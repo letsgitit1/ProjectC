@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class IndexController {
-	
+
 	@GetMapping({"/","index"})
 	public String index() {
 		return "index";
@@ -14,5 +14,9 @@ public class IndexController {
 	public String map() {
 		return"kakaomapTest";
 	}
-	
+
+	@GetMapping("/MapTestKyung")
+	public String map2() {
+		return"MapTestKyung";
+	}
 }
