@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>내차등록</title>
+</head>
+<body>
+	<main>
+		<h3>내차 등록</h3>
+			<form action="/carReg" method="POST">
+				<table>
+				<tr>
+					<td><input type="hidden" name="owner_id" th:value="${session.vo.id}"></td>
+				</tr>
+				 <tr>
+				 	<th><label for="car_number">자동차백넘버</label></th>
+				 	<td><input id="car_number" name="car_number" type="text"></td>
+				 </tr>
+				 <tr>
+				 	<th><label for="car_model">모델</label></th>
+				 	<td><input id="car_model" name="car_model" type="text"></td>
+				 </tr>
+				 <tr>
+				 	<th><label for="manufacturer">제조사</label></th>
+				 	<td><input id="manufacturer" name="manufacturer" type="text"></td>
+				 </tr>
+				 <tr>
+				 	<th><label for="engine_type">엔진종류</label></th>
+				 	<td>
+				 		<input id="engine_type" name="engine_type" type="radio" value="Electric">전기
+				 		<input id="engine_type" name="engine_type" type="radio" value="diesel">경유
+				 		<input id="engine_type" name="engine_type" type="radio" value="Gasoline">휘발유
+				 	</td>
+				 </tr>
+				 <tr>
+				 <th><label for="car_type">자동차타입</label></th>
+				 <td>
+				 	<input id="car_type" name="car_type" type="radio" value="소형">소형
+				 	<input id="car_type" name="car_type" type="radio" value="중형">중형
+				 	<input id="car_type" name="car_type" type="radio" value="대형">대형
+				 </tr>
+				 <tr>
+				 	<th><label for="c_year">연식</label></th>
+				 	<td>
+				 		<select id="c_year" name="c_year">
+				 		<option value=""></option>
+				 		<script>
+				 		for (var i = 1980; i <= 2023; i++) {
+				 		      document.write('<option value="' + i + '">' + i + '</option>');
+				 		    }
+						</script>
+				 		</select>
+				 	</td>
+				 </tr>
+				 <tr>
+				 	<td colspan="3"><button>등록</button> <button type="reset">다시입력</button> <button type="button" onclick="location.href='./'">메인</button> </td>
+				 </tr>
+				</table>
+			</form>
+	</main>
+</body>
+</html>

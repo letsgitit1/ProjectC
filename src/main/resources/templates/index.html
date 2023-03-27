@@ -1,16 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-<<<<<<< JJH
+
+
 	<h3>메인화면</h3>
+
+	<!-- 이동해 -->
+	<span th:if="${session.vo}!=null">[[${session.vo.email}]]님 <br>
+		<a href="carReg">내차등록</a> <br>
+		<a href="carSel">내차조회</a> <br>
+		<a href="review/write">후기작성</a> <br>
+		<a href="logout">로그아웃</a> <br>
+	</span>
+	<span th:unless="${session.vo}!=null">
+		<a href="reg">회원가입</a><br>
+		<a href="login">로그인</a>
+	</span>
+	
+	
+	<br>
+	<br>
+	
 	<a href="kakaomapTest">카카오맵 테스트</a> <hr>
 	<a href="/product/productAll">상품 전체보기</a> <hr>
 	<a href="#">결제 테스트</a> <hr>
 	<a href="#">반납전 알림 테스트</a> <hr>
-=======
+
+	
+	
+	
 </body>
 </html>
