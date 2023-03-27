@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<head>
+<title>결제하기</title>
+<script src="https://js.tosspayments.com/v1/payment"></script>
+</head>
+<body>
+	<div class="payment-method" style="clear: both;">
+			<h3 class="payment_bottom">결제수단</h3>
+			<select id="city">
+				<option class="payment_bottom"  value="카드">신용/체크카드</option>
+				<option class="payment_bottom"  value="가상계좌">가상계좌</option>
+			</select>
+
+
+			<!-- Submit Button -->
+			<br>
+			<button id="payment-button" class="payment_bottom">결제하기</button>
+		</div>
+<script>
+  let tossPayments = TossPayments("test_ck_4vZnjEJeQVxO9apBvMP3PmOoBN0k");
+  let button = document.getElementById("payment-button");
+  let orderId = new Date().getTime();
+  button.addEventListener("click", function () {
+  	let select_v=document.getElementById('city');
+		if(city.options[select_v.selectedIndex].value==='카드'){
+			tossPayments.requestPayment('카드', { // 결제 수단 파라미터
+				  // 결제 정보 파라미터
+				  amount:1000,
+				  orderId: orderId,
+				  orderName: '정지호',
+				  customerName: '냥냥',
+				  customerEmail:"moonnetworkqq@naver.com",
+				  successUrl: 'http://localhost:8088/index',
+				  failUrl: 'http://localhost:8082/travel/toss/fail.jsp',
+				})
+				
+				.catch(function (error) {
+				  if (error.code === 'USER_CANCEL') {
+				    // 결제 고객이 결제창을 닫았을 때 에러 처리
+				  } else if (error.code === 'INVALID_CARD_COMPANY') {
+				    // 유효하지 않은 카드 코드에 대한 에러 처리
+				  }
+				})
+		}
+		 if (city.options[select_v.selectedIndex].value === '가상계좌') {
+	        	tossPayments.requestPayment('가상계좌', { // 결제 수단 파라미터
+	        		  // 결제 정보 파라미터
+	        		amount: tprice,
+	        		  orderId: orderId,
+	        		  orderName: orderName,
+	        		  customerName: customerName,
+	        		  successUrl: 'http://localhost:8082/success?mid='+mid+'&pno='+pno,
+	        		  failUrl: 'http://localhost:8082/fail',
+	        		  validHours: 24,
+	        		  cashReceipt: {
+	        		    type: '소득공제',
+	        		  },
+	        		})
+	        		.catch(function (error) {
+	        		  if (error.code === 'USER_CANCEL') {
+	        		    // 결제 고객이 결제창을 닫았을 때 에러 처리
+	        		  } else if (error.code === 'INVALID_CARD_COMPANY') {
+	        		    // 유효하지 않은 카드 코드에 대한 에러 처리
+	        		  }
+	        		})
+	        }
+
+	    });
+ </script>
+</body>
+</html>
