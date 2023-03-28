@@ -17,4 +17,7 @@
  	<select id="check_wish" parameterType="CProductVo" resultType="int">
  		SELECT count (*) FROM C_WISHLISTS WHERE USER_ID=#{user_id} AND CAR_NUMBER=#{car_number}
  	</select>
+ 	<select id="selectCarByCar_number" resultType="CProductVo" parameterType="int">
+ 		select * from C_CARS where id=#{id}
+ 	</select>
  </mapper>

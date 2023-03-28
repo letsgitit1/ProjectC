@@ -48,7 +48,6 @@ public class CProductController {
 	@DeleteMapping("/product/wishlist/delete")
 	@ResponseBody
 	public String wishDelete(@RequestBody CWishListVo vo) {
-	    System.out.println("넘어옴!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	    service.wishlist_delete(vo);
 	    return "success";
 	}

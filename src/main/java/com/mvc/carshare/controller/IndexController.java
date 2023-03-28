@@ -10,11 +10,6 @@ public class IndexController {
 	public String index() {
 		return "index";
 	}
-	@GetMapping("/kakaomapTest")
-	public String map() {
-		return"kakaomapTest";
-	}
-
 	@GetMapping("/MapTestKyung")
 	public String map2() {
 		return"MapTestKyung";
