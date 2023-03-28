@@ -27,5 +27,7 @@
        SELECT count(*) from C_MEMBERS
        where email=#{email}
     </select>
+    <select id="selectOne" parameterType="int" resultType="CMemberVo">
+ 		select * from c_members where id=#{id}
+ 	</select>
  	
- </mapper>

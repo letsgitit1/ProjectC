@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>맵맵맵맵맵테스트트트트트</title>
+
+</head>
+
+<body>
+
+<div>
+    [[${markers}]]
+
+
+
+</div>
+
+<div id="map" style="width:100%;height:500px;">
+
+
+
+
+</div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d11d96d8bf1e2f7032da54bfc050846"></script>
+<script>
+
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            center: new kakao.maps.LatLng(37.50000717025944, 127.03515956607703), // 지도의 중심좌표 역삼역으로 했슴다
+            level: 3 // 지도의 확대 레벨
+        };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+    var imageSrc = "/resources/image/pngegg.png"  // 마커 이미지의 주소 (차)
+        imageSize = new kakao.maps.Size(30, 30), // 마커이미지의 크기입니다 향후 지도가 동적으로 바뀌었을 떄 위치 조정 해야됨
+        imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다. ????
+
+    // 마커가 표시될 위치입니다
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+    var markerListString = [[${markers}]]
+
+    console.log(typeof markerListString);
+    console.log( markerListString);
+    console.log( markerListString.latitude);
+
+
+    // for (var i = 0; i < markerList.length; i++) {
+    //     var marker = new kakao.maps.Marker({
+    //         position: new kakao.maps.LatLng(parseFloat(markerList[i].latitude),parseFloat(markerList[i].longitude)),
+    //         image: markerImage
+    //
+    //
+    //     });
+
+        marker.setMap(map);
+
+
+        // 지도에 표시할 원을 생성합니다
+        var circle = new kakao.maps.Circle({
+            center: new kakao.maps.LatLng(37.50061950618885, 127.0363105495403),  // 원의 중심좌표 입니다
+            radius: 150, // 미터 단위의 원의 반지름입니다
+            strokeWeight: 5, // 선의 두께입니다
+            strokeColor: '#75B8FA', // 선의 색깔입니다
+            strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+            strokeStyle: 'dashed', // 선의 스타일 입니다
+            fillColor: '#CFE7FF', // 채우기 색깔입니다
+            fillOpacity: 0.7  // 채우기 불투명도 입니다
+        });
+
+        // 지도에 원을 표시합니다
+        circle.setMap(map);
+
+        // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+        // marker.setMap(null);
+        // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+        var iwContent = '<div style="padding:5px;">차종 및 가져올 데이터 간단한 출력 ! 빌렸을 때 클릭이벤트(경로? 차주와 채팅? 결제페이지?)</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+        // 인포윈도우를 생성합니다
+        var infowindow = new kakao.maps.InfoWindow({
+            content: iwContent,
+            removable: iwRemoveable
+        });
+
+        //마커에 올리면 인포이벤트 발생
+        kakao.maps.event.addListener(marker, 'mouseover', function () {
+
+            infowindow.open(map, marker);
+        });
+
+        //때면 인포이벤트 제거
+        kakao.maps.event.addListener(marker, 'mouseout', function () {
+
+            infowindow.close();
+        });
+
+
+</script>
+
+</body>
+</html>
+
+

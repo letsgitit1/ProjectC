@@ -28,4 +28,7 @@ public class CProductService {
 	public int wishlist_delete(CWishListVo vo) {
 		return dao.wishlist_delete(vo);
 	}
+	public CProductVo selectCarByCar_number(int car_number) {
+		return dao.selectCarByCar_number(car_number);
+	}
 }
