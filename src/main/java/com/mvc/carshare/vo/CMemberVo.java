@@ -1,5 +1,8 @@
 package com.mvc.carshare.vo;
 
+import lombok.Data;
+
+@Data
 public class CMemberVo {
 	int id;
 	String email;
