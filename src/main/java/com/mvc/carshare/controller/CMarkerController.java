@@ -36,8 +36,7 @@ public class CMarkerController {
         List<CMarker> list = null;
         list = service.getAllMarkers();
         model.addAttribute("markers", list);
-
-        return"MapTestKyung";
+        return"/Map/MapTestKyung";
 }
 
 
