@@ -1,5 +1,10 @@
 package com.mvc.carshare.dao;
 
-public class CMemberDao {
+import org.apache.ibatis.annotations.Mapper;
 
+import com.mvc.carshare.vo.CMemberVo;
+
+@Mapper
+public interface CMemberDao {
+	CMemberVo selectOne (int id);
 }

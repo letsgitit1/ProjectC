@@ -19,7 +19,6 @@ import com.mvc.carshare.vo.CWishListVo;
 @Controller
 public class CProductController {
 	private CProductService service;
-	private ObjectMapper objectMapper= new ObjectMapper();
 	
 	public CProductController(CProductService service) {
 		this.service=service;
@@ -29,7 +28,6 @@ public class CProductController {
 		List <CProductVo>list =service.SelectAll();
 		model.addAttribute("car",list);
 		model.addAttribute("user_id", 1);
-		System.out.println(list.get(1).getId());
 		return "/product/productAll";
 	}
 	
@@ -49,7 +47,6 @@ public class CProductController {
 	@DeleteMapping("/product/wishlist/delete")
 	@ResponseBody
 	public String wishDelete(@RequestBody CWishListVo vo) {
-	    System.out.println("넘어옴!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	    service.wishlist_delete(vo);
 	    return "success";
 	}
