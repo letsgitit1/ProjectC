@@ -27,7 +27,8 @@ public class CProductController {
 	public String listAll(Model model) {
 		List <CProductVo>list =service.SelectAll();
 		model.addAttribute("car",list);
-		model.addAttribute("user_id", 1);
+		model.addAttribute("user_id", 1); // 임시데이터
+		model.addAttribute("rent_id", 1);	// 임시데이터
 		return "/product/productAll";
 	}
 	

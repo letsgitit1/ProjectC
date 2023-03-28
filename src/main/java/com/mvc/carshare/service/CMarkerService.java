@@ -13,6 +13,7 @@ public class CMarkerService {
 
 
     public CMarkerService(CMarkerDao dao) { this.dao=dao;}
+    
     public List<CMarker> getAllMarkers() {
         return dao.getAllMarkers();
     }

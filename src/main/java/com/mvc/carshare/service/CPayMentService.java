@@ -12,4 +12,9 @@ private CPayMentDao dao;
 	public CPayMentService(CPayMentDao dao) {
 		this.dao=dao;
 	}
+	public int paymentInsert(CPayMentVo vo) {
+		return dao.paymentInsert(vo);
+	}
+	
+	
 }

@@ -3,6 +3,7 @@ package com.mvc.carshare.dao;
 //이동해
 import java.util.Map;
 
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.mvc.carshare.vo.CMemberVo;
@@ -18,5 +19,7 @@ public interface CMemberDao {
 	
 	//아이디 확인
 	int idCheck (String email);
+	
+	CMemberVo selectOne (int id);
 }
 

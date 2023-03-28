@@ -16,7 +16,7 @@
          <th:block th:each="pic,i:${#strings.setSplit(car.car_image,',')}">
          <li style="width:200px;height: 200px;">
             <!-- /uploads/ url 경로는 ApplicationConfig 에서 설정합니다. -->
-            <a th:href="@{/product/payment(user_id=${user_id}, car_id=${car.id})}">
+            <a th:href="@{/product/payment(user_id=${user_id}, car_id=${car.id},rent_id=${rent_id})}">
             <img th:src="@{/uploads/}+${pic}" width="100%" height="100%" style="object-fit:cover"><br>
             </a>
             <span>[[${pic}]]([[${i.index}]])</span>

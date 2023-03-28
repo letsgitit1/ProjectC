@@ -16,9 +16,10 @@ import lombok.ToString;
 @Builder
 public class CPayMentVo {
 	int id;
-	int return_region_id;
-	int car_number;
-	int rent_price;
-	int rent_time;
-	Timestamp registered_at;
+	int reg_id; //판매
+	int return_number; //반납
+	int payer_id; //회원
+	String payment_method;
+	int price;
+	Timestamp payment_date;
 }
