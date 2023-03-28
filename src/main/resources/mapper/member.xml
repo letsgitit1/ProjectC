@@ -3,7 +3,31 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.mvc.carshare.dao.CMemberDao">
- 	<select id="selectOne" parameterType="int" resultType="CMemberVo">
+ 	<!-- 이동해 -->
+ 	
+ 	<!-- 회원가입 -->
+ 	<insert id="member_reg" parameterType="CMemberVo">
+ 		INSERT INTO C_MEMBERS
+		(ID, EMAIL, USERNAME, PASSWORD, NAME, AGE, GENDER, ADDRESS, 
+		PHONE_NUMBER, DRIVER_LICENSE_NUMBER)
+		VALUES
+		(members_seq.nextval, #{email}, #{username}, #{password},
+		 #{name}, #{age}, #{gender},
+		 #{address}, #{phone_number}, #{driver_license_number}) 
+ 	</insert>
+ 	
+ 	<!-- 로그인 -->
+ 	<select id="login" parameterType="java.util.Map" resultType="CMemberVo">
+ 		SELECT * FROM C_MEMBERS  
+ 		WHERE email=#{email} and password=#{password}
+ 	</select>
+ 	
+ 	<!-- ajax -->
+ 	<select id="idCheck" parameterType="String" resultType="int">
+       SELECT count(*) from C_MEMBERS
+       where email=#{email}
+    </select>
+    <select id="selectOne" parameterType="int" resultType="CMemberVo">
  		select * from c_members where id=#{id}
  	</select>
- </mapper>
+ 	
