@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <head>
 <title>결제하기</title>
-<script src="https://js.tosspayments.com/v1/payment"></script>
 </head>
 <body>
 	<div class="payment-method" style="clear: both;">
@@ -19,6 +18,7 @@
 			<br>
 			<button id="payment-button" class="payment_bottom">결제하기</button>
 		</div>
+<script src="https://js.tosspayments.com/v1/payment"></script>
 <script th:inline="javascript">
   let tossPayments = TossPayments("test_ck_4vZnjEJeQVxO9apBvMP3PmOoBN0k");
   let button = document.getElementById("payment-button");
@@ -28,6 +28,11 @@
   let price='[[${rvo.rent_price}]]';
   let orderName='[[${cvo.car_model}]]';
   let customerName='[[${mvo.id}]]';
+  //쿼리스트링으로 보낼 변수 설정
+  let rid='[[${rvo.id}]]';
+  let reid='[[${revo.id}]]';
+  let cid='[[${cvo.id}]]';
+  let mid='[[${mvo.id}]]';
   
   button.addEventListener("click", function () {
   	let select_v=document.getElementById('city');
@@ -39,7 +44,7 @@
 				  orderName: orderName,
 				  customerName: customerName,
 				  customerEmail:"moonnetworkqq@naver.com",
-				  successUrl: 'http://localhost:8088/product/paymentSuccess',
+				  successUrl: 'http://localhost:8088/product/paymentSuccess?rid='+rid+'&mid='+mid+'&reid='+reid,
 				  failUrl: 'http://localhost:8082/travel/toss/fail.jsp',
 				})
 				

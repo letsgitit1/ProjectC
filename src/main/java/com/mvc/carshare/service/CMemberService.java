@@ -12,7 +12,6 @@ import com.mvc.carshare.vo.CMemberVo;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@Slf4j
 public class CMemberService {
 	@Autowired
 	private CMemberDao dao;
@@ -44,7 +43,10 @@ public class CMemberService {
 	public int idCheck(String email) {
         return dao.idCheck(email);
     }
-
+	
+	  public CMemberVo selectOne(int id) { return dao.selectOne(id); }
+	 
+	
 	
 }
 
