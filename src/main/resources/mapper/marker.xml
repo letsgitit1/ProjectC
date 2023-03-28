@@ -6,7 +6,7 @@
 
 
  <select id="getAllMarkers" resultType="CMarker">
-  SELECT * FROM markers
+  SELECT * FROM CMarker
  </select>
 
 
