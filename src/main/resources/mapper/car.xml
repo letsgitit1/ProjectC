@@ -8,7 +8,7 @@
  	<!-- 내차등록 -->
  	<insert id="carReg" parameterType="CCarVo">
  		INSERT INTO C_CARS
-		(id, CAR_NUMBER, OWNER_ID, CAR_MODEL, MANUFACTURER, ENGINE_TYPE, CAR_TYPE, C_YEAR)
+		(car_id, CAR_NUMBER, OWNER_ID, CAR_MODEL, MANUFACTURER, ENGINE_TYPE, CAR_TYPE, C_YEAR)
 		VALUES(cars_seq.nextval,#{car_number}, #{owner_id}, #{car_model},
 		 #{manufacturer}, #{engine_type}, #{car_type}, #{c_year})
  	</insert>
