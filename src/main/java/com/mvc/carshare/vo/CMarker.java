@@ -12,6 +12,7 @@ public class CMarker {
     private int id;
     private double latitude;
     private double longitude;
-
+    private double clatitude;
+    private double clongitude;
 
 }
