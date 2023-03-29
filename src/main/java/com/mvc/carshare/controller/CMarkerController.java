@@ -21,7 +21,7 @@ public class CMarkerController {
 
         ObjectMapper mapper = new ObjectMapper();
 
-    @GetMapping("/MapTestKyung")
+    @GetMapping("/Map/MapTestKyung")
     public String map(Model model) {
 //        List<CMarker> list = null;
 //        list = service.getAllMarkers();
@@ -34,6 +34,7 @@ public class CMarkerController {
 //        }
         List<CMarker> list = null;
         list = service.getAllMarkers();
+        System.out.println(list);
         model.addAttribute("markers", list);
         return"Map/MapTestKyung";
 }
