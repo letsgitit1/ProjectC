@@ -23,7 +23,6 @@ public class CMarkerController {
 
     @GetMapping("/MapTestKyung")
     public String map(Model model) {
-
 //        List<CMarker> list = null;
 //        list = service.getAllMarkers();
 //        try {
@@ -36,11 +35,8 @@ public class CMarkerController {
         List<CMarker> list = null;
         list = service.getAllMarkers();
         model.addAttribute("markers", list);
-        return"/Map/MapTestKyung";
+        return"Map/MapTestKyung";
 }
-
-
-
     }
 
 
