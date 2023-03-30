@@ -21,4 +21,8 @@
    	<select id="selectCarByCar_number" resultType="CProductVo" parameterType="int">
  		select * from C_CARS where car_id=#{car_id}
  	</select>
+ 	
+ 	<select id="wishCount" resultType="int" parameterType="int">
+ 		SELECT car_number FROM C_wishlists WHERE user_id = #{user_id}
+ 	</select>
  </mapper>

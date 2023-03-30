@@ -31,4 +31,8 @@ public class CProductService {
 	public CProductVo selectCarByCar_number(int car_number) {
 		return dao.selectCarByCar_number(car_number);
 	}
+	public List<Integer> wishCount(int user_id){
+		return dao.wishCount(user_id);
+	}
+	
 }
