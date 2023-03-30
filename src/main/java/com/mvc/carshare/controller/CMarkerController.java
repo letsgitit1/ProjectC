@@ -5,6 +5,7 @@ import com.mvc.carshare.service.CMarkerService;
 import com.mvc.carshare.service.CProductService;
 import com.mvc.carshare.service.CRegistrationsService;
 import com.mvc.carshare.vo.CMarker;
+import com.mvc.carshare.vo.CMarkerJoinCarDTO;
 import com.mvc.carshare.vo.CProductVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,15 +38,13 @@ public class CMarkerController {
 //        } catch (JsonProcessingException e) {
 //            throw new RuntimeException(e);
 //        }
-        List<CMarker> list = null;
-        list = service.getAllMarkers();
+        List<CMarkerJoinCarDTO> list = null;
+        list = service.getAllMarkersJoinCars();
 
-        model.addAttribute("markers", list);
-//        List <CProductVo> productlist =pservice.SelectAll();
-//       model.addAttribute("carlist",productlist);
+        model.addAttribute("markers" ,list);
 
         return"Map/MapTestKyung";
-}
     }
+}
 
 

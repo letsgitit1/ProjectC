@@ -10,7 +10,6 @@
 
 
 <div>
-    [[${markers}]]
 
 
 </div>
@@ -93,6 +92,7 @@
         function createOverlay(markerData) {
             var content = '<div>' + markerData.car_model + '</div>'+
                '<div>' + markerData.rent_price + '</div>';
+            var content = '<div>' + markerData.car_model + '</div>';
             var overlay = new kakao.maps.CustomOverlay({
                 content: content,
                 map: null,
@@ -166,6 +166,40 @@ console.log(1234123412341234);
 
         const jobj = {"La" : clickmouse1 ,"Ma" : clickmouse2 }
         const jstl = JSON.stringify(jobj)
+
+        // 클로저를 이용하여 각 원에 대한 클릭 이벤트 추가
+        (function (circle) {
+            // 원에 마우스오버 이벤트가 발생했을 때 변경할 채우기 옵션입니다
+            var mouseoverOption = {
+                fillColor: '#EFFFED',
+                fillOpacity: 0.8
+            };
+            // 원에 마우스아웃 이벤트가 발생했을 때 변경할 채우기 옵션입니다
+            var mouseoutOption = {
+                fillColor: '#A2FF99',
+                fillOpacity: 0.7
+            };
+
+            // 원의 마우스오버 이벤트를 등록합니다
+            kakao.maps.event.addListener(circle, 'mouseover', function() {
+                // 원의 채우기 옵션을 변경합니다
+                this.setOptions(mouseoverOption);
+            });
+
+            kakao.maps.event.addListener(circle, 'mouseout', function() {
+                // 원의 채우기 옵션을 변경합니다
+                this.setOptions(mouseoutOption);
+            });
+
+            // 원에 클릭 이벤트를 등록합니다
+            kakao.maps.event.addListener(circle, 'click', function () {
+                let resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = '<div>' + '반납할때 나오는 정보들 (반납시간, 가격 등 )' + '</div>';
+            });
+        })(circle);
+
+        circle.setMap(map);
+    }
 
         const xhr = new XMLHttpRequest()
         xhr.open('post','/Map/Insert')
