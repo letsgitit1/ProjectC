@@ -2,7 +2,10 @@ package com.mvc.carshare.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mvc.carshare.service.CMarkerService;
+import com.mvc.carshare.service.CProductService;
+import com.mvc.carshare.service.CRegistrationsService;
 import com.mvc.carshare.vo.CMarker;
+import com.mvc.carshare.vo.CProductVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +17,14 @@ public class CMarkerController {
 
 
     private CMarkerService service;
+    private CProductService pservice;
+    private CRegistrationsService rservice;
 
-    public CMarkerController(CMarkerService service) {
-        this.service = service;
+    public CMarkerController(CMarkerService service ,CProductService pservice , CRegistrationsService  rservice ){
+        this.service= service; //marker
+        this.pservice= pservice; //product
+        this.rservice= rservice; //reg
     }
-
-        ObjectMapper mapper = new ObjectMapper();
 
     @GetMapping("/Map/MapTestKyung")
     public String map(Model model) {
@@ -34,8 +39,11 @@ public class CMarkerController {
 //        }
         List<CMarker> list = null;
         list = service.getAllMarkers();
-        System.out.println(list);
+
         model.addAttribute("markers", list);
+//        List <CProductVo> productlist =pservice.SelectAll();
+//       model.addAttribute("carlist",productlist);
+
         return"Map/MapTestKyung";
 }
     }
