@@ -25,19 +25,24 @@ public class CProductController {
 	}
 	@GetMapping("/product/productAll")
 	public String listAll(Model model) {
-		List <CProductVo>list =service.SelectAll();
-		System.out.println(list);
-		model.addAttribute("car",list);
-		model.addAttribute("user_id", 1); // 임시데이터
-		model.addAttribute("rent_id", 1);	// 임시데이터
-		return "product/productAll";
+	    List<CProductVo> list = service.SelectAll();
+	    int user_id = 1; // 사용자 아이디 임시 값
+	    model.addAttribute("car", list);
+	    model.addAttribute("user_id", user_id);
+	    model.addAttribute("rent_id", 1);	// 임시데이터
+	    
+	    // 해당 사용자가 찜한 상품 번호 리스트를 가져옴
+	    List<Integer> wishList = service.wishCount(user_id);
+	    model.addAttribute("wishList", wishList);
+	    System.out.println(wishList);
+
+	    return "product/productAll";
 	}
 	
 	@PostMapping("/product/wishlist")
 	@ResponseBody
 	public String wishInsert(@RequestBody CWishListVo vo) {
 		String result="fail";
-		System.out.println(vo);
 		if(service.check_wish(vo)==0) {
 			if(service.wishlist_insert(vo)==1) {
 				result="success";

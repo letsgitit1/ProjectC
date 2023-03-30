@@ -15,4 +15,5 @@ public interface CProductDao {
 	int check_wish(CWishListVo vo);
 	int wishlist_delete(CWishListVo vo);
 	CProductVo selectCarByCar_number(int car_number);
+	List<Integer> wishCount(int user_id);
 }

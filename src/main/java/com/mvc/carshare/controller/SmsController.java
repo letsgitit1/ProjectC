@@ -46,13 +46,20 @@ public class SmsController {
 //			  long currentMillis = currentTime.getTime();
 //			  long timeDiffMillis = remainingMillis-currentMillis ;
 //				  long timeDiffMinutes = TimeUnit.MILLISECONDS.toMinutes(timeDiffMillis);
-//				  if((timeDiffMinutes/60)<6) {
-//					  String content="자동차 공유 사이트 Budy입니다. 회원님의 자동차 반납이 1시간 남았습니다.";
+//				  if((timeDiffMinutes/60)==1) { //반납시간 한시간남은 차량에게 아래 로직실행
 //					  CMemberVo mvo=mService.selectOne(list.get(i).getUser_id());
-//					  System.out.println(mvo);
-//					  //MessageDTO messageDto=new MessageDTO(mvo.getPhone_number(),content);
-//					 // SmsResponseDTO response = smsService.sendSms(messageDto);
+//					  String content=mvo.getName()+"님 "+"자동차 공유 사이트 Budy입니다. 회원님의 자동차 반납이 1시간 남았습니다.";
+//					  System.out.println(mvo);  
+//					  MessageDTO messageDto=new MessageDTO(mvo.getPhone_number(),content);
+//					  SmsResponseDTO response = smsService.sendSms(messageDto);
+//					  System.out.println(response);
+//				  }
+//				else if((timeDiffMinutes/60)<0) {
+//	  				CMemberVo mvo=mService.selectOne(list.get(i).getUser_id());
+//	  				String content=mvo.getName()+"님 "+"자동차 반납시간이 지났습니다. 추가 요금이 발생할 수 있습니다.";
+//	  				MessageDTO messageDto=new MessageDTO(mvo.getPhone_number(),content);
+//	  				SmsResponseDTO response = smsService.sendSms(messageDto);
+//				}
 //				  }
 //		  }
-//	    }
-}
+	    }

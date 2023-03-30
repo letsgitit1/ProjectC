@@ -8,7 +8,10 @@
 	 <th:block th:each="car,status:${car}">  
 	 	<div>
 	 		[[${car.car_model}]]
-     <button th:onclick="wishlist([[${user_id}]],[[${car.car_id}]])" th:id="wishlist+${car.car_id}" th:class="wishlist-btn">찜하기</button>
+     <button th:onclick="wishlist([[${user_id}]],[[${car.car_id}]])" th:id="wishlist+${car.car_id}" th:class="wishlist-btn">
+    <span th:text="${(wishList.contains(car.car_id)) ? '찜완료' : '찜하기'}"></span>
+</button>
+
 	 	 <ul style="display: flex;margin-bottom:30px;">
       <!--  #strings 는 타임리트 유틸객체.메소드를 갖습니다. 문자열을 , 분리해서 배열로 변환
            pic는 배열요소를 1개씩 순서대로 저장. i는 foreach의 상태변수
@@ -25,6 +28,7 @@
       </ul>   
 	 	</div>
 	 </th:block>
+	 
 </body>
 <script th:inline="javascript">
 function wishlist(user_id, car_number) {
