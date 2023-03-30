@@ -18,6 +18,11 @@ public class CMarkerService {
     public List<CMarker> getAllMarkers() {
         return dao.getAllMarkers();
     }
+    public List<CMarkerJoinCarDTO> getAllMarkersJoinCars() {
+        return dao.getAllMarkersJoinCars();
+    }
+
+
 
     public List<CMarkerJoinCarDTO> getAllMarkersJoinCars() {
         return dao.getAllMarkersJoinCars();

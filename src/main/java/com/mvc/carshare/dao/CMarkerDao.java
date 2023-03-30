@@ -11,7 +11,7 @@ public interface CMarkerDao {
 
 
     public List<CMarker> getAllMarkers();
-
+    public List<CMarkerJoinCarDTO> getAllMarkersJoinCars();
 
     public List<CMarkerJoinCarDTO> getAllMarkersJoinCars();
 

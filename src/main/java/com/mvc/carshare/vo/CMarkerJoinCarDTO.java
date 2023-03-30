@@ -2,6 +2,10 @@ package com.mvc.carshare.vo;
 
 import lombok.Data;
 
+
+import java.sql.Timestamp;
+
+
 @Data
 public class CMarkerJoinCarDTO {
 
@@ -27,8 +31,15 @@ public class CMarkerJoinCarDTO {
     private String c_year;          //차의 년식
 
 
+    /////////////////////////////
 
 
+    private  int id2;
+    private  int return_region_id;
+    private int car_numberproduct;
+    private int rent_price;
+    private  int rent_time;
+    private  Timestamp registered_at;
 
 
 

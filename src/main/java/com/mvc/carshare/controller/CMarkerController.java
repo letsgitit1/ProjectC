@@ -29,21 +29,14 @@ public class CMarkerController {
 
     @GetMapping("/Map/MapTestKyung")
     public String map(Model model) {
-//        List<CMarker> list = null;
-//        list = service.getAllMarkers();
-//        try {
-//            String jsonString = mapper.writeValueAsString(list);
-//        model.addAttribute("markers", jsonString);
-//            System.out.println(jsonString);
-//        } catch (JsonProcessingException e) {
-//            throw new RuntimeException(e);
-//        }
+
         List<CMarkerJoinCarDTO> list = null;
         list = service.getAllMarkersJoinCars();
 
         model.addAttribute("markers" ,list);
 
         return"Map/MapTestKyung";
+
     }
 }
 
