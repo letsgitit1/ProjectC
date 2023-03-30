@@ -12,7 +12,6 @@
 		VALUES(cars_seq.nextval,#{car_number}, #{owner_id}, #{car_model},
 		 #{manufacturer}, #{engine_type}, #{car_type}, #{c_year})
  	</insert>
- 	
  	<!-- 등록된 차량 조회 -->
  	<select id="carSel" parameterType="String" resultType="CCarVo">
  		SELECT CAR_NUMBER ,CAR_MODEL ,MANUFACTURER ,ENGINE_TYPE ,CAR_TYPE ,C_YEAR ,driver_License_number, car_image FROM 

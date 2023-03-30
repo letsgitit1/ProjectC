@@ -10,12 +10,15 @@
 
 
 <div>
-
+    [[${markers}]]
 
 </div>
 
 
+
 <div id="map" style="width:100%;height:500px;">
+
+
 
 </div>
 <p id="result">반납하기(결제)</p>
@@ -88,7 +91,7 @@
 
         function createOverlay(markerData) {
             var content = '<div>' + markerData.car_model + '</div>'+
-               '<div>' + markerData.rent_price + '</div>';
+                '<div>' + markerData.rent_price + '</div>';
             var content = '<div>' + markerData.car_model + '</div>';
             var overlay = new kakao.maps.CustomOverlay({
                 content: content,
@@ -98,6 +101,7 @@
             return overlay;
         }
     }
+    // 원
     for (var i = 0; i < markerListString.length; i++) {
         var cicleData = markerListString[i];
         var circle = new kakao.maps.Circle({
@@ -125,12 +129,12 @@
             };
 
             // 원의 마우스오버 이벤트를 등록합니다
-            kakao.maps.event.addListener(circle, 'mouseover', function() {
+            kakao.maps.event.addListener(circle, 'mouseover', function () {
                 // 원의 채우기 옵션을 변경합니다
                 this.setOptions(mouseoverOption);
             });
 
-            kakao.maps.event.addListener(circle, 'mouseout', function() {
+            kakao.maps.event.addListener(circle, 'mouseout', function () {
                 // 원의 채우기 옵션을 변경합니다
                 this.setOptions(mouseoutOption);
             });
@@ -143,79 +147,44 @@
         })(circle);
 
         circle.setMap(map);
-    }
+
 //마커를 찍었을 떄 클릭 이벤트 발생시키는 함수입니다
-function  markerfordb () {
- let resultajax= document.getElementById(ajaxformarker);
-console.log(1234123412341234);
+        function markerfordb() {
+            let resultajax = document.getElementById(ajaxformarker);
+            console.log(1234123412341234);
 
-
-}
-
-    kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
-
-        // 클릭한 위도, 경도 정보를 가져옵니다
-        var latlng = mouseEvent.latLng;
-
-        let clickmouse1 = latlng.La;
-        let clickmouse2 = latlng.Ma;
-
-
-        const jobj = {"La" : clickmouse1 ,"Ma" : clickmouse2 }
-        const jstl = JSON.stringify(jobj)
-
-        // 클로저를 이용하여 각 원에 대한 클릭 이벤트 추가
-        (function (circle) {
-            // 원에 마우스오버 이벤트가 발생했을 때 변경할 채우기 옵션입니다
-            var mouseoverOption = {
-                fillColor: '#EFFFED',
-                fillOpacity: 0.8
-            };
-            // 원에 마우스아웃 이벤트가 발생했을 때 변경할 채우기 옵션입니다
-            var mouseoutOption = {
-                fillColor: '#A2FF99',
-                fillOpacity: 0.7
-            };
-
-            // 원의 마우스오버 이벤트를 등록합니다
-            kakao.maps.event.addListener(circle, 'mouseover', function() {
-                // 원의 채우기 옵션을 변경합니다
-                this.setOptions(mouseoverOption);
-            });
-
-            kakao.maps.event.addListener(circle, 'mouseout', function() {
-                // 원의 채우기 옵션을 변경합니다
-                this.setOptions(mouseoutOption);
-            });
-
-            // 원에 클릭 이벤트를 등록합니다
-            kakao.maps.event.addListener(circle, 'click', function () {
-                let resultDiv = document.getElementById('result');
-                resultDiv.innerHTML = '<div>' + '반납할때 나오는 정보들 (반납시간, 가격 등 )' + '</div>';
-            });
-        })(circle);
-
-        circle.setMap(map);
-    }
-
-        const xhr = new XMLHttpRequest()
-        xhr.open('post','/Map/Insert')
-         xhr.send(jstl)
-        xhr.onload = function (){
-            if (xhr.status === 200 || xhr.status === 201) {
-                console.log(xhr.response)
-
-            } else {
-                console.error("오류", xhr.status);
-            }
 
         }
-    });
+
+        kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+
+            // 클릭한 위도, 경도 정보를 가져옵니다
+            var latlng = mouseEvent.latLng;
+
+            let clickmouse1 = latlng.La;
+            let clickmouse2 = latlng.Ma;
 
 
+            const jobj = {"La": clickmouse1, "Ma": clickmouse2}
+            const jstl = JSON.stringify(jobj)
 
+
+            const xhr = new XMLHttpRequest()
+            xhr.open('post', '/Map/Insert')
+            xhr.send(jstl)
+            xhr.onload = function () {
+                if (xhr.status === 200 || xhr.status === 201) {
+                    console.log(xhr.response)
+
+                } else {
+                    console.error("오류", xhr.status);
+                }
+            }
+        });
+
+
+    }
 </script>
 
 </body>
 </html>
-
