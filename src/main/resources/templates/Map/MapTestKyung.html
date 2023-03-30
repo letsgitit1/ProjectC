@@ -10,7 +10,7 @@
 
 
 <div>
-
+    [[${markers}]]
 
 
 </div>
@@ -24,6 +24,8 @@
 </div>
 <p id="result">반납하기(결제)</p>
 <div id="clickLatlng"></div>
+
+<button id = "ajaxformarker" onclick="markerfordb()">판매확정하기</button>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d11d96d8bf1e2f7032da54bfc050846"></script>
 <script th:inline="javascript">
@@ -43,8 +45,6 @@
     var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption); //마커 이미지 생성
     var markerListString = [[${markers}]];      //배열을 담고있는 makers입니다!
 
-
-
     var overlay = new kakao.maps.CustomOverlay({
         content: '',
         map: null,
@@ -58,6 +58,7 @@
 
     for (var i = 0; i < markerListString.length; i++) {
         var markerData = markerListString[i];
+
         var marker = new kakao.maps.Marker({
             position: new kakao.maps.LatLng(parseFloat(markerData.latitude), parseFloat(markerData.longitude)),
             image: markerImage
@@ -84,13 +85,14 @@
                 // 클릭된 마커 위치로 오버레이 이동 약 30픽셀정도 이동시킴
                 overlay.setPosition(new kakao.maps.LatLng(parseFloat(markerData.latitude) + 0.0005, parseFloat(markerData.longitude)));
                 // 오버레이 내용 갱신(추후 차 정보로 바꿔 줄 예정입니다)
-                overlay.setContent('<div>' + markerData.id + '</div>');
+                overlay.setContent('<div>' + markerData.car_model + '</div>');
                 overlay.setMap(map);
             }
         })(markerData));
 
         function createOverlay(markerData) {
-            var content = '<div>' + markerData.id + '</div>';
+            var content = '<div>' + markerData.car_model + '</div>'+
+               '<div>' + markerData.rent_price + '</div>';
             var overlay = new kakao.maps.CustomOverlay({
                 content: content,
                 map: null,
@@ -99,51 +101,85 @@
             return overlay;
         }
     }
-    var circles = [];
     for (var i = 0; i < markerListString.length; i++) {
         var cicleData = markerListString[i];
         var circle = new kakao.maps.Circle({
-            center: new kakao.maps.LatLng(parseFloat(cicleData.clatitude), parseFloat(cicleData.clongitude)),  // 원의 중심좌표 입니다
-            radius: 150, // 미터 단위의 원의 반지름입니다
-            strokeWeight: 5, // 선의 두께입니다
-            strokeColor: '#75B8FA', // 선의 색깔입니다
-            strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-            strokeStyle: 'dashed', // 선의 스타일 입니다
-            fillColor: '#CFE7FF', // 채우기 색깔입니다
-            fillOpacity: 0.7 // 채우기 불투명도 입니다
+            center: new kakao.maps.LatLng(parseFloat(cicleData.clatitude), parseFloat(cicleData.clongitude)),
+            radius: 150,
+            strokeWeight: 5,
+            strokeColor: '#75B8FA',
+            strokeOpacity: 1,
+            strokeStyle: 'dashed',
+            fillColor: '#CFE7FF',
+            fillOpacity: 0.7
         });
+
+        // 클로저를 이용하여 각 원에 대한 클릭 이벤트 추가
+        (function (circle) {
+            // 원에 마우스오버 이벤트가 발생했을 때 변경할 채우기 옵션입니다
+            var mouseoverOption = {
+                fillColor: '#EFFFED',
+                fillOpacity: 0.8
+            };
+            // 원에 마우스아웃 이벤트가 발생했을 때 변경할 채우기 옵션입니다
+            var mouseoutOption = {
+                fillColor: '#A2FF99',
+                fillOpacity: 0.7
+            };
+
+            // 원의 마우스오버 이벤트를 등록합니다
+            kakao.maps.event.addListener(circle, 'mouseover', function() {
+                // 원의 채우기 옵션을 변경합니다
+                this.setOptions(mouseoverOption);
+            });
+
+            kakao.maps.event.addListener(circle, 'mouseout', function() {
+                // 원의 채우기 옵션을 변경합니다
+                this.setOptions(mouseoutOption);
+            });
+
+            // 원에 클릭 이벤트를 등록합니다
+            kakao.maps.event.addListener(circle, 'click', function () {
+                let resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = '<div>' + '반납할때 나오는 정보들 (반납시간, 가격 등 )' + '</div>';
+            });
+        })(circle);
+
         circle.setMap(map);
-        circles.push(circle);
     }
+//마커를 찍었을 떄 클릭 이벤트 발생시키는 함수입니다
+function  markerfordb () {
+ let resultajax= document.getElementById(ajaxformarker);
+console.log(1234123412341234);
 
-    // 원에 마우스오버 이벤트가 발생했을 때 변경할 채우기 옵션입니다
-    var mouseoverOption = {
-        fillColor: '#EFFFED', // 채우기 색깔입니다
-        fillOpacity: 0.8 // 채우기 불투명도 입니다
-    };
-    // 원에 마우스아웃 이벤트가 발생했을 때 변경할 채우기 옵션입니다
-    var mouseoutOption = {
-        fillColor: '#A2FF99', // 채우기 색깔입니다
-        fillOpacity: 0.7 // 채우기 불투명도 입니다
-    };
-    // 원의 마우스오버 이벤트를 등록합니다
-    kakao.maps.event.addListener(circle, 'mouseover', function() {
-        // 원의 채우기 옵션을 변경합니다
-        this.setOptions(mouseoverOption);
 
+}
+
+    kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
+        // 클릭한 위도, 경도 정보를 가져옵니다
+        var latlng = mouseEvent.latLng;
+
+        let clickmouse1 = latlng.La;
+        let clickmouse2 = latlng.Ma;
+
+
+        const jobj = {"La" : clickmouse1 ,"Ma" : clickmouse2 }
+        const jstl = JSON.stringify(jobj)
+
+        const xhr = new XMLHttpRequest()
+        xhr.open('post','/Map/Insert')
+         xhr.send(jstl)
+        xhr.onload = function (){
+            if (xhr.status === 200 || xhr.status === 201) {
+                console.log(xhr.response)
+
+            } else {
+                console.error("오류", xhr.status);
+            }
+
+        }
     });
-    kakao.maps.event.addListener(circle, 'mouseout', function() {
-        // 원의 채우기 옵션을 변경합니다
-        this.setOptions(mouseoutOption);
-    });
-
-    //클릭이벤트 부여
-    kakao.maps.event.addListener(circle, 'click', function() {
-        var resultDiv = document.getElementById('result');
-        resultDiv.innerHTML =  '<div>' + '원에 click 이벤트가 발생했습니다!' + '</div>';
-    });
-
-
 
 
 
