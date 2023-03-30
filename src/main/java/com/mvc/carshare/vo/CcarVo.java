@@ -14,7 +14,7 @@ import lombok.ToString;
 @ToString
 @Builder
 public class CcarVo {
-	private int id;					//자동차ID
+	private int car_id;					//자동차ID
 	private String car_number;		//자동차번호
 	private int owner_id;			//소유주
 	private int review_id;			//후기번호

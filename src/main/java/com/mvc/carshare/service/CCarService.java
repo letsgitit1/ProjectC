@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CCarService {
 
-	@Autowired
 	private CCarDao dao;
 
 	public CCarService(CCarDao dao) {

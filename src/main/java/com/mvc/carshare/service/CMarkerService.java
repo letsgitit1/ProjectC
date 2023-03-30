@@ -24,4 +24,9 @@ public class CMarkerService {
 
 
 
+    public List<CMarkerJoinCarDTO> getAllMarkersJoinCars() {
+        return dao.getAllMarkersJoinCars();
+    }
+
+
 }

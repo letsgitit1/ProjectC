@@ -10,8 +10,9 @@ import org.apache.ibatis.annotations.Mapper;
 public interface CMarkerDao {
 
 
-
     public List<CMarker> getAllMarkers();
+    public List<CMarkerJoinCarDTO> getAllMarkersJoinCars();
+
     public List<CMarkerJoinCarDTO> getAllMarkersJoinCars();
 
 }

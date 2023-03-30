@@ -9,6 +9,15 @@
   select * from CMarker
  </select>
 
+ <select id="getAllMarkersJoinCars" resultType="CMarkerJoinCarDTO">
+
+  SELECT * FROM CMarker c JOIN c_cars r
+ ON c.CAR_NUMBER =r.CAR_ID
+
+
+ </select>
+
+
 
  <select id="getAllMarkersJoinCars" resultType="CMarkerJoinCarDTO">
          SELECT *

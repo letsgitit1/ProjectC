@@ -29,6 +29,7 @@ public class CMarkerController {
 
     @GetMapping("/Map/MapTestKyung")
     public String map(Model model) {
+
         List<CMarkerJoinCarDTO> list = null;
         list = service.getAllMarkersJoinCars();
 
@@ -36,10 +37,7 @@ public class CMarkerController {
 
         return"Map/MapTestKyung";
 
-}
-
-
-
     }
+}
 
 

@@ -97,6 +97,7 @@ public class CPayMentController {
 			model.addAttribute("orderId", successNode.get("orderId").asText());
 			pService.paymentInsert(vo);
 			String secret = successNode.get("secret").asText(); // 가상계좌의 경우 입금 callback 검증을 위해서 secret을 저장하기를 권장함
+			
 			result = "/product/paymentSuccess";
 		} else {
 			JsonNode failNode = responseEntity.getBody();

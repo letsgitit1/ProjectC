@@ -26,16 +26,18 @@ public class CProductController {
 	@GetMapping("/product/productAll")
 	public String listAll(Model model) {
 		List <CProductVo>list =service.SelectAll();
+		System.out.println(list);
 		model.addAttribute("car",list);
 		model.addAttribute("user_id", 1); // 임시데이터
 		model.addAttribute("rent_id", 1);	// 임시데이터
-		return "/product/productAll";
+		return "product/productAll";
 	}
 	
 	@PostMapping("/product/wishlist")
 	@ResponseBody
 	public String wishInsert(@RequestBody CWishListVo vo) {
 		String result="fail";
+		System.out.println(vo);
 		if(service.check_wish(vo)==0) {
 			if(service.wishlist_insert(vo)==1) {
 				result="success";

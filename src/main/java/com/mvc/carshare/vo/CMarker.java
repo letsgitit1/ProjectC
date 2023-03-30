@@ -12,7 +12,8 @@ public class CMarker {
     private int id;
     private double latitude;
     private double longitude;
-    private double clatitude;
-    private double clongitude;
+    private double clatitude; //사이클 위도경도
+    private double clongitude;  //사이클 위도경도
+    private int car_number; //참조하는 카 번호
 
 }
