@@ -13,16 +13,5 @@
 
   SELECT * FROM CMarker c JOIN c_cars r
  ON c.CAR_NUMBER =r.CAR_ID
-
-
- </select>
-
-
-
- <select id="getAllMarkersJoinCars" resultType="CMarkerJoinCarDTO">
-         SELECT *
- FROM CMarker c
- JOIN C_cars r ON c.car_number = r.CAR_ID
- JOIN C_registrations s ON r.CAR_ID = s.car_number
  </select>
 </mapper>
