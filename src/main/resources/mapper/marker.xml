@@ -9,5 +9,14 @@
   select * from CMarker
  </select>
 
+<<<<<<< Updated upstream
 
+=======
+ <select id="getAllMarkersJoinCars" resultType="CMarkerJoinCarDTO">
+  SELECT *
+  FROM CMarker c
+        JOIN C_cars r ON c.car_number = r.CAR_ID
+        JOIN C_registrations s ON r.CAR_ID = s.car_number
+ </select>
+>>>>>>> Stashed changes
 </mapper>
