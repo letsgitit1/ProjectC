@@ -1,33 +1,103 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <title>맵맵맵맵맵테스트트트트트</title>
+<meta charset="utf-8">
+<title>맵맵맵맵맵테스트트트트트</title>
 
 </head>
+
+<style>
+.overlaybox {
+	position: relative;
+	width: 360px;
+	height: 400px;
+	background:
+		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/box_movie.png')
+		no-repeat;
+	padding: 15px 10px;
+}
+
+.overlaybox div, ul {
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+}
+
+.overlaybox li {
+	list-style: none;
+}
+
+.overlaybox .boxtitle {
+	color: #fff;
+	font-size: 16px;
+	font-weight: bold;
+	background:
+		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png')
+		no-repeat right 120px center;
+	margin-bottom: 8px;
+}
+
+.overlaybox .first {
+	position: relative;
+	width: 247px;
+	height: 136px;
+	margin-bottom: 8px;
+}
+
+.first .text {
+	color: #fff;
+	font-weight: bold;
+}
+
+.first .movietitle {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.4);
+	padding: 7px 15px;
+	font-size: 14px;
+}
+
+.overlaybox ul {
+	width: 247px;
+}
+
+.overlaybox li {
+	position: relative;
+	background: #2b2d36;
+	padding: 5px 10px;
+	color: #aaabaf;
+	line-height: 1;
+}
+
+.overlaybox li span {
+	display: inline-block;
+}
+
+.overlaybox li .number {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.overlaybox li .title {
+	font-size: 13px;
+	color: crimson;
+}
+</style>
 
 <body>
 
 
-<div>
-    [[${markers}]]
 
-</div>
+	<div id="map" style="width: 100%; height: 500px;"></div>
+	<p id="result">반납하기(결제)</p>
+	<div id="clickLatlng"></div>
 
+	<button id="ajaxformarker" onclick="markerfordb()">판매확정하기</button>
 
-
-<div id="map" style="width:100%;height:500px;">
-
-
-
-</div>
-<p id="result">반납하기(결제)</p>
-<div id="clickLatlng"></div>
-
-<button id = "ajaxformarker" onclick="markerfordb()">판매확정하기</button>
-
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d11d96d8bf1e2f7032da54bfc050846"></script>
-<script th:inline="javascript">
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d11d96d8bf1e2f7032da54bfc050846"></script>
+	<script th:inline="javascript">
 
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
@@ -57,7 +127,7 @@
 
     for (var i = 0; i < markerListString.length; i++) {
         var markerData = markerListString[i];
-
+			console.log(markerListString)
         var marker = new kakao.maps.Marker({
             position: new kakao.maps.LatLng(parseFloat(markerData.latitude), parseFloat(markerData.longitude)),
             image: markerImage
@@ -78,28 +148,96 @@
         });
 
 
+
         //각 마커에 클릭 이벤트를 등록 클릭 이벤트가 발생되면 오버레이를 클릭한 마커 위치로 이동, 오버레이 내용을 해당 마커 데이터로 갱신
         kakao.maps.event.addListener(marker, 'click', (function(markerData) {
             return function() {
+                var carImage = '<img src="/image/' + markerData.car_image + '">';
                 // 클릭된 마커 위치로 오버레이 이동 약 30픽셀정도 이동시킴
                 overlay.setPosition(new kakao.maps.LatLng(parseFloat(markerData.latitude) + 0.0005, parseFloat(markerData.longitude)));
                 // 오버레이 내용 갱신(추후 차 정보로 바꿔 줄 예정입니다)
-                overlay.setContent('<div>' + markerData.car_model + '</div>');
+                overlay.setContent('<div class="overlaybox">' +
+                    '    <div class="boxtitle">차 대여 정보입니다</div>' +
+                    '    <div class="image-wrapper">' +
+                    '        <div class="image">' +
+                    '            ' + carImage +
+                    '    <div class="first">' +
+                    '        <div class="triangle text">대여하기</div>' +
+                    '        <div class="movietitle text">'+markerData.car_model+'</div>' +
+                    '    </div>' +
+                    '    <ul>' +
+                    '        <li class="up">' +
+                    '            <span class="number">차 엔진 타입 </span>' +
+                    '            <span class="title">'+markerData.engine_type+'</span>' +
+                    '        </li>' +
+                    '        <li>' +
+                    '            <span class="number">차의 대여 가격</span>' +
+                    '            <span class="title">'+markerData.rent_price+'</span>' +
+                    '        </li>' +
+                    '        <li>' +
+                    '            <span class="number">차의 년식</span>' +
+                    '            <span class="title">'+markerData.c_year+'</span>' +
+                    '        </li>' +
+                    '        <li>' +
+                    '            <span class="number">등록날짜</span>' +
+                    '            <span class="title">'+markerData.registered_at+'</span>' +
+                    '        </li>' +
+                    '        <li>' +
+                    '            <span class="number">최대 대여가능시간</span>' +
+                    '            <span class="title">'+markerData.rent_time+'</span>' +
+                    '        </li>' +
+                    '    </ul>' +
+                    '</div>');
+
                 overlay.setMap(map);
             }
+
         })(markerData));
 
         function createOverlay(markerData) {
-            var content = '<div>' + markerData.car_model + '</div>'+
-                '<div>' + markerData.rent_price + '</div>';
-            var content = '<div>' + markerData.car_model + '</div>';
+            var content = '<div class="overlaybox">' +
+                '    <div class="boxtitle">차 대여 정보입니다</div>' +
+                '    <div class="image-wrapper">' +
+                '        <div class="image">' +
+                '            ' + carImage +
+                '    <div class="first">' +
+                '        <div class="triangle text">대여하기</div>' +
+                '        <div class="movietitle text">'+markerData.car_model+'</div>' +
+                '    </div>' +
+                '    <ul>' +
+                '        <li class="up">' +
+                '            <span class="number">차 엔진 타입 </span>' +
+                '            <span class="title">'+markerData.engine_type+'</span>' +
+                '        </li>' +
+                '        <li>' +
+                '            <span class="number">차의 대여 가격</span>' +
+                '            <span class="title">'+markerData.rent_price+'</span>' +
+                '        </li>' +
+                '        <li>' +
+                '            <span class="number">차의 년식</span>' +
+                '            <span class="title">'+markerData.c_year+'</span>' +
+                '        </li>' +
+                '        <li>' +
+                '            <span class="number">등록날짜</span>' +
+                '            <span class="title">'+markerData.registered_at+'</span>' +
+                '        </li>' +
+                '        <li>' +
+                '            <span class="number">최대 대여가능시간</span>' +
+                '            <span class="title">'+markerData.rent_time+'</span>' +
+                '        </li>' +
+                '    </ul>' +
+                '</div>';
             var overlay = new kakao.maps.CustomOverlay({
                 content: content,
                 map: null,
                 position: marker.getPosition()
             });
             return overlay;
+            function closeOverlay() {
+                overlay.setMap(null);
+            }
         }
+
     }
     // 원
     for (var i = 0; i < markerListString.length; i++) {
@@ -148,42 +286,46 @@
 
         circle.setMap(map);
 
+        
 //마커를 찍었을 떄 클릭 이벤트 발생시키는 함수입니다
-        function markerfordb() {
-            let resultajax = document.getElementById(ajaxformarker);
-            console.log(1234123412341234);
+let clickmouse1;
+let clickmouse2;
+          kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+        	  let resultajax = document.getElementById(ajaxformarker);
 
+              // 클릭한 위도, 경도 정보를 가져옵니다
+              var latlng = mouseEvent.latLng;
 
-        }
+               clickmouse1 = latlng.La;
+               clickmouse2 = latlng.Ma;
+              console.log(clickmouse1)
+            });
+          function markerfordb() {
+              
+                  const jobj = {"longitude": clickmouse1, "latitude": clickmouse2}
+                  const jstl = JSON.stringify(jobj)
+  					console.log(jstl);
+                  const xhr = new XMLHttpRequest()
+                  xhr.open('POST', '/Map/Insert')
+                  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                  xhr.send(jstl)
+                  xhr.onload = function () {
+                  	console.log(xhr.response)
+                      if (xhr.status === 200 || xhr.status === 201) {
+                          console.log(xhr.response)
+                      } else {
+                          console.error("오류", xhr.status);
+                      }
+                  }
 
-        kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
-
-            // 클릭한 위도, 경도 정보를 가져옵니다
-            var latlng = mouseEvent.latLng;
-
-            let clickmouse1 = latlng.La;
-            let clickmouse2 = latlng.Ma;
-
-
-            const jobj = {"La": clickmouse1, "Ma": clickmouse2}
-            const jstl = JSON.stringify(jobj)
-
-
-            const xhr = new XMLHttpRequest()
-            xhr.open('post', '/Map/Insert')
-            xhr.send(jstl)
-            xhr.onload = function () {
-                if (xhr.status === 200 || xhr.status === 201) {
-                    console.log(xhr.response)
-
-                } else {
-                    console.error("오류", xhr.status);
-                }
-            }
-        });
-
-
+          }
+          //인포 닫는 코드
+          kakao.maps.event.addListener(map, 'click', function() {
+              overlay.setMap(null);
+          });
     }
+    
+    
 </script>
 
 </body>

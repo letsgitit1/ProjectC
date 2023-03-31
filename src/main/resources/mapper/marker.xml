@@ -10,8 +10,15 @@
  </select>
 
  <select id="getAllMarkersJoinCars" resultType="CMarkerJoinCarDTO">
-
-  SELECT * FROM CMarker c JOIN c_cars r
- ON c.CAR_NUMBER =r.CAR_ID
+  SELECT *
+FROM CMarker c
+JOIN C_cars r ON c.car_number = r.CAR_ID
+JOIN C_registrations s ON r.CAR_ID = s.car_number
  </select>
+ 
+ <insert id="insertMarker" parameterType="CMarker">
+ 		INSERT INTO CMARKER
+		(ID, LATITUDE, LONGITUDE,CAR_NUMBER)
+		VALUES(marker_seq.nextval, #{latitude}, #{longitude},#{car_number})
+ </insert>
 </mapper>
