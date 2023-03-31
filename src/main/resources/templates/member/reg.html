@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+	<main>
+		<h3>회원가입</h3>
+		<form action="/reg" method="POST">
+			<table class="form-group">
+				<tr>
+					<th><label for="id">아이디</label></th>
+					<td><input type="email" name="email" id="email" required></td>
+					<td><span id="idOK"></span> </td>
+				</tr>
+				<tr>
+					<th><label for="password">패스워드</label></th>
+					<td><input type="password" name="password" id="password" required></td>
+					<td><div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
+					<div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다.</div></td>
+				</tr>
+				<tr>
+					<th><label for="password2"></label></th>
+					<td><input type="password" name="password2" id="password2" required placeholder="비밀번호 재입력"></td>
+				</tr>
+				<tr>
+					<th><label for="rname">이름</label></th>
+					<td><input type="text" name="username" id="rname" required></td>
+				</tr>
+				<tr>
+					<th><label for="rage">나이</label></th>
+					<td><input type="number" name="age" id="rage" required></td>
+				</tr>
+				<tr>
+					<th><label for="rgender">성별</label></th>
+					<td>
+						<input type="radio" name="gender" id="rgender" value="남성" required>남
+    					<input type="radio" name="gender" id="rgender" value="여성" required>여<br>
+    				</td>	
+				</tr>
+				<tr>
+					<th><label for="raddress">주소</label></th>
+					<td><input type="text" name="address" id="raddress" required></td>
+				</tr>
+				<tr>
+					<th><label for="rphone">전화번호</label></th>
+					<td><input type="tel" name="phone_number" id="rphone" required></td>
+				</tr>
+				<tr>
+					<th><label for="driver_license_number">운전면허</label></th>
+					<td><input type="text" name="driver_license_number" id="driver_license_number" required></td>
+					<td><span id="lisenseOK"></span> </td>
+				</tr>
+				<tr>
+					<th><label for="name">닉네임</label></th>
+					<td><input type="text" name="name" id="name" required></td>
+					<td><span id="nickOK"></span> </td>
+				</tr>
+				<tr>
+					<td colspan="3"><button>회원가입</button> <button type="reset">다시입력</button> <button type="button" onclick="location.href='./'">메인</button> </td>
+				</tr>
+			</table>
+		</form>
+		
+<script type="text/javascript">
+
+//ajax 아이디확인
+$('#email').on('keyup', function() {
+	   const id = $('#email').val();
+	   const xhr = new XMLHttpRequest();
+	   const idOK = $('#idOK');
+	   
+	   
+	   // 이메일 형식 검증
+	   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	   if (!emailPattern.test(id)) {
+	      idOK.html('잘못된 이메일 형식입니다.');
+	      idOK.css('color', 'red');
+	      return;
+	   }
+	   
+
+	   $.ajax({
+	      type: 'post',
+	      url: "/checkid/"+id,
+	      dataType: 'json',
+	      success: function(response) {
+	         if (JSON.parse(response) == 0) {
+	            idOK.html('사용가능한 아이디입니다.');
+	            idOK.css('color', 'blue');
+	         } else {
+	            idOK.html('중복된 아이디입니다.');
+	            idOK.css('color', 'red');
+	         }
+	      },
+	      error: function() {
+	    		console.log("실패");
+	    	}
+	   })
+	});
+	
+//ajax 닉네임확인
+$('#name').on('keyup', function() {
+	   const name = $('#name').val();
+	   const xhr = new XMLHttpRequest();
+	   const nickOK = $('#nickOK');
+	    	  console.log(name)
+
+	   $.ajax({
+	      type: 'post',
+	      url: "/checkname/"+name,
+	      dataType: 'json',
+	      success: function(response) {
+	    	  console.log(response)
+	         if (JSON.parse(response) == 0) {
+	        	 nickOK.html('사용가능한 닉네임입니다.');
+	        	 nickOK.css('color', 'blue');
+	         } else {
+	        	 nickOK.html('중복된 닉네임입니다.');
+	        	 nickOK.css('color', 'red');
+	         }
+	      },
+	      error: function() {
+	    		console.log("실패");
+	    	}
+	   })
+	});
+	
+//ajax 운전면허확인
+$('#driver_license_number').on('keyup', function() {
+	   const driver_license_number = $('#driver_license_number').val();
+	   const xhr = new XMLHttpRequest();
+	   const lisenseOK = $('#lisenseOK');
+	    	  console.log(driver_license_number)
+
+	   $.ajax({
+	      type: 'post',
+	      url: "/checklisense/"+driver_license_number,
+	      dataType: 'json',
+	      success: function(response) {
+	    	  console.log(response)
+	         if (JSON.parse(response) == 0) {
+	        	 lisenseOK.html('사용가능한 운전면허입니다.');
+	        	 lisenseOK.css('color', 'blue');
+	         } else {
+	        	 lisenseOK.html('중복된 운전면허입니다.');
+	        	 lisenseOK.css('color', 'red');
+	         }
+	      },
+	      error: function() {
+	    		console.log("실패");
+	    	}
+	   })
+	});
+	
+	
+	
+	
+//ajax 비밀번호확인
+$(function(){
+    $("#alert-success").hide();
+    $("#alert-danger").hide();
+    
+    $("#password2").keyup(function(){
+        var pwd1=$("#password").val();
+        var pwd2=$("#password2").val();
+        
+        
+        if(pwd1 != "" || pwd2 != ""){
+            if(pwd1 == pwd2){
+            	$("#alert-success").css('color', 'blue');
+                $("#alert-success").show();
+                $("#alert-danger").hide();
+                $("#submit").removeAttr("disabled");
+            }else{
+                $("#alert-success").hide();
+                $("#alert-danger").show();
+                $("#alert-danger").css('color', 'red');
+                $("#submit").attr("disabled", "disabled");
+            }    
+        }
+    });
+});
+	
+	
+</script>
+	</main>
+</body>
+</html>

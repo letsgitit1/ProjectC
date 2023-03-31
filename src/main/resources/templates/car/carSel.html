@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>내차조회</title>
+</head>
+<body>
+	<main>
+		<h3 th:text="${username}+' 님의 차량정보'">내가 등록 한 차량</h3>
+
+		<table>
+			<tr>
+				<th>이미지</th>
+				<th>차량번호</th>
+				<th>모델</th>
+				<th>제조사</th>
+				<th>엔진종류</th>
+				<th>자동차타입</th>
+				<th>연식</th>
+				<th>내차평점</th>
+			</tr>
+			<tr th:each="list : ${list}">
+				<td ><img th:src="@{/image/testcar.jpg}" alt="이미지"> </td>
+				<td th:text="${list.car_number}"></td>
+				<td th:text="${list.car_model}"></td>
+				<td th:text="${list.manufacturer}"></td>
+				<td th:text="${list.engine_type}"></td>
+				<td th:text="${list.car_type}"></td>
+				<td th:text="${list.c_year}+년식"></td>
+				<td th:text="${list.car_score}"></td>
+				<td><a th:href="@{/review/review(car_id=${list.car_id})}">리뷰</a></td>
+			</tr>
+			<tr>
+				<td>
+				<input type="button" onclick="location.href='./carReg'" value="등록으로"> 
+				<input type="button" onclick="location.href='./'" value="메인으로"> 
+				</td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				
+			</tr>
+		</table>
+	</main>
+</body>
+</html>

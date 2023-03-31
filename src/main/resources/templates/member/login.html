@@ -1,0 +1,35 @@
+	<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>로그인</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+	<h3>로그인</h3>
+	<div>
+		<form action="/login" method="POST">
+			<table>
+				<tr>
+					<td><input type="text" name="email" placeholder="아이디" id="id"></td>
+				</tr> 
+				<tr>
+					<td><input type="password" name="password" id="password" placeholder="비밀번호"></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="로그인"></td>
+				</tr>
+			</table>
+		</form>
+		<br>
+
+		<div>
+			<input type="button" value="간편 회원가입" onclick="location.href='./reg'">
+			<br> 
+			<button onclick="location.href='./find_id'">아이디 찾기</button>
+			<button onclick="location.href='./find_pass'">비밀번호 찾기</button>
+		</div>
+	</div>
+
+</body>
+</html>
