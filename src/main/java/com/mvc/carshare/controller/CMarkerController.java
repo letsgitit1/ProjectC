@@ -51,7 +51,8 @@ public class CMarkerController {
     	vo.setCar_number(1);
     	int cnt=service.insertMarker(vo);
 		Map<String, Object> result=new HashMap<>();
-		
+        System.out.println(vo);
+
 		result.put("cnt", cnt);
 		String json=null;
 		json=objectMapper.writeValueAsString(result);
