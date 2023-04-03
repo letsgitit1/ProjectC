@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<body>
+ <div id="stick_div">
+      <header id="header">
+        <div class="header_icon_area">
+          <ul class="header_icon">
+            <li class="header_icon">
+              <a><i class="fa-brands fa-facebook fa-xl"></i></a>
+            </li>
+            <li class="header_icon">
+              <a><i class="fa-brands fa-instagram fa-xl"></i></a>
+            </li>
+            <li class="header_icon">
+              <a><i class="fa-brands fa-twitter fa-xl"></i></a>
+            </li>
+            <li class="header_icon">
+              <a><i class="fa-brands fa-discord fa-xl"></i></a>
+            </li>
+          </ul>
+        </div>
+        <h1 id="Buddy_title">Buddy</h1>
+        <ul class="header_nav">
+          <li class="header_nav_item"><a href="#">JOIN</a></li>
+          <li class="header_nav_item"><a href="#">SIGNIN</a></li>
+          <li class="header_nav_item"><a href="#">CHAT</a></li>
+          <li class="header_nav_item"><a href="#">MYPAGE</a></li>
+        </ul>
+      </header>
+          </div>
+      <div class="nav_area" style="margin-top:200px;">
+        <ul class="nav_text">
+          <li class="nav_detail_text"><a href="#">ABOUT</a></li>
+          <li class="nav_detail_text"><a href="#">SERVICE</a></li>
+          <li class="nav_detail_text"><a href="#">NOTICE</a></li>
+        </ul>
+      </div>
+       
+</body>
+<script>
+const headerIcons = document.querySelectorAll(".header_icon li i");
+const headerNav = document.querySelector(".header_nav"); // ul 요소 가져오기
+const headerNavItems = headerNav.querySelectorAll("li>a"); // li 요소 가져오기
+const header=document.getElementById('header')
+const title=document.getElementById('Buddy_title')
+console.log( headerNavItems[2])
+window.addEventListener("scroll", function() {
+  if (window.scrollY > 700) {
+	  title.style.color="#000"
+		headerIcons[0].style.color="#000";
+		headerIcons[1].style.color="#000";
+		headerIcons[2].style.color="#000";
+		headerIcons[3].style.color="#000";
+	  headerNavItems[0].style.color = "#000"; 
+	  headerNavItems[1].style.color = "#000"; 
+	  headerNavItems[2].style.color = "#fff"; 
+	  headerNavItems[3].style.color = "#fff"; 
+	  header.style.backgroundColor  ="#fff";
+  } else if(window.scrollY < 700) {
+	  title.style.color="#fff"
+	  headerNavItems[0].style.color = "#fff"; 
+	  headerNavItems[1].style.color = "#fff";
+	  headerNavItems[2].style.color = "black"; 
+	  headerNavItems[3].style.color = "black";
+	  header.style.backgroundColor  ="#000";
+	  headerIcons[0].style.color="#fff";
+		headerIcons[1].style.color="#fff";
+		headerIcons[2].style.color="#fff";
+		headerIcons[3].style.color="#fff";
+  }
+});
+</script>
+</html>

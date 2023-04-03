@@ -1,0 +1,72 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: black;
+  z-index: 0;
+}
+.content_area {
+  width: 100%;
+  margin-top: 150px;
+  height: 3000px;
+}
+.box {
+  height: 600px;
+  width: 100%;
+  position: relative;
+  left: -100%;
+  opacity: 0;
+  transition: all 2s ease-out;
+}
+.content1 {
+  width: 1200px;
+  margin: 100px auto;
+  display: flex;
+}
+
+.content2 {
+  width: 1200px;
+  margin: 800px auto;
+  display: flex;
+}
+.content1_img {
+  background-image: url(../image/v1_10.png);
+  width: 600px;
+  height: 600px;
+}
+.content2_img {
+  background-image: url(../image/v2_31.png);
+  width: 600px;
+  height: 600px;
+  background-size: cover;
+}
+.content_text_area {
+  margin-left: 100px;
+}
+.content1_title {
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 20px;
+}
+.content_detail_text1 {
+  font-size: 24px;
+  color: #fff;
+  bottom: 0;
+  word-wrap: break-word;
+  width: 550px; /* 내가 원하는 너비로 지정 */
+  position: absolute;
+  bottom: 0;
+}
+.content_detail_text2 {
+  font-size: 24px;
+  color: #fff;
+  bottom: 0;
+  word-wrap: break-word;
+  width: 550px; /* 내가 원하는 너비로 지정 */
+  position: absolute;
+  bottom: 0;
+}
