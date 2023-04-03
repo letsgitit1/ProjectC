@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+
 <meta charset="utf-8">
 <title>맵맵맵맵맵테스트트트트트</title>
 
 </head>
 
 <style>
+
 .overlaybox {
 	position: relative;
-	width: 360px;
-	height: 400px;
-	background:
-		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/box_movie.png')
-		no-repeat;
+	width: 100%;
+	height: 100%;
+	background-color: gray;
 	padding: 15px 10px;
 }
 
@@ -31,16 +31,14 @@
 	color: #fff;
 	font-size: 16px;
 	font-weight: bold;
-	background:
-		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png')
-		no-repeat right 120px center;
+
 	margin-bottom: 8px;
 }
 
 .overlaybox .first {
 	position: relative;
-	width: 247px;
-	height: 136px;
+	width:100%;
+	height: 66px;
 	margin-bottom: 8px;
 }
 
@@ -59,7 +57,7 @@
 }
 
 .overlaybox ul {
-	width: 247px;
+	width: 100%;
 }
 
 .overlaybox li {
@@ -84,17 +82,83 @@
 	color: crimson;
 }
 </style>
-
+<link href="../css/main.css" rel="stylesheet"/>
 <body>
+<div id="stick_div">
+	<header>
+
+		<div class="header_icon_area">
+			<ul class="header_icon">
+				<li class="header_icon">
+					<a><i class="fa-brands fa-facebook fa-xl"></i></a>
+				</li>
+				<li class="header_icon">
+					<a><i class="fa-brands fa-instagram fa-xl"></i></a>
+				</li>
+				<li class="header_icon">
+					<a><i class="fa-brands fa-twitter fa-xl"></i></a>
+				</li>
+				<li class="header_icon">
+					<a><i class="fa-brands fa-discord fa-xl"></i></a>
+				</li>
+			</ul>
+		</div>
+		<h1>Buddy</h1>
+		<ul class="header_nav">
+			<li class="header_nav_item"><a href="#">JOIN</a></li>
+			<li class="header_nav_item"><a href="#">SIGNIN</a></li>
+			<li class="header_nav_item"><a href="#">CHAT</a></li>
+			<li class="header_nav_item"><a href="#">MYPAGE</a></li>
+		</ul>
+	</header>
+</div>
+<div class="nav_area" style="margin-top:200px;">
+	<ul class="nav_text">
+		<li class="nav_detail_text"><a href="#">ABOUT</a></li>
+		<li class="nav_detail_text"><a href="#">SERVICE</a></li>
+		<li class="nav_detail_text"><a href="#">NOTICE</a></li>
+	</ul>
+</div>
+
+<script>
+	const headerNav = document.querySelector(".header_nav"); // ul 요소 가져오기
+	const headerNavItems = headerNav.querySelectorAll("li>a"); // li 요소 가져오기
+	console.log( headerNavItems[2])
+	window.addEventListener("scroll", function() {
+		if (window.scrollY > 80) {
+			headerNavItems[0].style.display = "none";
+			headerNavItems[1].style.display = "none";
+			headerNavItems[2].style.display = "none";
+			headerNavItems[3].style.display = "none";
+
+		} else if(window.scrollY < 80) {
+			headerNavItems[0].style.display = "block";
+			headerNavItems[1].style.display = "block";
+			headerNavItems[2].style.display = "block";
+			headerNavItems[3].style.display = "block";
+
+		}
+	});
+</script>
+</header>
 
 
 
+
+<!--만약 차를 빌렸다면 이 버튼이 나오게 하기 -->
 	<div id="map" style="width: 100%; height: 500px;"></div>
 	<p id="result">반납하기(결제)</p>
 	<div id="clickLatlng"></div>
+<p>
+	<button onclick="hideMarkers()">판매하기(마커 다 사라짐)</button>
+	<button onclick="showMarkers()">구매하기(마커 다 보임)</button>
+</p>
 
+<!---->
+<div style="height:1000px;"></div>
+<!--만약 공급자의 입장이라면 이 버튼이 나오게 하기 -->
 	<button id="ajaxformarker" onclick="markerfordb()">판매확정하기</button>
-
+<!---->
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d11d96d8bf1e2f7032da54bfc050846"></script>
 	<script th:inline="javascript">
@@ -104,7 +168,6 @@
             center: new kakao.maps.LatLng(37.50000717025944, 127.03515956607703), // 지도의 중심좌표 역삼역으로 했슴다
             level: 3 // 지도의 확대 레벨
         };
-
 
     var map = new kakao.maps.Map(mapContainer, mapOption);
     var imageSrc = "/image/pngegg.png";
@@ -124,7 +187,7 @@
     // position은 오버레이의 초기 위치입니다. 초기 위치는 지도 영역 밖으로 설정
 
 
-
+	var markers = [];
     for (var i = 0; i < markerListString.length; i++) {
         var markerData = markerListString[i];
 			console.log(markerListString)
@@ -132,8 +195,13 @@
             position: new kakao.maps.LatLng(parseFloat(markerData.latitude), parseFloat(markerData.longitude)),
             image: markerImage
         });
+		// 지도에 표시된 마커 객체를 가지고 있을 배열입니다
+
+		// 생성된 마커를 배열에 추가합니다
+		markers.push(marker);
         //db에서 가져온 정보를 통해 지도에 마커를 생성합니다.
         marker.setMap(map);
+
 
         kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 
@@ -152,7 +220,7 @@
         //각 마커에 클릭 이벤트를 등록 클릭 이벤트가 발생되면 오버레이를 클릭한 마커 위치로 이동, 오버레이 내용을 해당 마커 데이터로 갱신
         kakao.maps.event.addListener(marker, 'click', (function(markerData) {
             return function() {
-                var carImage = '<img src="/image/' + markerData.car_image + '">';
+                var carImage = '<img src="/image/' + markerData.car_image + '" style="width:100%;">';
                 // 클릭된 마커 위치로 오버레이 이동 약 30픽셀정도 이동시킴
                 overlay.setPosition(new kakao.maps.LatLng(parseFloat(markerData.latitude) + 0.0005, parseFloat(markerData.longitude)));
                 // 오버레이 내용 갱신(추후 차 정보로 바꿔 줄 예정입니다)
@@ -162,7 +230,10 @@
                     '        <div class="image">' +
                     '            ' + carImage +
                     '    <div class="first">' +
-                    '        <div class="triangle text">대여하기</div>' +
+                    '        <a class="triangle text" href="./" style="color: crimson; position: absolute; background-color: #2b2d36; border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none">대여하기</a>' +
+						'        <a class="triangle text" href="./" style="color: crimson;position: absolute; right:0; background-color: #2b2d36;  border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none' +
+						'" >' +
+						'1:1채팅으로</a>' +
                     '        <div class="movietitle text">'+markerData.car_model+'</div>' +
                     '    </div>' +
                     '    <ul>' +
@@ -196,37 +267,40 @@
 
         function createOverlay(markerData) {
             var content = '<div class="overlaybox">' +
-                '    <div class="boxtitle">차 대여 정보입니다</div>' +
-                '    <div class="image-wrapper">' +
-                '        <div class="image">' +
-                '            ' + carImage +
-                '    <div class="first">' +
-                '        <div class="triangle text">대여하기</div>' +
-                '        <div class="movietitle text">'+markerData.car_model+'</div>' +
-                '    </div>' +
-                '    <ul>' +
-                '        <li class="up">' +
-                '            <span class="number">차 엔진 타입 </span>' +
-                '            <span class="title">'+markerData.engine_type+'</span>' +
-                '        </li>' +
-                '        <li>' +
-                '            <span class="number">차의 대여 가격</span>' +
-                '            <span class="title">'+markerData.rent_price+'</span>' +
-                '        </li>' +
-                '        <li>' +
-                '            <span class="number">차의 년식</span>' +
-                '            <span class="title">'+markerData.c_year+'</span>' +
-                '        </li>' +
-                '        <li>' +
-                '            <span class="number">등록날짜</span>' +
-                '            <span class="title">'+markerData.registered_at+'</span>' +
-                '        </li>' +
-                '        <li>' +
-                '            <span class="number">최대 대여가능시간</span>' +
-                '            <span class="title">'+markerData.rent_time+'</span>' +
-                '        </li>' +
-                '    </ul>' +
-                '</div>';
+					'    <div class="boxtitle">차 대여 정보입니다</div>' +
+					'    <div class="image-wrapper">' +
+					'        <div class="image">' +
+					'            ' + carImage +
+					'    <div class="first">' +
+					'        <a class="triangle text" href="./" style="color: crimson; position: absolute; background-color: #2b2d36; border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none">대여하기</a>' +
+					'        <a class="triangle text" href="./" style="color: crimson;position: absolute; right:0; background-color: #2b2d36;  border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none' +
+					'" >' +
+					'1:1채팅으로</a>' +
+					'        <div class="movietitle text">'+markerData.car_model+'</div>' +
+					'    </div>' +
+					'    <ul>' +
+					'        <li class="up">' +
+					'            <span class="number">차 엔진 타입 </span>' +
+					'            <span class="title">'+markerData.engine_type+'</span>' +
+					'        </li>' +
+					'        <li>' +
+					'            <span class="number">차의 대여 가격</span>' +
+					'            <span class="title">'+markerData.rent_price+'</span>' +
+					'        </li>' +
+					'        <li>' +
+					'            <span class="number">차의 년식</span>' +
+					'            <span class="title">'+markerData.c_year+'</span>' +
+					'        </li>' +
+					'        <li>' +
+					'            <span class="number">등록날짜</span>' +
+					'            <span class="title">'+markerData.registered_at+'</span>' +
+					'        </li>' +
+					'        <li>' +
+					'            <span class="number">최대 대여가능시간</span>' +
+					'            <span class="title">'+markerData.rent_time+'</span>' +
+					'        </li>' +
+					'    </ul>' +
+					'</div>';
             var overlay = new kakao.maps.CustomOverlay({
                 content: content,
                 map: null,
@@ -323,6 +397,24 @@ let clickmouse2;
           kakao.maps.event.addListener(map, 'click', function() {
               overlay.setMap(null);
           });
+		// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
+
+// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
+		function setMarkers(map) {
+			for (var i = 0; i < markers.length; i++) {
+				markers[i].setMap(map);
+			}
+		}
+
+// "마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
+		function showMarkers() {
+			setMarkers(map)
+		}
+
+// "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
+		function hideMarkers() {
+			setMarkers(null);
+		}
     }
     
     
