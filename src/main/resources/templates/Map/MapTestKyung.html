@@ -142,7 +142,8 @@
 </script>
 </header>
 
-
+<input type="text" id="keyword" placeholder="장소를 입력하세요">
+<button onclick="searchPlaces()">검색하기</button>
 
 
 <!--만약 차를 빌렸다면 이 버튼이 나오게 하기 -->
@@ -158,7 +159,6 @@
 <!---->
 <div style="height:1000px;"></div>
 <!--만약 공급자의 입장이라면 이 버튼이 나오게 하기 -->
-	<button id="ajaxformarker" onclick="markerfordb()">판매확정하기</button>
 <!---->
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d11d96d8bf1e2f7032da54bfc050846"></script>
@@ -316,88 +316,90 @@
     }
     // 원
     for (var i = 0; i < markerListString.length; i++) {
-        var cicleData = markerListString[i];
-        var circle = new kakao.maps.Circle({
-            center: new kakao.maps.LatLng(parseFloat(cicleData.clatitude), parseFloat(cicleData.clongitude)),
-            radius: 150,
-            strokeWeight: 5,
-            strokeColor: '#75B8FA',
-            strokeOpacity: 1,
-            strokeStyle: 'dashed',
-            fillColor: '#CFE7FF',
-            fillOpacity: 0.7
-        });
+		var cicleData = markerListString[i];
+		var circle = new kakao.maps.Circle({
+			center: new kakao.maps.LatLng(parseFloat(cicleData.clatitude), parseFloat(cicleData.clongitude)),
+			radius: 150,
+			strokeWeight: 5,
+			strokeColor: '#75B8FA',
+			strokeOpacity: 1,
+			strokeStyle: 'dashed',
+			fillColor: '#CFE7FF',
+			fillOpacity: 0.7
+		});
 
-        // 클로저를 이용하여 각 원에 대한 클릭 이벤트 추가
-        (function (circle) {
-            // 원에 마우스오버 이벤트가 발생했을 때 변경할 채우기 옵션입니다
-            var mouseoverOption = {
-                fillColor: '#EFFFED',
-                fillOpacity: 0.8
-            };
-            // 원에 마우스아웃 이벤트가 발생했을 때 변경할 채우기 옵션입니다
-            var mouseoutOption = {
-                fillColor: '#A2FF99',
-                fillOpacity: 0.7
-            };
+		// 클로저를 이용하여 각 원에 대한 클릭 이벤트 추가
+		(function (circle) {
+			// 원에 마우스오버 이벤트가 발생했을 때 변경할 채우기 옵션입니다
+			var mouseoverOption = {
+				fillColor: '#EFFFED',
+				fillOpacity: 0.8
+			};
+			// 원에 마우스아웃 이벤트가 발생했을 때 변경할 채우기 옵션입니다
+			var mouseoutOption = {
+				fillColor: '#A2FF99',
+				fillOpacity: 0.7
+			};
 
-            // 원의 마우스오버 이벤트를 등록합니다
-            kakao.maps.event.addListener(circle, 'mouseover', function () {
-                // 원의 채우기 옵션을 변경합니다
-                this.setOptions(mouseoverOption);
-            });
+			// 원의 마우스오버 이벤트를 등록합니다
+			kakao.maps.event.addListener(circle, 'mouseover', function () {
+				// 원의 채우기 옵션을 변경합니다
+				this.setOptions(mouseoverOption);
+			});
 
-            kakao.maps.event.addListener(circle, 'mouseout', function () {
-                // 원의 채우기 옵션을 변경합니다
-                this.setOptions(mouseoutOption);
-            });
+			kakao.maps.event.addListener(circle, 'mouseout', function () {
+				// 원의 채우기 옵션을 변경합니다
+				this.setOptions(mouseoutOption);
+			});
 
-            // 원에 클릭 이벤트를 등록합니다
-            kakao.maps.event.addListener(circle, 'click', function () {
-                let resultDiv = document.getElementById('result');
-                resultDiv.innerHTML = '<div>' + '반납할때 나오는 정보들 (반납시간, 가격 등 )' + '</div>';
-            });
-        })(circle);
+			// 원에 클릭 이벤트를 등록합니다
+			kakao.maps.event.addListener(circle, 'click', function () {
+				let resultDiv = document.getElementById('result');
+				resultDiv.innerHTML = '<div>' + '반납할때 나오는 정보들 (반납시간, 가격 등 )' + '</div>';
+			});
+		})(circle);
 
-        circle.setMap(map);
+		circle.setMap(map);
 
-        
+
 //마커를 찍었을 떄 클릭 이벤트 발생시키는 함수입니다
-let clickmouse1;
-let clickmouse2;
-          kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
-        	  let resultajax = document.getElementById(ajaxformarker);
+		let clickmouse1;
+		let clickmouse2;
+		kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+			let resultajax = document.getElementById(ajaxformarker);
 
-              // 클릭한 위도, 경도 정보를 가져옵니다
-              var latlng = mouseEvent.latLng;
+			// 클릭한 위도, 경도 정보를 가져옵니다
+			var latlng = mouseEvent.latLng;
 
-               clickmouse1 = latlng.La;
-               clickmouse2 = latlng.Ma;
-              console.log(clickmouse1)
-            });
-          function markerfordb() {
-              
-                  const jobj = {"longitude": clickmouse1, "latitude": clickmouse2}
-                  const jstl = JSON.stringify(jobj)
-  					console.log(jstl);
-                  const xhr = new XMLHttpRequest()
-                  xhr.open('POST', '/Map/Insert')
-                  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-                  xhr.send(jstl)
-                  xhr.onload = function () {
-                  	console.log(xhr.response)
-                      if (xhr.status === 200 || xhr.status === 201) {
-                          console.log(xhr.response)
-                      } else {
-                          console.error("오류", xhr.status);
-                      }
-                  }
+			clickmouse1 = latlng.La;
+			clickmouse2 = latlng.Ma;
+			console.log(clickmouse1)
+		});
 
-          }
-          //인포 닫는 코드
-          kakao.maps.event.addListener(map, 'click', function() {
-              overlay.setMap(null);
-          });
+		function markerfordb() {
+
+			const jobj = {"longitude": clickmouse1, "latitude": clickmouse2}
+			const jstl = JSON.stringify(jobj)
+			console.log(jstl);
+			const xhr = new XMLHttpRequest()
+			xhr.open('POST', '/Map/Insert')
+			xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			xhr.send(jstl)
+			xhr.onload = function () {
+				console.log(xhr.response)
+				if (xhr.status === 200 || xhr.status === 201) {
+					console.log(xhr.response)
+				} else {
+					console.error("오류", xhr.status);
+				}
+			}
+
+		}
+
+		//인포 닫는 코드
+		kakao.maps.event.addListener(map, 'click', function () {
+			overlay.setMap(null);
+		});
 		// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
 
 // 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
@@ -416,7 +418,37 @@ let clickmouse2;
 		function hideMarkers() {
 			setMarkers(null);
 		}
-    }
+
+		// 장소 검색 객체를 생성합니다
+		var ps = new kakao.maps.services.Places();
+
+		function searchPlaces() {
+			var keyword = document.getElementById('keyword').value;
+
+			// 장소검색을 요청하는 함수입니다
+			ps.keywordSearch(keyword, placesSearchCB);
+		}
+
+		// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+		function placesSearchCB(data, status, pagination) {
+			if (status === kakao.maps.services.Status.OK) {
+
+				// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+				// LatLngBounds 객체에 좌표를 추가합니다
+				var bounds = new kakao.maps.LatLngBounds();
+
+				for (var i = 0; i < data.length; i++) {
+					displayMarker(data[i]);
+					bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+				}
+
+				// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+				map.setBounds(bounds);
+			}
+		}
+
+
+	}
     
     
 </script>
