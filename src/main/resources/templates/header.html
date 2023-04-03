@@ -46,28 +46,30 @@ const title=document.getElementById('Buddy_title')
 console.log( headerNavItems[2])
 window.addEventListener("scroll", function() {
   if (window.scrollY > 700) {
-	  title.style.color="#000"
-		headerIcons[0].style.color="#000";
-		headerIcons[1].style.color="#000";
-		headerIcons[2].style.color="#000";
-		headerIcons[3].style.color="#000";
-	  headerNavItems[0].style.color = "#000"; 
-	  headerNavItems[1].style.color = "#000"; 
-	  headerNavItems[2].style.color = "#fff"; 
-	  headerNavItems[3].style.color = "#fff"; 
-	  header.style.backgroundColor  ="#fff";
+    title.style.color="#000";
+    headerIcons.forEach(icon => icon.style.color="#000");
+    headerNavItems[0].style.color = "#000"; 
+    headerNavItems[1].style.color = "#000"; 
+    headerNavItems[2].style.color = "#fff"; 
+    headerNavItems[3].style.color = "#fff"; 
+    header.style.backgroundColor  ="#fff";
+    header.style.transition = "background-color 0.5s"; // 배경색 변경 시 부드럽게 변환
   } else if(window.scrollY < 700) {
-	  title.style.color="#fff"
-	  headerNavItems[0].style.color = "#fff"; 
-	  headerNavItems[1].style.color = "#fff";
-	  headerNavItems[2].style.color = "black"; 
-	  headerNavItems[3].style.color = "black";
-	  header.style.backgroundColor  ="#000";
-	  headerIcons[0].style.color="#fff";
-		headerIcons[1].style.color="#fff";
-		headerIcons[2].style.color="#fff";
-		headerIcons[3].style.color="#fff";
+    title.style.color="#fff";
+    headerNavItems[0].style.color = "#fff"; 
+    headerNavItems[1].style.color = "#fff";
+    headerNavItems[2].style.color = "black"; 
+    headerNavItems[3].style.color = "black";
+    header.style.backgroundColor  ="#000";
+    header.style.transition = "background-color 0.5s"; // 배경색 변경 시 부드럽게 변환
+    headerIcons.forEach(icon => icon.style.color="#fff");
   }
 });
+
+
+
+
+
+
 </script>
 </html>
