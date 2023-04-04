@@ -7,18 +7,30 @@
 <body>
 	<main>
 		<h3>후기작성</h3>
-
-		<table>
-		
-			<tr>
-				<td>작성자</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>내용</td>
-				<td></td>
-			</tr>
-		</table>
+		<form action="write" method="post">
+			<table>
+				<tr>
+					<td>작성자</td>
+					<td th:if="${session.vo}!=null">[[${session.vo.name}]]</td>
+				</tr>
+				<tr>
+					<td>이용차량</td>
+					<td>@@@</td>
+				</tr>
+				<tr>
+					<td>내용</td>
+					<td><textarea rows="30" cols="80" style="resize: none;" required></textarea></td>
+				</tr>
+				<tr>
+					<td>점수</td>
+					<td>점수주세욤</td>
+				</tr>
+				<tr>
+					<td><button type="button" onclick="location.href='/'">메인으로</button> </td>
+					<td><button>작성</button> </td>
+				</tr>
+			</table>
+		</form>
 	</main>
 </body>
 </html>

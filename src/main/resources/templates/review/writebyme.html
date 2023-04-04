@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>내차리뷰조회</title>
+</head>
+<body>
+	<main>
+		<h3>내가쓴리뷰</h3>
+
+	<table>
+		<tr>
+			<th>차량번호</th>
+			<th>내용</th>
+			<th>점수</th>
+		</tr>
+		<tr th:each="list : ${list}">
+			<td th:text="${list.car_number}+번차"></td>
+			<td th:text="${list.content}"></td>
+			<td th:text="${list.car_score}"></td>
+		</tr>
+		<tr>
+			<td> <input type="button" onclick="location.href='/'" value="메인으로"> </td>
+		</tr>
+	</table>
+
+	</main>
+</body>
+</html>

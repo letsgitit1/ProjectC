@@ -7,6 +7,10 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
 	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="https://fonts.googleapis.com/css?family=Anton&display=swap"
+	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Inter&display=swap"
+	rel="stylesheet">
 <link href="../css/footer.css" rel="stylesheet">
 <link href="../css/header.css" rel="stylesheet">
 <link href="../css/main.css" rel="stylesheet">
@@ -14,10 +18,9 @@
 <body>
 	<div th:include="header.html"></div>
 	<!-- content_area시작 -->
-	<div id="under_header">
 	<div class="info_area">
-        <span class="info_area_text">Company Introduction</span>
-      </div>
+		<span class="info_area_text">Company Introduction</span>
+	</div>
 	<div class="content_area">
 		<div class="box">
 			<div class="content1">
@@ -56,26 +59,92 @@
 				</div>
 			</div>
 		</div>
+		<div class="box">
+			<div class="content3">
+				<div class="content3_img"></div>
+				<div class="content_text_area">
+					<div class="content1_title">eco-friendly promise</div>
+					<div class="content_detail_text2">Buddy is an advanced We not
+						only provide comfortable transportation for people to their
+						destinations, but also help them order food quickly and
+						affordably. We break down barriers to medical services and develop
+						new solutions for cargo transportation reservations. We also help
+						companies provide smooth transportation solutions for their
+						employees. In addition, we help drivers generate income through
+						operations and deliveries.</div>
+				</div>
+			</div>
+		</div>
+		<!-- notice -->
+		<h2
+			style="color: white; text-align: center; font-size: 48px; transform: translateY(200px);">PRESS</h2>
+		<section id="press">
+			<div class="container">
+				<div class="press-list">
+					<div class="press-item">
+						<div class="press-image">
+							<img src="../image/logo-black.png" alt="Press Image 1">
+						</div>
+						<div class="press-info">
+							<h3 class="press-title">Press Title 1</h3>
+							<p class="press-date">July 1, 2022</p>
+							<p class="press-description">We are committed to providing
+								the best service to our customers, always.</p>
+							<a href="#" class="press-link">Read More</a>
+						</div>
+					</div>
+					<div class="press-item">
+						<div class="press-image">
+							<img src="../image/megaphone.jpg" alt="Press Image 2">
+						</div>
+						<div class="press-info">
+							<h3 class="press-title">Press Title 2</h3>
+							<p class="press-date">June 15, 2022</p>
+							<p class="press-description">Join the discussion: be part of
+								our community and stay informed about our products and services.</p>
+							<a href="#" class="press-link">Read More</a>
+						</div>
+					</div>
+					<div class="press-item">
+						<div class="press-image">
+							<img src="../image/question.png" alt="Press Image 3">
+						</div>
+						<div class="press-info">
+							<h3 class="press-title">Press Title 3</h3>
+							<p class="press-date">May 30, 2022</p>
+							<p class="press-description">Click here to view more
+								information</p>
+							<a href="#" class="press-link">Read More</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--NOTICE끝  -->
 	</div>
-	</div>
+
 	<div th:replace="footer.html :: footer"></div>
 </body>
 <script>
-    let observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.style.left = "0%";
-          entry.target.style.opacity = 1;
-        } else {
-          entry.target.style.left = "-50%";
-          entry.target.style.opacity = 0;
-        }
-      });
-    });
+let observer = new IntersectionObserver((entries) => {
+	  entries.forEach((entry) => {
+	    if (entry.isIntersecting) {
+	      // 요소가 뷰포트 내부에 있을 때
+	      entry.target.style.left = "0%";
+	      entry.target.style.opacity = 1;
+	    } else {
+	      // 요소가 뷰포트 밖으로 나갈 때
+	      entry.target.style.left = "-50%";
+	      entry.target.style.opacity = 0;
+	    }
+	  });
+	}, {
+	  threshold: [0, 1] // 뷰포트 내부에서 진입할 때, 완전히 벗어날 때 모두 애니메이션 실행
+	});
+	let boxes = document.querySelectorAll(".box");
+	boxes.forEach((box) => {
+	  observer.observe(box);
+	});
 
-    let boxes = document.querySelectorAll(".box");
-    boxes.forEach((box) => {
-      observer.observe(box);
-    });
   </script>
 </html>

@@ -1,6 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+</head>
+<style type="text/css">
+.modal_h3 {
+	text-align: center;
+}
+.modal_table, .modal_div {
+	margin: auto;
+}
+.modal_button {
+	border: none;
+	background-color: white;
+	cursor: pointer;
+	margin-left: 20px;
+}
+.modal_submit {
+	width: 310px;
+	height: 35px;
+	background-color: black;
+	color: white;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+}
+.modal_submit:hover {
+	background-color: silver;
+	border: 1px solid silver;
+	
+}
+input[type="text"],[type="password"] {
+	margin-bottom: 20px;
+	width: 300px;
+	height: 30px;
+}
+.modal_button_left {
+	margin-left: 57px;
+}
+.input_ph::-webkit-input-placeholder {
+	padding-left: 10px;
+	border-radius: 4px;
+}
+.logincheck {
+	color: red;
+}
+</style>
 <body>
+<!-- 모달창 로그인 -->
+	<div id="modal1" class="modal">
+  		<h3 class="modal_h3">LOGIN</h3>
+	<div>
+		<form action="/login" method="POST">
+			<table class="modal_table">
+				<tr>
+					<td><input class="input_ph" type="text" name="email" placeholder="아이디" id="id"></td>
+				</tr> 
+				<tr>
+					<td><input class="input_ph" type="password" name="password" id="password" placeholder="비밀번호"> <br>
+						<span class="loginOK"></span>
+					</td>
+				</tr>
+				<tr>
+					<td><input class="modal_submit" type="submit" value="로그인"></td>
+				</tr>
+			</table>
+		</form>
+		<br>
+
+		<div class="modal_div">
+			<button class="modal_button modal_button_left" onclick="location.href='./reg'">간편 회원가입</button>
+			<button class="modal_button" onclick="location.href='./find_id'">아이디 찾기</button>
+			<button class="modal_button" onclick="location.href='./find_pass'">비밀번호 찾기</button>
+		</div>
+		<br>
+	</div>
+	</div>
  <div id="stick_div">
       <header id="header">
         <div class="header_icon_area">
@@ -19,10 +95,11 @@
             </li>
           </ul>
         </div>
-        <h1 id="Buddy_title">Buddy</h1>
+        <h1 id="Buddy_title">Buddy<span id="sub_title">with together</span></h1>
         <ul class="header_nav">
-          <li class="header_nav_item"><a href="#">JOIN</a></li>
-          <li class="header_nav_item"><a href="#">SIGNIN</a></li>
+          <li class="header_nav_item"><a href="reg">JOIN</a></li>
+          <li th:if="${session.vo}!=null" class="header_nav_item"><a href="/logout">LOGOUT</a></li>
+         <li th:unless="${session.vo}!=null" class="header_nav_item"><a href="#modal1" rel="modal:open">LOGIN</a></li>
           <li class="header_nav_item"><a href="#">CHAT</a></li>
           <li class="header_nav_item"><a href="#">MYPAGE</a></li>
         </ul>
@@ -34,8 +111,7 @@
           <li class="nav_detail_text"><a href="#">SERVICE</a></li>
           <li class="nav_detail_text"><a href="#">NOTICE</a></li>
         </ul>
-      </div>
-       
+      </div>    
 </body>
 <script>
 const headerIcons = document.querySelectorAll(".header_icon li i");
@@ -43,31 +119,55 @@ const headerNav = document.querySelector(".header_nav"); // ul 요소 가져오�
 const headerNavItems = headerNav.querySelectorAll("li>a"); // li 요소 가져오기
 const header=document.getElementById('header')
 const title=document.getElementById('Buddy_title')
-console.log( headerNavItems[2])
+const sub_title=document.getElementById('sub_title')
+		window.addEventListener('scroll', function() {
+			  // 현재 스크롤 위치
+			  var scrollPosition = window.scrollY;
+			  console.log(scrollPosition);
+			});
+
 window.addEventListener("scroll", function() {
-  if (window.scrollY > 700) {
-	  title.style.color="#000"
-		headerIcons[0].style.color="#000";
-		headerIcons[1].style.color="#000";
-		headerIcons[2].style.color="#000";
-		headerIcons[3].style.color="#000";
-	  headerNavItems[0].style.color = "#000"; 
-	  headerNavItems[1].style.color = "#000"; 
-	  headerNavItems[2].style.color = "#fff"; 
-	  headerNavItems[3].style.color = "#fff"; 
-	  header.style.backgroundColor  ="#fff";
-  } else if(window.scrollY < 700) {
-	  title.style.color="#fff"
-	  headerNavItems[0].style.color = "#fff"; 
-	  headerNavItems[1].style.color = "#fff";
-	  headerNavItems[2].style.color = "black"; 
-	  headerNavItems[3].style.color = "black";
-	  header.style.backgroundColor  ="#000";
-	  headerIcons[0].style.color="#fff";
-		headerIcons[1].style.color="#fff";
-		headerIcons[2].style.color="#fff";
-		headerIcons[3].style.color="#fff";
-  }
+	if (window.scrollY > 3700) {
+		 title.style.color="#fff";
+		 sub_title.style.color="#fff";
+		  headerNavItems[0].style.color = "#fff"; 
+		  headerNavItems[1].style.color = "#fff";
+		  headerNavItems[2].style.color = "black"; 
+		  headerNavItems[3].style.color = "black";
+		  header.style.backgroundColor  ="#000";
+		  headerIcons[0].style.color="#fff";
+		  headerIcons[1].style.color="#fff";
+		  headerIcons[2].style.color="#fff";
+		  headerIcons[3].style.color="#fff";
+		  header.style.transition = "background-color 1s";
+		} else if(window.scrollY > 700) {
+		  title.style.color="#000";
+		  sub_title.style.color="#000";
+		  headerIcons[0].style.color="#000";
+		  headerIcons[1].style.color="#000";
+		  headerIcons[2].style.color="#000";
+		  headerIcons[3].style.color="#000";
+		  headerNavItems[0].style.color = "#000"; 
+		  headerNavItems[1].style.color = "#000"; 
+		  headerNavItems[2].style.color = "#fff"; 
+		  headerNavItems[3].style.color = "#fff"; 
+		  header.style.backgroundColor  ="#fff";
+		  header.style.transition = "background-color 1s";
+		} else {
+		  title.style.color="#fff";
+		  sub_title.style.color="#fff";
+		  headerNavItems[0].style.color = "#fff"; 
+		  headerNavItems[1].style.color = "#fff";
+		  headerNavItems[2].style.color = "black"; 
+		  headerNavItems[3].style.color = "black";
+		  header.style.backgroundColor  ="#000";
+		  headerIcons[0].style.color="#fff";
+		  headerIcons[1].style.color="#fff";
+		  headerIcons[2].style.color="#fff";
+		  headerIcons[3].style.color="#fff";
+		  header.style.transition = "background-color 1s";
+		}
+
 });
 </script>
 </html>
