@@ -22,7 +22,7 @@ import com.mvc.carshare.vo.CMarkerJoinCarDTO;
 @Controller
 public class CMarkerController {
 
-	private ObjectMapper objectMapper= new ObjectMapper();
+    private ObjectMapper objectMapper= new ObjectMapper();
     private CMarkerService service;
     private CProductService pservice;
     private CRegistrationsService rservice;
@@ -42,21 +42,21 @@ public class CMarkerController {
         model.addAttribute("markers" ,list);
 
         return"Map/MapTestKyung";
-    } 
-    
+    }
+
     @PostMapping("/Map/Insert")
-    @ResponseBody //이렇게 선언해야 ajax 데이타 받을 수 있음 
+    @ResponseBody //이렇게 선언해야 ajax 데이타 받을 수 있음
     public String insert(@RequestBody CMarker vo) throws JsonProcessingException {
-    	System.out.println(vo);
-    	vo.setCar_number(1);
-    	int cnt=service.insertMarker(vo);
-		Map<String, Object> result=new HashMap<>();
-		
-		result.put("cnt", cnt);
-		String json=null;
-		json=objectMapper.writeValueAsString(result);
-    	return json;
+        System.out.println(vo);
+        vo.setCar_number(1);
+        int cnt=service.insertMarker(vo);
+        Map<String, Object> result=new HashMap<>();
+        System.out.println(vo);
+
+        result.put("cnt", cnt);
+        String json=null;
+        json=objectMapper.writeValueAsString(result);
+        return json;
     }
 }
-
 

@@ -5,20 +5,20 @@
 <mapper namespace="com.mvc.carshare.dao.CMarkerDao">
 
 
- <select id="getAllMarkers" resultType="CMarker">
-  select * from CMarker
- </select>
+    <select id="getAllMarkers" resultType="CMarker">
+        select * from CMarker
+    </select>
 
- <select id="getAllMarkersJoinCars" resultType="CMarkerJoinCarDTO">
-  SELECT *
-FROM CMarker c
-JOIN C_cars r ON c.car_number = r.CAR_ID
-JOIN C_registrations s ON r.CAR_ID = s.car_number
- </select>
- 
- <insert id="insertMarker" parameterType="CMarker">
- 		INSERT INTO CMARKER
-		(ID, LATITUDE, LONGITUDE,CAR_NUMBER)
-		VALUES(marker_seq.nextval, #{latitude}, #{longitude},#{car_number})
- </insert>
+    <select id="getAllMarkersJoinCars" resultType="CMarkerJoinCarDTO">
+        SELECT *
+        FROM CMarker c
+                 JOIN C_cars r ON c.car_number = r.CAR_ID
+                 JOIN C_registrations s ON r.CAR_ID = s.car_number
+    </select>
+
+    <insert id="insertMarker" parameterType="CMarker">
+        INSERT INTO CMARKER
+            (ID, LATITUDE, LONGITUDE,CAR_NUMBER)
+        VALUES(marker_seq.nextval, #{latitude}, #{longitude},#{car_number})
+    </insert>
 </mapper>
