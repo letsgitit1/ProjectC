@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+
 <meta charset="utf-8">
 <title>맵맵맵맵맵테스트트트트트</title>
-
+<link href="../css/footer.css" rel="stylesheet">
+<link href="../css/header.css" rel="stylesheet">
 </head>
 
 <style>
@@ -85,6 +87,7 @@
 
 <body>
 
+
 <div th:include="header.html"></div>
 <!--검색div-->
 <div>
@@ -104,6 +107,7 @@
 	<button id="ajaxformarker" onclick="moveToCurrentPosition()">판매확정하기</button>
 </p>
 <!--허수의 영역-->
+
 <div style="height:1000px;"></div>
 	<div th:include="footer.html"></div>
 
