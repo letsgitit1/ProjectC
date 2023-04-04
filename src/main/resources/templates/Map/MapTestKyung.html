@@ -129,7 +129,7 @@
 	<p style="margin-left: 600px; margin-bottom: 10px">찾고싶은 장소를 입력하시면 해당 위치로 이동합니다 장소를 입력 해 주세요 !</p>
 	<input id="searchBox" type="text" placeholder="장소 검색" style="width: 708px;height: 30px;margin-left: 600px;margin-bottom: 50px; padding-left: 5px">
 	<button id="searchButton" onclick="searchPlace()">검색</button>
-	<button id="ipmyplace" onclick="ipplace()">현재위치</button>
+	<button id="moveToCurrentPositionButton">현재위치</button>
 </div>
 
 <!--만약 차를 빌렸다면 이 버튼이 나오게 하기 -->
@@ -139,7 +139,7 @@
 <p>
 	<button onclick="hideMarkers()">판매하기(마커 다 사라짐)</button>
 	<button onclick="showMarkers()">구매하기(마커 다 보임)</button>
-	<button id="ajaxformarker" onclick="markerfordb()">판매확정하기</button>
+	<button id="ajaxformarker" onclick="moveToCurrentPosition()">판매확정하기</button>
 </p>
 
 <!--허수의 영역-->
@@ -175,11 +175,33 @@
 			});
 		}
 
+
 		// 검색 버튼 클릭 시 searchPlace 함수 호출
 		document.getElementById('searchButton').addEventListener('click', searchPlace)
 
+		function moveToCurrentPosition() {
+			if (navigator.geolocation) {
+				// 사용자의 현재 위치를 요청합니다.
+				navigator.geolocation.getCurrentPosition(function(position) {
+					// 현재 위치의 위도와 경도를 저장합니다.
+					var lat = position.coords.latitude;
+					var lng = position.coords.longitude;
 
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+					// 현재 위치로 지도를 이동합니다.
+					var moveLatLon = new kakao.maps.LatLng(lat, lng);
+					map.panTo(moveLatLon);
+					alert("현재 접속중인 위치를 기반으로 안내해드리겠습니다")
+				});
+			} else {
+				alert("Geolocation is not supported by this browser.");
+			}
+		// 버튼 클릭 시 moveToCurrentPosition 함수를 호출합니다.
+
+		}
+		document.getElementById('moveToCurrentPositionButton').addEventListener('click', moveToCurrentPosition);
+
+
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
             center: new kakao.maps.LatLng(37.50000717025944, 127.03515956607703), // 지도의 중심좌표 역삼역으로 했슴다
             level: 3 // 지도의 확대 레벨
