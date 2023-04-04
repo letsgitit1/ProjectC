@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.mvc.carshare.dao.CReviewDao">
+ 	<!-- 이동해 -->
+ 	
+ 	<!-- 차량넘버로 모든리뷰조회 -->
+ 	<select id="creviewOne" parameterType="int" resultType="CReviewVo">
+		SELECT * FROM C_REVIEWS cr 
+		WHERE car_number = #{car_number}
+ 	</select>
+ 	
+ 	<select id="writebyme" parameterType="int" resultType="CReviewVo">
+		SELECT * FROM C_REVIEWS cr 
+		WHERE AUTHOR_ID = #{author_id}
+ 	</select>
+ 	
+
+ 	
+ </mapper>

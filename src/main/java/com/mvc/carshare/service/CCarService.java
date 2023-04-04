@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mvc.carshare.dao.CCarDao;
+import com.mvc.carshare.vo.CcarDto;
 import com.mvc.carshare.vo.CcarVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CCarService {
 
+	@Autowired
 	private CCarDao dao;
 
 	public CCarService(CCarDao dao) {
@@ -28,10 +30,19 @@ public class CCarService {
 	}
 
 	// 차량조회
-	public List<CcarVo> getCarList(String id) {
+	public List<CcarDto> getCarList(String id) {
 		log.info("service id = {}", id);
 		return dao.carSel(id);
 	}
 	
+	//평점
+	public int carSc(int car_number) {
+		log.info("service car_number = {}", car_number);
+		return dao.carSc(car_number);
+	}
 	
+	//테스트
+	public List<Integer> getCarNum(String id) {
+		return dao.getCarNum(id);
+	}
 }
