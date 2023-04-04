@@ -2,9 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<link href="../css/serviceheader.css" rel="stylesheet"/>
+	<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <meta charset="utf-8">
 <title>맵맵맵맵맵테스트트트트트</title>
-
+<link href="../css/footer.css" rel="stylesheet">
+<link href="../css/header.css" rel="stylesheet">
 </head>
 
 <style>
@@ -85,44 +90,7 @@
 
 
 <body>
-<div id="stick_div">
-	<header>
-
-		<div class="header_icon_area">
-			<ul class="header_icon">
-				<li class="header_icon">
-					<a><i class="fa-brands fa-facebook fa-xl"></i></a>
-				</li>
-				<li class="header_icon">
-					<a><i class="fa-brands fa-instagram fa-xl"></i></a>
-				</li>
-				<li class="header_icon">
-					<a><i class="fa-brands fa-twitter fa-xl"></i></a>
-				</li>
-				<li class="header_icon">
-					<a><i class="fa-brands fa-discord fa-xl"></i></a>
-				</li>
-			</ul>
-		</div>
-		<h1>Buddy</h1>
-		<ul class="header_nav">
-			<li class="header_nav_item"><a href="#">JOIN</a></li>
-			<li class="header_nav_item"><a href="#">SIGNIN</a></li>
-			<li class="header_nav_item"><a href="#">CHAT</a></li>
-			<li class="header_nav_item"><a href="#">MYPAGE</a></li>
-		</ul>
-	</header>
-</div>
-<div class="nav_area" style="margin-top:200px;">
-	<ul class="nav_text">
-		<li class="nav_detail_text"><a href="#">ABOUT</a></li>
-		<li class="nav_detail_text"><a href="#">SERVICE</a></li>
-		<li class="nav_detail_text"><a href="#">NOTICE</a></li>
-	</ul>
-</div>
-
-
-</header>
+<div th:include="header.html"></div>
 
 <!--검색div-->
 <div>
@@ -143,7 +111,8 @@
 </p>
 
 <!--허수의 영역-->
-<div style="height:1000px;"></div>
+<div style="height:500px;"></div>
+<div th:replace="footer.html :: footer"></div>
 
 <!-- services 라이브러리 불러오기 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d11d96d8bf1e2f7032da54bfc050846&libraries=services"></script>
