@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-
+	<link href="../css/serviceheader.css" rel="stylesheet"/>
 <meta charset="utf-8">
 <title>맵맵맵맵맵테스트트트트트</title>
 
@@ -82,7 +82,8 @@
 	color: crimson;
 }
 </style>
-<link href="../css/serviceheader.css" rel="stylesheet"/>
+
+
 <body>
 <div id="stick_div">
 	<header>
@@ -120,34 +121,19 @@
 	</ul>
 </div>
 
-<script>
-	const headerNav = document.querySelector(".header_nav"); // ul 요소 가져오기
-	const headerNavItems = headerNav.querySelectorAll("li>a"); // li 요소 가져오기
-	console.log( headerNavItems[2])
-	window.addEventListener("scroll", function() {
-		if (window.scrollY > 80) {
-			headerNavItems[0].style.display = "none";
-			headerNavItems[1].style.display = "none";
-			headerNavItems[2].style.display = "none";
-			headerNavItems[3].style.display = "none";
 
-		} else if(window.scrollY < 80) {
-			headerNavItems[0].style.display = "block";
-			headerNavItems[1].style.display = "block";
-			headerNavItems[2].style.display = "block";
-			headerNavItems[3].style.display = "block";
-
-		}
-	});
-</script>
 </header>
 
-<input type="text" id="keyword" placeholder="장소를 입력하세요">
-<button onclick="searchPlaces()">검색하기</button>
-
+<!--검색div-->
+<div>
+	<p style="margin-left: 600px; margin-bottom: 10px">찾고싶은 장소를 입력하시면 해당 위치로 이동합니다 장소를 입력 해 주세요 !</p>
+	<input id="searchBox" type="text" placeholder="장소 검색" style="width: 708px;height: 30px;margin-left: 600px;margin-bottom: 50px; padding-left: 5px">
+	<button id="searchButton" onclick="searchPlace()">검색</button>
+	<button id="ipmyplace" onclick="ipplace()">현재위치</button>
+</div>
 
 <!--만약 차를 빌렸다면 이 버튼이 나오게 하기 -->
-	<div id="map" style="width: 100%; height: 500px;"></div>
+	<div id="map" style="width: 80%; height: 500px; margin-left: 230px;"></div>
 	<p id="result">반납하기(결제)</p>
 	<div id="clickLatlng"></div>
 <p>
@@ -156,21 +142,51 @@
 	<button id="ajaxformarker" onclick="markerfordb()">판매확정하기</button>
 </p>
 
-<!---->
+<!--허수의 영역-->
 <div style="height:1000px;"></div>
-<!--만약 공급자의 입장이라면 이 버튼이 나오게 하기 -->
-<!---->
-	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d11d96d8bf1e2f7032da54bfc050846"></script>
+
+<!-- services 라이브러리 불러오기 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d11d96d8bf1e2f7032da54bfc050846&libraries=services"></script>
 	<script th:inline="javascript">
+		function searchPlace() {
+			var place = document.getElementById('searchBox').value;
+
+			// 장소 검색 객체를 생성합니다
+			var places = new kakao.maps.services.Places();
+
+			// 지역 검색을 요청합니다
+			places.keywordSearch(place, function(result, status) {
+
+				// 정상적으로 검색이 완료됐으면
+				if (status === kakao.maps.services.Status.OK) {
+
+					var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+					// 마커를 생성합니다
+					var marker = new kakao.maps.Marker({
+						map: map,
+						position: coords
+					});
+
+					// 검색된 위치로 지도 중심을 이동시킵니다
+					map.setCenter(coords);
+
+				}
+			});
+		}
+
+		// 검색 버튼 클릭 시 searchPlace 함수 호출
+		document.getElementById('searchButton').addEventListener('click', searchPlace)
+
 
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
             center: new kakao.maps.LatLng(37.50000717025944, 127.03515956607703), // 지도의 중심좌표 역삼역으로 했슴다
             level: 3 // 지도의 확대 레벨
         };
+    var map = new kakao.maps.Map(mapContainer, mapOption); //지도 생성
 
-    var map = new kakao.maps.Map(mapContainer, mapOption);
+
     var imageSrc = "/image/pngegg.png";
     var imageSize = new kakao.maps.Size(30, 30);
     var imageOption = {offset: new kakao.maps.Point(27, 69)};
@@ -418,40 +434,27 @@
 		function hideMarkers() {
 			setMarkers(null);
 		}
-
-		// 장소 검색 객체를 생성합니다
-		var ps = new kakao.maps.services.Places();
-
-		function searchPlaces() {
-			var keyword = document.getElementById('keyword').value;
-
-			// 장소검색을 요청하는 함수입니다
-			ps.keywordSearch(keyword, placesSearchCB);
-		}
-
-		// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
-		function placesSearchCB(data, status, pagination) {
-			if (status === kakao.maps.services.Status.OK) {
-
-				// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-				// LatLngBounds 객체에 좌표를 추가합니다
-				var bounds = new kakao.maps.LatLngBounds();
-
-				for (var i = 0; i < data.length; i++) {
-					displayMarker(data[i]);
-					bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-				}
-
-				// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-				map.setBounds(bounds);
-			}
-		}
-
-
 	}
-    
-    
 </script>
+<script>
+	const headerNav = document.querySelector(".header_nav"); // ul 요소 가져오기
+	const headerNavItems = headerNav.querySelectorAll("li>a"); // li 요소 가져오기
+	console.log( headerNavItems[2])
+	window.addEventListener("scroll", function() {
+		if (window.scrollY > 80) {
+			headerNavItems[0].style.display = "none";
+			headerNavItems[1].style.display = "none";
+			headerNavItems[2].style.display = "none";
+			headerNavItems[3].style.display = "none";
 
+		} else if(window.scrollY < 80) {
+			headerNavItems[0].style.display = "block";
+			headerNavItems[1].style.display = "block";
+			headerNavItems[2].style.display = "block";
+			headerNavItems[3].style.display = "block";
+
+		}
+	});
+</script>
 </body>
 </html>
