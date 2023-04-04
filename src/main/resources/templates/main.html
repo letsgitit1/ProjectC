@@ -7,8 +7,6 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
 	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link href="../css/footer.css" rel="stylesheet">
-<link href="../css/header.css" rel="stylesheet">
 <link href="../css/main.css" rel="stylesheet">
 </head>
 <body>
@@ -119,7 +117,7 @@
 		<!--NOTICE끝  -->
 	</div>
 
-	<div th:replace="footer.html :: footer"></div>
+	<div th:include="footer.html"></div>
 </body>
 <script>
 let observer = new IntersectionObserver((entries) => {

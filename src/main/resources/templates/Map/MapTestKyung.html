@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<link href="../css/serviceheader.css" rel="stylesheet"/>
-	<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <meta charset="utf-8">
 <title>맵맵맵맵맵테스트트트트트</title>
 <link href="../css/footer.css" rel="stylesheet">
@@ -90,8 +86,9 @@
 
 
 <body>
-<div th:include="header.html"></div>
 
+
+<div th:include="header.html"></div>
 <!--검색div-->
 <div>
 	<p style="margin-left: 600px; margin-bottom: 10px">찾고싶은 장소를 입력하시면 해당 위치로 이동합니다 장소를 입력 해 주세요 !</p>
@@ -109,10 +106,10 @@
 	<button onclick="showMarkers()">구매하기(마커 다 보임)</button>
 	<button id="ajaxformarker" onclick="moveToCurrentPosition()">판매확정하기</button>
 </p>
-
 <!--허수의 영역-->
-<div style="height:500px;"></div>
-<div th:replace="footer.html :: footer"></div>
+
+<div style="height:1000px;"></div>
+	<div th:include="footer.html"></div>
 
 <!-- services 라이브러리 불러오기 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d11d96d8bf1e2f7032da54bfc050846&libraries=services"></script>
