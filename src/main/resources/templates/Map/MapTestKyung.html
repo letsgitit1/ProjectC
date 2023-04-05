@@ -9,9 +9,13 @@
 </head>
 
 <style>
+
 .wishlist-btn{
-	width:100%;
-	height:50px;
+	    width: 100px;
+    height: 45px;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .overlaybox {
@@ -198,6 +202,10 @@
     // position은 오버레이의 초기 위치입니다. 초기 위치는 지도 영역 밖으로 설정
 
 
+
+
+
+
 	var markers = [];
     for (var i = 0; i < markerListString.length; i++) {
         var markerData = markerListString[i];
@@ -225,9 +233,8 @@
 
         });
 
-		
+		//***********//
         let wishList=[[${wishList}]];
-			console.log(wishList);
 			let wish='';
 			if(wishList.includes(markerData.car_id)){
 				wish='찜완료'
@@ -245,7 +252,6 @@
                 overlay.setContent('<div class="overlaybox">' +
                 		 '<div class="boxtitle">차 대여 정보입니다</div>'+
                 		
-     					'</button>'+
                     '    <div class="image-wrapper">' +
                     '        <div class="image">' +
                     '            ' + carImage +
@@ -279,22 +285,22 @@
                     '        </li>' +
                     '    </ul>' +
                     '</div>'+
-                    '<button "th:id="wishlist'+markerData.car_id+' buttonId" class="wishlist-btn" style="width:100%; height:100px; position:absolute; z-index:999; top:50px">'+
- 					'<span >'+wish+'</span>'
+                    '<button "id="wishlist'+markerData.car_id+'" class="wishlist-btn" style="width: 100px;height: 45px;position: absolute; top: 0;right: 0;">'+
+ 					'<span >'+wish+'</span>'+
+ 					'</button>'
                     );
-               
                 overlay.setMap(map);
             }
         })(markerData));
-              
+        	}
 		
 		
         function createOverlay(markerData) {
             var content = '<div class="overlaybox">' +
    		 '<div class="boxtitle">차 대여 정보입니다</div>'+
-		 '<button "th:id="wishlist'+markerData.car_id+'" class="wishlist-btn" style="width:100%; height:100px; position:absolute; z-index:999; top:50px">'+
-			'<span >'+wish+'</span>'+
-			'</button>'+
+   		 '<button "id="wishlist'+markerData.car_id+'" class="wishlist-btn" style="width:100%; height:100px; position:absolute; top:50px">'+
+			'<span >'+wish+'</span>'
+			+'</button>'+
     '    <div class="image-wrapper">' +
     '        <div class="image">' +
     '            ' + carImage +
@@ -337,10 +343,11 @@
             function closeOverlay() {
                 overlay.setMap(null);
             }
+            
         }
            
 
-    }
+  
     // 원
     for (var i = 0; i < markerListString.length; i++) {
 		var cicleData = markerListString[i];
@@ -444,66 +451,62 @@
 			setMarkers(null);
 		}
 		
+		
 	}
 </script>
-
-<script th:inline="javascript">
-
-const wishlistBtn = document.getElementsByClassName("wishlist-btn");
-wishlistBtn.addEventListener("click", function() {
- wishlist([[${user_id}]], markerData.car_id);
-}); 
-function wishlist(user_id, car_number) {
-	console.log("들어옴")
-	  var button_id = "#wishlist" + car_number;
-	  var isWished = $(button_id).hasClass("btn-secondary");
-	  $.ajax({
-	    type: "POST",
-	    url: "/product/wishlist",
-	    contentType: 'application/json',
-	    data: JSON.stringify({car_number: car_number, user_id: user_id}),
-	    success: function (response) {
-	      if (response === "success") {
-	        // 찜 완료 메시지 출력
-	        alert("찜 완료!");
-	        // 버튼 스타일 변경
-	        $(button_id).removeClass("btn-primary").addClass("btn-secondary");
-	        // 버튼 텍스트 변경
-	        $(button_id).text("찜 완료");
-	      } else if (response === "fail") {
-	        // 이미 찜한 경우, 삭제 여부 확인
-	        if (confirm("이미 찜한 상품입니다. 삭제하시겠습니까?")) {
-	          // 찜 삭제 ajax 요청
-	          $.ajax({
-	            type: "DELETE",
-	            url: "/product/wishlist/delete",
-	            contentType: 'application/json',
-	            data: JSON.stringify({car_number: car_number, user_id: user_id}),
-	            success: function (response) {
-	              // 찜 삭제 완료 메시지 출력
-	              alert("찜 삭제 완료!");
-	              // 버튼 스타일 변경
-	              $(button_id).removeClass("btn-secondary").addClass("btn-primary");
-	              // 버튼 텍스트 변경
-	              $(button_id).text("찜하기");
-	            },
-	            error: function (xhr, status, error) {
-	              // 에러 메시지 출력
-	              alert("찜 삭제 실패: " + error);
-	            }
-	          });
-	        }
-	      }
-	    },
-	    error: function (xhr, status, error) {
-	      alert("찜 실패")
-	    }
-	  });
-	}
-
-
-
-
+<script>
+document.addEventListener("dblclick", function() {
+    var wishlistBtn= document.getElementById("wishlist"+markerData.car_id)
+      wishlist(2, markerData.car_id);
+    }); 
+    function wishlist(user_id, car_number) {
+    	console.log("들어옴")
+    	  var button_id = "#wishlist" + car_number;
+    	  var isWished = $(button_id).hasClass("btn-secondary");
+    	  $.ajax({
+    	    type: "POST",
+    	    url: "/product/wishlist",
+    	    contentType: 'application/json',
+    	    data: JSON.stringify({car_number: car_number, user_id: user_id}),
+    	    success: function (response) {
+    	      if (response === "success") {
+    	        // 찜 완료 메시지 출력
+    	        alert("찜 완료!");
+    	        // 버튼 스타일 변경
+    	        $(button_id).removeClass("btn-primary").addClass("btn-secondary");
+    	        // 버튼 텍스트 변경
+    	        $(button_id).text("찜 완료");
+    	      } else if (response === "fail") {
+    	        // 이미 찜한 경우, 삭제 여부 확인
+    	        if (confirm("이미 찜한 상품입니다. 삭제하시겠습니까?")) {
+    	          // 찜 삭제 ajax 요청
+    	          $.ajax({
+    	            type: "DELETE",
+    	            url: "/product/wishlist/delete",
+    	            contentType: 'application/json',
+    	            data: JSON.stringify({car_number: car_number, user_id: user_id}),
+    	            success: function (response) {
+    	              // 찜 삭제 완료 메시지 출력
+    	              alert("찜 삭제 완료!");
+    	              // 버튼 스타일 변경
+    	              $(button_id).removeClass("btn-secondary").addClass("btn-primary");
+    	              // 버튼 텍스트 변경
+    	              $(button_id).text("찜하기");
+    	            },
+    	            error: function (xhr, status, error) {
+    	              // 에러 메시지 출력
+    	              alert("찜 삭제 실패: " + error);
+    	            }
+    	          });
+    	        }
+    	      }
+    	    },
+    	    error: function (xhr, status, error) {
+    	      alert("찜 실패")
+    	    }
+    	  });
+}
 </script>
+
 </body>
 </html>
