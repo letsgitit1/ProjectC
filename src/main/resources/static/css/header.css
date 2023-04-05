@@ -42,7 +42,7 @@ h1 {
   transform: translate(-50%, -50%);
   font-size: 58px;
 }
-.header_icon,
+.header_icon1,
 .header_nav {
   color: #fff;
   list-style: none;
@@ -62,9 +62,10 @@ h1 {
 
 .header_icon > li {
   margin: 0px 20px;
+      color: #fff;
 }
 .header_icon {
-  width: 32px;
+  width: 320px;
   height: 32px;
 }
 .header_nav {

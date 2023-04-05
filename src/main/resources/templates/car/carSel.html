@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>내차조회</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 <style>
 main{
@@ -63,279 +62,58 @@ main{
 	background-color: silver;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
-li {
-  list-style: none;
-}
-header {
-  width: 100%;
-  position: relative;
-  height: 200px;
-  z-index:999;
-  background-color: #000;
-}
-#stick_div{
-   position: fixed;
-    top: 0;
-    z-index: 999;
-    width: 100%;
-}
-h1 {
-  color: #fff;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 58px;
-}
-.header_icon,
-.header_nav {
-  color: #fff;
-  list-style: none;
-}
-.header_icon_area {
-  width: 100%;
-  position: absolute;
-  top: 60%;
-  left: 5%;
-}
-.header_icon {
-  display: flex;
-  justify-content: space-between; /* 각 li 요소를 동일한 간격으로 배치 */
-  list-style: none; /* li 요소의 리스트 마커 제거 */
-  padding: 0; /* ul 요소의 기본 패딩 제거 */
-}
 
-.header_icon > li {
-  margin: 0px 20px;
+.mypage_div_a {
+	width: 270px;
+	height: 430px;
+	position: absolute;
+	left: 30px;
+	bottom: 30px;
+	background-color: white;
 }
-.header_icon {
-  width: 32px;
-  height: 32px;
+.mypage_button {
+	margin: 10px 0px 10px 23px;
+	border: 1px solid silver;
+	border-radius: 4px;
+	background-color: #828282;
+	color: white;
+	width: 200px;
+	height: 50px;
+	cursor: pointer;
+	font-size: 17px;
+	box-shadow: 5px 5px 5px #828282;
+	
 }
-.header_nav {
-  position: absolute;
-  right: 100px;
-  top: 100px;
-  line-height: 50px;
-  font-size: 22px;
-  font-weight: bold;
-}
-.header_nav_item:first-child > a,
-.header_nav_item:nth-child(2) > a {
-  color: #fff;
-}
-.header_nav_item:nth-child(3) {
-  z-index: 999;
-  color: #000;
-}
-.header_nav_item:last-child {
-  z-index: 999;
-  color: #000;
-}
-.header_nav_item:nth-child(3) > a {
-  color: #000;
-}
-.header_nav_item:last-child > a {
-  color: #000;
-}
-.nav_area {
-  width: 100%;
-  height: 200px;
-  background-color: #fff;
-  z-index: 1;
-      position: relative;
-}
-.nav_text {
-  display: flex;
-  justify-content: center;
-  height: 100%; /* 추가 */
-  align-items: center;
-}
-
-.nav_detail_text {
-  font-size: 30px;
-  font-weight: bold;
-  margin: 0px 100px; /* 간격 조절을 위한 마진 */
-}
-.nav_detail_text > a {
-  color: #000;
-}
-a {
-  text-decoration: none;
-}
-.info_area {
-  width: 100%;
-  background-image: url(../image/main.jpg);
-  height: 525px;
-  position: relative;
-  overflow: hidden; /* 이미지가 div 영역을 벗어나지 않도록 설정 */
-  z-index: 1; /* 그림자가 배경 이미지 위에 그려지도록 설정 */
-}
-
-/* 이미지에 블러 효과를 적용 */
-.info_area:before {
-  content: "";
-  position: absolute;
-  top: -20px;
-  left: -20px;
-  right: -20px;
-  bottom: -20px;
-  background: inherit;
-  filter: blur(2px); /* 블러 효과 적용 */
-  z-index: -1; /* 배경 이미지보다 뒤에 위치하도록 설정 */
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
-}
-
-
-/* 그림자 효과 추가 */
-.info_area::after {
-  content: "";
-  position: absolute;
-  top: 100%; /* div 하단에 위치하도록 설정 */
-  left: 0;
-  width: 100%;
-  height: 30px;
-  box-shadow: 20px 0px 5px rgba(0, 0, 0, 0.7); /* 그림자 효과 설정 */
-}
-
-.info_area_text {
-  position: absolute;
-  color: #fff;
-  font-size: 44px;
-  left: 25%;
-  bottom: 0;
-  font-weight: bold;
-  transform: translate(-50%, -50%);
-}
-
-
-footer {
-  background-color: #000000;
-  color: #ffffff;
-  padding: 50px 0;
-}
-
-.footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.footer-section {
-  width: 20%;
-}
-
-.footer-section h3 {
-  font-size: 18px;
-  margin-bottom: 15px;
-}
-
-.footer-section ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.footer-section li {
-  margin-bottom: 10px;
-}
-
-.footer-section li a {
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.footer-section li a:hover {
-  text-decoration: underline;
+.mypage_button:hover {
+	border: 1px solid silver;
+	background-color: silver;
+	box-shadow: 5px 5px 5px silver;
 }
 
 
 </style>
-	<link href="../css/serviceheader.css" rel="stylesheet"/>
+	 <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 <body>
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-
 	<main>
-	
-<div id="stick_div">
-   <header>
-
-      <div class="header_icon_area">
-         <ul class="header_icon">
-            <li class="header_icon">
-               <a><i class="fa-brands fa-facebook fa-xl"></i></a>
-            </li>
-            <li class="header_icon">
-               <a><i class="fa-brands fa-instagram fa-xl"></i></a>
-            </li>
-            <li class="header_icon">
-               <a><i class="fa-brands fa-twitter fa-xl"></i></a>
-            </li>
-            <li class="header_icon">
-               <a><i class="fa-brands fa-discord fa-xl"></i></a>
-            </li>
-         </ul>
-      </div>
-      <h1>Buddy</h1>
-      <ul class="header_nav">
-         <li class="header_nav_item"><a href="#">JOIN</a></li>
-         <li class="header_nav_item"><a href="#">SIGNIN</a></li>
-         <li class="header_nav_item"><a href="#">CHAT</a></li>
-         <li class="header_nav_item"><a href="#">MYPAGE</a></li>
-      </ul>
-   </header>
-</div>
-<div class="nav_area" style="margin-top:200px;">
-   <ul class="nav_text">
-      <li class="nav_detail_text"><a href="#">ABOUT</a></li>
-      <li class="nav_detail_text"><a href="#">SERVICE</a></li>
-      <li class="nav_detail_text"><a href="#">NOTICE</a></li>
-   </ul>
-</div>
-
-<script>
-   const headerNav = document.querySelector(".header_nav"); // ul 요소 가져오기
-   const headerNavItems = headerNav.querySelectorAll("li>a"); // li 요소 가져오기
-   console.log( headerNavItems[2])
-   window.addEventListener("scroll", function() {
-      if (window.scrollY > 80) {
-         headerNavItems[0].style.display = "none";
-         headerNavItems[1].style.display = "none";
-         headerNavItems[2].style.display = "none";
-         headerNavItems[3].style.display = "none";
-
-      } else if(window.scrollY < 80) {
-         headerNavItems[0].style.display = "block";
-         headerNavItems[1].style.display = "block";
-         headerNavItems[2].style.display = "block";
-         headerNavItems[3].style.display = "block";
-
-      }
-   });
-</script>
-</header>
-	
-	
-
-		<div class="carSel_div_button">
-			<input class="carSel_button" type="button" onclick="location.href='./carReg'" value="등록으로"> 
-			<input class="carSel_button" type="button" onclick="location.href='./'" value="메인으로"> 
+	<div th:include="header.html"></div>
+		<div class="mypage_div_a">
+			<button class="mypage_button" onclick="location.href='/update'">회원정보수정</button> <br>
+			<button class="mypage_button" onclick="location.href='/carSel'">등록차량조회</button> <br>
+			<button class="mypage_button" onclick="location.href='/review/write'">후기작성/구현중</button> <br>
+			<button class="mypage_button" onclick="location.href='/review/writebyme'">내가쓴후기</button> <br>
+			<button class="mypage_button" onclick="location.href='/mypage'">결제내역/구현해야함</button> <br>
+			<button class="mypage_button" onclick="location.href='#'">회원탈퇴/구현해야함</button> <br>
 		</div>
-	
+		<div style="float: right; width: 80%;">
 			<div th:each="list : ${list}" class="carSel_div_car">
- 		<th:block th:each="pic,i:${#strings.setSplit(list.car_image,',')}">
-				<img th:src=@{/uploads/}+${pic} alt="이미지" style="width: 150px; height: 200px; float: left; margin-left: 20px; margin-top: 20px; margin-right: 20px;">
-				
+				<th:block th:each="pic,i:${#strings.setSplit(list.car_image,',')}">
+				<img th:src="@{/uploads/}+${pic}" alt="이미지" style="width: 150px; height: 200px; float: left; margin-left: 20px; ">
 				<div style=" padding-top: 20px;">
 					차량번호 : <p class="carSel_p" th:text="${list.car_number}"></p> <br>
 					모델 : <p class="carSel_p" th:text="${list.car_model}"></p> <br>
@@ -347,51 +125,19 @@ footer {
 					<a class="carSel_a" th:href="@{/review/review(car_id=${list.car_id})}" >리뷰</a>
 					<a class="carSel_a" th:href="@{/review/review(car_id=${list.car_id})}" >삭제</a>
 				</div>
+				
+				</th:block>
 			</div>
-		</th:block>
+		</div>
+		
 		
 	</main>
-		<footer>
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>고객지원 센터 방문</h3>
-          <ul>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">문의하기</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h3>기업 정보</h3>
-          <ul>
-            <li><a href="#">회사 소개</a></li>
-            <li><a href="#">투자자</a></li>
-            <li><a href="#">채용 정보</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h3>Buddy 서비스</h3>
-          <ul>
-            <li><a href="#">차량 서비스</a></li>
-            <li><a href="#">운행</a></li>
-            <li><a href="#">배달 (Buddy Eats)</a></li>
-            <li><a href="#">Buddy for Business</a></li>
-            <li><a href="#">Buddy Freight</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h3>세계 시민 의식</h3>
-          <ul>
-            <li><a href="#">안전</a></li>
-            <li><a href="#">다양성과 포용성</a></li>
-            <li><a href="#">지속 가능성</a></li>
-            <li><a href="#">출장 (공항/도시)</a></li>
-          </ul>
-        </div>
-      </div>
-    </footer>
-		
-	
-	
-	
+	<div th:include="footer.html"></div>
+
+
+
+
+
+
 </body>
 </html>

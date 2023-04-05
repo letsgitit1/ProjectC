@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원정보수정</title>
+<style type="text/css">
+
+body {
+	background: black;
+	margin: 0px;
+}
+
+.mypage_div_a {
+	width: 270px;
+	height: 430px;
+	position: absolute;
+	left: 30px;
+	bottom: 30px;
+	background-color: black;
+}
+.mypage_button {
+	margin: 10px 0px 10px 23px;
+	border: 1px solid silver;
+	border-radius: 4px;
+	background-color: #828282;
+	color: white;
+	width: 200px;
+	height: 50px;
+	cursor: pointer;
+	font-size: 17px;
+	box-shadow: 5px 5px 5px #828282;
+	
+}
+.mypage_button:hover {
+	border: 1px solid silver;
+	background-color: silver;
+	box-shadow: 5px 5px 5px silver;
+}
+
+
+.update_div {
+	width: 500px;
+	margin: auto;
+	background-color: white;
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.update_table {
+	margin: auto;
+	width: 100%;
+}
+
+th, td {
+  padding: 15px 15px 10px 10px;
+}
+
+tr > td {
+  text-align: left;
+}
+
+th {
+	text-align: right;
+}
+
+.update_button {
+	background: black;
+	color: white;
+	padding: 5px;
+	margin-left: 50px;
+	margin-bottom : 10px;
+	width: 80%;
+	height: 40px;
+	border-radius: 6px;
+	font-size: 15px;
+}
+
+.update_button:hover {
+cursor: pointer;
+background-color: silver;
+border: 1px solid silver;
+}
+
+input[type="text"],[type="password"],[type="number"],[type="tel"],[type="email"] {
+	width: 70%;
+	height: 30px;
+	border: 1px solid silver;
+	border-radius: 4px;
+}
+.input_ph::-webkit-input-placeholder {
+	padding-left: 10px;
+}
+.input_ph:hover{
+	border: 1px solid black;
+}
+
+
+
+</style>
+</head>
+ <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+<body>
+
+	<div th:include="header.html"></div>
+
+
+
+
+
+	<div class="mypage_div_a">
+			<button class="mypage_button" onclick="location.href='/update'">회원정보수정</button> <br>
+			<button class="mypage_button" onclick="location.href='/carSel'">등록차량조회</button> <br>
+			<button class="mypage_button" onclick="location.href='/review/write'">후기작성/구현중</button> <br>
+			<button class="mypage_button" onclick="location.href='/review/writebyme'">내가쓴후기</button> <br>
+			<button class="mypage_button" onclick="location.href='/mypage'">결제내역/구현해야함</button> <br>
+			<button class="mypage_button" onclick="location.href='#'">회원탈퇴/구현해야함</button> <br>
+	</div>
+
+
+<br>
+<br>
+		<div class="update_div">
+			<form action="/member/modify" method="post">
+			<table class="update_table">
+				<tr>
+					<td><input type="hidden" name="email" th:value="${session.vo.email}" class="input_ph"></td>	
+				</tr>
+				<tr>
+					<th><label for="username">이름</label></th>
+					<td><input type="number" id="username" name="username" th:value="${session.vo.username}" class="input_ph"> </td>
+				</tr>
+				<tr>
+					<th><label for="password">비밀번호</label></th>
+					<td><input type="password" id="password" name="password" th:value="${session.vo.password}" class="input_ph"> </td>
+				</tr>
+				<tr>
+					<th><label for="name">닉네임</label></th>
+					<td><input type="text" id="name" name="name" th:value="${session.vo.name}" class="input_ph"> </td>
+				</tr>
+				<tr>
+					<th><label for="age">나이</label></th>
+					<td><input type="number" id="age" name="age" th:value="${session.vo.age}" class="input_ph"> </td>
+				</tr>
+				<tr>
+					<th><label for="address">주소</label></th>
+					<td><input type="text" id="address" name="address" th:value="${session.vo.address}" class="input_ph"> </td>
+				</tr>
+				<tr>
+					<th><label for="phone_number">전화번호</label></th>
+					<td><input type="tel" id="phone_number" name="phone_number" th:value="${session.vo.phone_number}" class="input_ph"> </td>
+				</tr>
+				<tr>
+					<td colspan="2">
+					<button class="update_button">수정</button> 
+					<button  class="update_button" onclick="location.href='./'" type="button">메인</button></td>
+				</tr>
+			</table>
+			</form>
+	</div>
+	<div style="height:300px;"></div>
+		<div th:include="footer.html"></div>
+	
+	
+</body>
+</html>

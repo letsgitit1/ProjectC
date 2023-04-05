@@ -98,27 +98,50 @@ input[type="text"],[type="password"],[type="number"],[type="tel"],[type="email"]
 
 
 /* 모든 스크롤바 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 ::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
+}
+#sub_title{
+	     position: absolute;
+    font-family: inter;
+    top: 70%;
+    left: 188%;
+    width: 100%;
+    transform: translate(-90%, -10%);
+    font-size: 13px;
+    font-weight: 700;
 }
 li {
   list-style: none;
 }
 header {
-  background-color: black;
   width: 100%;
   position: relative;
-  height: 150px;
+  height: 200px;
+  z-index:999;
+  background-color: #000;
+}
+#stick_div{
+	position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%;
 }
 h1 {
   color: #fff;
   position: absolute;
+  font-family:Anton;
+  top: 50%;
   left: 50%;
-  top: 20%;
   transform: translate(-50%, -50%);
   font-size: 58px;
 }
-.header_icon,
+.header_icon1,
 .header_nav {
   color: #fff;
   list-style: none;
@@ -138,9 +161,10 @@ h1 {
 
 .header_icon > li {
   margin: 0px 20px;
+      color: #fff;
 }
 .header_icon {
-  width: 32px;
+  width: 320px;
   height: 32px;
 }
 .header_nav {
@@ -153,6 +177,9 @@ h1 {
 }
 .header_nav_item:first-child > a,
 .header_nav_item:nth-child(2) > a {
+	font-family: 'Anton', sans-serif;
+    font-weight: normal;
+    font-size: 1.5rem;
   color: #fff;
 }
 .header_nav_item:nth-child(3) {
@@ -164,14 +191,17 @@ h1 {
   color: #000;
 }
 .header_nav_item:nth-child(3) > a {
+	font-family: 'Anton', sans-serif;
+    font-weight: normal;
+    font-size: 1.5rem;
   color: #000;
 }
 .header_nav_item:last-child > a {
+	font-family: 'Anton', sans-serif;
+    font-weight: normal;
+    font-size: 1.5rem;
   color: #000;
 }
-
-
-
 </style>
  <link
       rel="stylesheet"
@@ -180,6 +210,10 @@ h1 {
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link href="https://fonts.googleapis.com/css?family=Anton&display=swap"
+	rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Inter&display=swap"
+	rel="stylesheet">
 </head>
 <body>
 	<main>
@@ -201,11 +235,8 @@ h1 {
           </li>
         </ul>
       </div>
-      <h1>Buddy</h1>
+      <h1 id="Buddy_title"><a href="/" style="color: #fff; text-decoration:none;" class="title_a">Buddy</a><span id="sub_title">with together</span></h1>
     </header>
-    
-    
-	
 		<div class="reg_div">
 		<form action="/reg" method="POST">
 			<table class="reg_table">
@@ -396,7 +427,7 @@ $(function(){
                 $("#alert-danger").css('color', 'red');
                 $("#alert-success").css('font-size', '14px');
                 $("#submit").attr("disabled", "disabled");
-            }    
+            }    	
         }
     });
 });
