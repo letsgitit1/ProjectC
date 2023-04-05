@@ -18,6 +18,9 @@ import com.mvc.carshare.service.CProductService;
 import com.mvc.carshare.service.CRegistrationsService;
 import com.mvc.carshare.vo.CMarker;
 import com.mvc.carshare.vo.CMarkerJoinCarDTO;
+import com.mvc.carshare.vo.CProductVo;
+
+import ch.qos.logback.core.util.SystemInfo;
 
 @Controller
 public class CMarkerController {
@@ -35,23 +38,28 @@ public class CMarkerController {
 
     @GetMapping("/Map/MapTestKyung")
     public String map(Model model) {
-
         List<CMarkerJoinCarDTO> list = null;
         list = service.getAllMarkersJoinCars();
-        System.out.println(list);
         model.addAttribute("markers" ,list);
-
+       
+        //테스트용찜
+       
+	    int user_id = 2; // 사용자 아이디 임시 값
+	    model.addAttribute("user_id", user_id);
+	    model.addAttribute("rent_id", 1);	// 임시데이터
+	  
+	    // 해당 사용자가 찜한 상품 번호 리스트를 가져옴
+	    List<Integer> wishList = pservice.wishCount(user_id);
+	    model.addAttribute("wishList", wishList);
         return"Map/MapTestKyung";
     }
 
     @PostMapping("/Map/Insert")
     @ResponseBody //이렇게 선언해야 ajax 데이타 받을 수 있음
     public String insert(@RequestBody CMarker vo) throws JsonProcessingException {
-        System.out.println(vo);
-        vo.setCar_number(1);
+        vo.setCar_number(3);
         int cnt=service.insertMarker(vo);
         Map<String, Object> result=new HashMap<>();
-        System.out.println(vo);
 
         result.put("cnt", cnt);
         String json=null;

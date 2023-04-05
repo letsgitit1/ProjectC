@@ -8,6 +8,11 @@
 	rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Inter&display=swap"
 	rel="stylesheet">
+	<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+	
 </head>
 <style type="text/css">
 .modal_h3 {
@@ -100,20 +105,20 @@ input[type="text"],[type="password"] {
             </li>
           </ul>
         </div>
-        <h1 id="Buddy_title">Buddy<span id="sub_title">with together</span></h1>
+        <h1 id="Buddy_title"><a href="/" style="color: #fff;" class="title_a" id="Buddy_title1">Buddy</a><span id="sub_title">with together</span></h1>
         <ul class="header_nav">
-          <li class="header_nav_item"><a href="reg">JOIN</a></li>
+          <li class="header_nav_item"><a href="/reg">JOIN</a></li>
           <li th:if="${session.vo}!=null" class="header_nav_item"><a href="/logout">LOGOUT</a></li>
          <li th:unless="${session.vo}!=null" class="header_nav_item"><a href="#modal1" rel="modal:open">LOGIN</a></li>
           <li class="header_nav_item"><a href="#">CHAT</a></li>
-          <li class="header_nav_item"><a href="#">MYPAGE</a></li>
+          <li class="header_nav_item"><a href="/mypage">MYPAGE</a></li>
         </ul>
       </header>
           </div>
       <div class="nav_area" style="margin-top:200px;">
         <ul class="nav_text">
           <li class="nav_detail_text"><a href="#">ABOUT</a></li>
-          <li class="nav_detail_text"><a href="#">SERVICE</a></li>
+          <li class="nav_detail_text"><a href="/Map/MapTestKyung">SERVICE</a></li>
           <li class="nav_detail_text"><a href="#">NOTICE</a></li>
         </ul>
       </div>    
@@ -123,13 +128,9 @@ const headerIcons = document.querySelectorAll(".header_icon li i");
 const headerNav = document.querySelector(".header_nav"); // ul 요소 가져오기
 const headerNavItems = headerNav.querySelectorAll("li>a"); // li 요소 가져오기
 const header=document.getElementById('header')
-const title=document.getElementById('Buddy_title')
+const title=document.getElementById('Buddy_title1')
 const sub_title=document.getElementById('sub_title')
-		window.addEventListener('scroll', function() {
-			  // 현재 스크롤 위치
-			  var scrollPosition = window.scrollY;
-			  console.log(scrollPosition);
-			});
+	
 
 window.addEventListener("scroll", function() {
 	if (window.scrollY > 3700) {

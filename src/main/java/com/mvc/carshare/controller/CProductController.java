@@ -30,7 +30,7 @@ public class CProductController {
 	    model.addAttribute("car", list);
 	    model.addAttribute("user_id", user_id);
 	    model.addAttribute("rent_id", 1);	// 임시데이터
-	    
+	
 	    // 해당 사용자가 찜한 상품 번호 리스트를 가져옴
 	    List<Integer> wishList = service.wishCount(user_id);
 	    model.addAttribute("wishList", wishList);
@@ -42,6 +42,7 @@ public class CProductController {
 	@PostMapping("/product/wishlist")
 	@ResponseBody
 	public String wishInsert(@RequestBody CWishListVo vo) {
+		System.out.println("위시리스트들어옴");
 		String result="fail";
 		if(service.check_wish(vo)==0) {
 			if(service.wishlist_insert(vo)==1) {
@@ -49,7 +50,6 @@ public class CProductController {
 			}
 		}
 		return result;
-	    
 	}
 
 	@DeleteMapping("/product/wishlist/delete")
