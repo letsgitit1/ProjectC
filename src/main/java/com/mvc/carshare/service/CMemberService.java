@@ -1,5 +1,14 @@
 package com.mvc.carshare.service;
 
-public class CMemberService {
+import org.springframework.stereotype.Service;
 
+import com.mvc.carshare.vo.CMemberVo;
+
+@Service
+public interface CMemberService {
+	public void remove(String email);
+	public void modify(CMemberVo cMemberVo);
+	public CMemberVo findByEmailAll(String email);
+	public int findByEmail(String email);
+	public String findByEamilAtRegisterId(int id);
 }

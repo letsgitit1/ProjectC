@@ -3,5 +3,34 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.mvc.carshare.dao.CMemberDao">
+ 	<delete id="remove">
+ 		DELETE FROM C_MEMBERS
+		WHERE Email = #{email}
+ 	</delete>
+ 	
+ 	<update id="modify">
+ 		UPDATE C_MEMBERS
+		SET USERNAME=#{username}, PASSWORD=#{password}, NAME=#{name}, AGE=#{age}, ADDRESS=#{address}, 
+			PHONE_NUMBER=#{phone_number}, DRIVER_LICENSE_NUMBER=#{driver_license_number}
+		WHERE EMAIL = #{email}
+ 	</update> 	
+ 	
+ 	<select id="findByEmailAll" resultType="CMemberVo">
+ 		SELECT ID, EMAIL, USERNAME, PASSWORD, NAME, AGE, GENDER, ADDRESS, 
+ 				PHONE_NUMBER, DRIVER_LICENSE_NUMBER, POINT, MANNERSCORE, AUTH
+		FROM C_MEMBERS WHERE EMAIL = #{email}
+ 	</select>
+ 	
+ 	<select id="findByEmail" resultType="_int">		<!-- 이메일로 id값 조회 -->
+		SELECT ID FROM C_MEMBERS WHERE EMAIL = #{email} GROUP BY ID
+ 	</select>
+ 	
+ 	<select id="findByEamilAtRegisterId" resultType="string">
+ 		SELECT EMAIL FROM C_REGISTRATIONS m1 JOIN 
+		(
+		SELECT c.ID, m.EMAIL FROM C_MEMBERS m JOIN C_CARS c ON m.ID = c.OWNER_ID
+		) m2
+		ON m1.CAR_NUMBER = m2.ID WHERE m1.ID = #{id}
+ 	</select>
  	
  </mapper>

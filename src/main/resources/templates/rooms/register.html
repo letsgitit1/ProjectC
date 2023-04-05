@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+
+	button {
+		font-size: 20px;
+	    border-radius: 10px;
+	    border-color: black;
+	    color: white;
+	    background-color: black;
+	    margin-top: 35px;
+	}
+
+</style>
+</head>
+<body>
+	<div style="width: 500px; height: 500px; margin: 0 auto; text-align: center;">
+		<form action="/rooms/register" method="post">
+			<div style="margin-top: 150px;">
+				<h1 style="font-size: 50px;">방 이름</h1> 
+			<div >
+				<input type="text" name="room_name" placeholder="방 이름 입력" style="font-size: 35px;">
+			</div>
+				판매 등록 번호(나중에 히든으로 값만 줄거임) : <input type="text" name="registrNum" placeholder="일단 1 or 2 넣으면 됨">
+				<input type="text" name="email" placeholder="세션에 저장된 email값이 들어갈것임">
+			<div>
+				<button>만들기</button>
+			</div>
+		</div>
+		</form>
+	</div>
+</body>
+</html>

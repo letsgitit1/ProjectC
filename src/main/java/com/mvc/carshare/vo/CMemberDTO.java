@@ -3,7 +3,7 @@ package com.mvc.carshare.vo;
 import lombok.Data;
 
 @Data
-public class CMemberVo {
+public class CMemberDTO {
 	private int id;
 	private String email;
 	private String username;
@@ -17,4 +17,5 @@ public class CMemberVo {
 	private int point;
 	private String mannerscore;
 	private String auth;
+	int registrNum;
 }

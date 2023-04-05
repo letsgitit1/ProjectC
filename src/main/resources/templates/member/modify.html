@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	input{
+		margin-bottom: 30px;
+		font-size: 21px;
+		margin-left: 100px;
+	    border: 1px solid red;
+	}
+	
+	.inputBox{
+		font-size: 20px;
+	}
+	
+	button{
+		font-size: 20px;
+	    border-radius: 10px;
+	    border-color: black;
+	    color: white;
+	    background-color: black;
+	}
+	
+	button:hover {
+		cursor: pointer;
+	}
+	
+</style>
+</head>
+<body>
+	<div style="width: 500px; height: 610px; margin: 0 auto;">
+		<div style="width: 100%; margin-top: 100px;">
+			<h1 style="text-align: center; margin-bottom: 60px;">회원 정보 수정</h1>
+			<form action="/member/modify" method="post">
+				<div class="inputBox">이름<input type="text" name="username" th:value="${member.username}"></div>
+				<div class="inputBox">비밀번호<input type="text" name="password" th:value="${member.password}" style="margin-left: 60px;"></div>
+				<div class="inputBox">닉네임<input type="text" name="name" th:value="${member.name}" style="margin-left: 80px;"></div>
+				<div class="inputBox">나이<input type="text" name="age" th:value="${member.age}"></div>
+				<div class="inputBox">주소<input type="text" name="address" th:value="${member.address}"></div>
+				<div class="inputBox">전화번호<input type="text" name="phone_number" th:value="${member.phone_number}" style="margin-left: 60px;"></div>
+				<div class="inputBox">면허증<input type="text" name="driver_license_number" th:value="${member.driver_license_number}" style="margin-left: 80px;"></div>
+				<div class="inputBox">
+					<input type="hidden" name="email" th:value="${member.email}">
+				</div>
+				<div style="text-align: center; margin-top: 20px;">
+					<button style="margin-right: 30px;">수정</button>
+					<button onclick="history.back()">취소</button>
+				</div>	
+			</form>
+		</div>
+	</div>
+	
+</body>
+</html>
