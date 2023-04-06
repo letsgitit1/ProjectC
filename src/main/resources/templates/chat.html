@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>hello</title>
+</head>
+<style>
+	.chatListBox {/* 채팅 리스트 */
+		font-size: 12px;
+		margin: 10px 0;
+		width: 350px;
+	}
+	.chatListContent{/* 채팅 내용 */
+		word-wrap: break-word; 
+		font-size: 20px;
+	}
+	
+	#msg{
+	    resize: none;
+	    margin-left: -5px;
+	    width: 530px;
+    	height: 27px;
+    	font-size: 20px;
+	}
+	
+	#msgArea{
+	    max-width: 580px;
+	    margin: 0 auto;
+	    overflow: hidden;
+	    height: 540px;
+		background-color: darkslategray;
+	}
+	
+	#myChat{
+		border-radius: 15px; 
+		background-color: yellow;
+	}
+	
+	#myChat .chatListContent{
+		padding-right: 11px; 
+		padding-left: 5px;
+	}
+	
+	#yourChat{
+		border-radius: 15px; 
+		background-color: darkgray; 
+	}
+	
+	.createdAt{
+		color: darkgrey;
+	}
+	
+	.modal {
+	    display: none; /* 초기에는 모달 숨김 */
+	    position: fixed; /* 화면에 고정 */
+	    z-index: 1; /* 다른 요소들보다 앞에 위치 */
+	    left: 0;
+	    top: 0;
+	    width: 100%;
+	    height: 100%;
+	    overflow: auto;
+	    background-color: rgba(0, 0, 0, 0.5); /* 배경에 투명한 검은색 레이어 */
+	}
+
+	.modal-content {
+		background-color: white;
+		margin: 1.5% auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 580px;
+		max-width: 610px;
+		border-radius: 10px;
+		position: relative;
+		height: 635px;
+	}
+
+	.close-btn {
+		position: absolute;
+		right: 10px;
+		top: 5px;
+		font-size: 28px;
+		font-weight: bold;
+		cursor: pointer;
+	}
+	
+	#button-send {
+		margin: 0px;
+        width: 44.424px;
+		height: 32.5px;
+	}
+</style>
+<body>
+
+
+
+<!-- 모달창 -->
+<div id="modal" class="modal">
+	<div class="modal-content">
+    <span class="close-btn">&times;</span>	<!-- 모달 닫기 버튼 -->
+    <h2 style="margin-top: 0px; margin-left: 15px;">모달창 제목</h2>	<!-- 모달창 제목 -->
+    
+    <div id="msgArea" class="col">
+    	<th:block th:each="message : ${list}">
+    		<!-- 중복값 제거하고 한번씩만 출력 -->
+    		<div th:if="${messageStat.first} or ${#strings.substring(message.created_at, 0, 10)} != ${#strings.substring(list[__${messageStat.index - 1}__].created_at, 0, 10)}">
+			    <div style="text-align: center; color: white;" th:text="${#strings.substring(message.created_at, 0, 10)}"></div>
+			</div>
+			
+   			<div class="chatListBox" th:if="${email} == ${message.email}" style="margin-left: 222px; text-align: right;">	<!-- 세션의 담긴 이메일과 리스트에 나온 이메일이 같으면 작성자니까 오른쪽에 나오게 하기 -->
+				<div id="myChat">
+					<div class="chatListContent" th:text="${message.content}"></div>
+				</div>
+				<div class="createdAt" th:text="${#strings.substring(message.created_at, 11, 16)}" style="margin-right: 5px;"></div>
+   			</div>
+   			
+   			<div class="chatListBox" th:unless="${email} == ${message.email}" style="text-align: left;">	<!-- 세션의 담긴 이메일과 리스트에 나온 이메일이 다르면 작성자가 아니니까 왼른쪽에 나오게 하기 -->
+		        <div th:text="${message.email}" style="margin-left: 5px; color: darkgrey;"></div>
+		        <div id="yourChat">
+		        	<div class="chatListContent" th:text="${message.content}" style="margin-left: 10px;"></div>
+		        </div>
+		        <div class="createdAt" style="margin-left: 5px;" th:text="${message.created_at}"></div>
+   			</div>
+		</th:block>
+    </div>
+	
+    <div class="col-6" style="margin: 0 auto; width: 570px">
+        <div class="input-group mb-3" style="width: 575px;">
+            <textarea rows="1" id="msg" style="overflow: auto;"></textarea>
+            <div class="input-group-append" style="float: right;">
+                <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
+            </div>
+        </div>
+    </div>
+	</div>
+</div>
+
+
+<!-- <div class="container">
+	<div class="col-6">
+	    <label><b>채팅방</b></label>
+	</div>
+	<div>
+	만약 세션에 담긴 이메일과 리스트에 뽑은 이메일 값이 같으면 오른쪽으로, 아니면 왼쪽으로 나오게 하기
+		<span th:text="${email} + ' - 입장한 아이디'"></span>
+	</div>
+</div>
+모달 열기 버튼
+<button id="open-modal-btn">채팅하기</button>
+<button class="btn btn-outline-secondary" type="button" onclick="location.href='/rooms/rooms'">나가기</button> -->
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script th:inline="javascript">
+
+		var element = document.getElementById("msgArea");
+		
+		/* 스크롤 바 없애고 휠 이동 */
+		const msgArea = document.querySelector('#msgArea');
+				msgArea.addEventListener('wheel', (e) => {
+				msgArea.scrollTo({
+				top: msgArea.scrollTop + e.deltaY,
+				behavior: 'smooth'
+			});
+			e.preventDefault();
+		});
+	
+		//모달창 열기
+		document.getElementById('modal').style.display = 'block';
+		
+		// 모달창 닫기
+		document.querySelector('.close-btn').addEventListener('click', function () {
+			document.getElementById('modal').style.display = 'none';
+			window.location.href = "/rooms/rooms";
+		});
+	
+		const textarea = document.querySelector('#msg');
+		
+		// 이벤트 핸들러 등록
+		const sendBtn = document.getElementById('button-send');
+		// 입력 내용이 없으면 크기를 원래 크기로 돌림
+		sendBtn.addEventListener('click', () => {
+			 textarea.style.height = '27px';
+			 textarea.style.overflow = 'hidden';
+			 textarea.style.maxHeight = '48px';
+		});
+		
+		textarea.addEventListener('input', () => {
+				textarea.style.height = 'auto';
+				textarea.style.height = `${textarea.scrollHeight}px`;
+				if (textarea.scrollHeight > 48) { // 최대 높이보다 높은 경우
+			        textarea.style.overflow = 'auto'; // 스크롤바 추가
+			        textarea.style.maxHeight = '48px';
+			    } else {
+			        textarea.style.overflow = 'hidden'; // 스크롤바 제거
+			        textarea.style.maxHeight = 'none';
+			    }
+		});
+	
+		window.onload = function() {
+			element.scrollTop = element.scrollHeight;
+		};
+	
+
+		$(document).ready(function(){
+
+			let chat_room_id = [[${roomId}]]	//채팅방 번호(ajax로 실시간 메신저 기록 디비에 저장할 때 필요)
+			let email = [[${email}]];			//세션아이디(채팅 아이디)
+			let username = [[${id}]];			//ajax로 실시간 메신저 기록 디비에 저장할 때 필요, 이것도 세션 아이디
+			
+			let chat = [[${list}]]
+			let size = [[${list.size()-1}]]
+			
+			/* 값 가져와서 비교 해야함 */
+			let chatAt = chat[size].created_at
+			let chatY = chatAt.substring(0, 4)
+			let chatM = chatAt.substring(5, 7)
+			let chatD = chatAt.substring(8, 10)
+			
+			
+			$("#disconn").on("click", (e) => {
+                disconnect();
+            })
+
+            $("#button-send").on("click", (e) => {
+                send();
+            });
+
+            const websocket = new WebSocket("ws://localhost:8085/ws/chat");
+
+            websocket.onmessage = onMessage;
+            websocket.onopen = onOpen;
+            websocket.onclose = onClose;
+
+            function send(){
+				
+            	username = [[${id}]];
+            	
+                let msg = document.getElementById("msg");
+                
+                if (msg.value.trim() == "") {
+                    alert("메시지를 입력해주세요.");
+                    return;
+                  }
+                
+                /* 비동기 통신으로 실시간 메세지 저장 */
+				$.ajax({
+	             	url: "/chat/message",
+	             	type: "post",
+	             	data: JSON.stringify({content: msg.value, sender_id: username, chat_room_id: chat_room_id}),
+	             	contentType: "application/json; charset=utf-8",
+	             	success: function() {
+	             			console.log("성공")
+						}
+	             });
+
+				username = email;
+				
+                websocket.send(username + ":" + msg.value );
+                msg.value = '';
+            }
+
+            //채팅창에서 나갔을 때
+            function onClose(evt) {
+                let str = email + " : 님이 방을 나가셨습니다.";
+                websocket.send(str);
+            }
+
+            //채팅창에 들어왔을 때
+            function onOpen(evt) {
+                /* let str = username + " : 님이 입장하셨습니다."; */
+                websocket.send(str);
+            }
+
+            function onMessage(msg) {
+            	
+                var data = msg.data;
+                var sessionId = null;
+                //데이터를 보낸 사람
+                var message = null;
+                var arr = data.split(":");
+                
+                for(var i=0; i<arr.length; i++){
+                    console.log('arr[' + i + ']: ' + arr[i]);
+                }
+                
+                var cur_session = email;
+                
+                //현재 세션에 로그인 한 사람
+                console.log("cur_session : " + cur_session);
+                sessionId = arr[0];
+                message = arr[1];
+                sessionId
+                var cur_session = email;
+                
+                console.log("sessionID : " + sessionId);
+                console.log("cur_session : " + cur_session);
+                
+                //작성 시간
+                let today = new Date();
+
+    			let year = today.getFullYear();
+    			let month = ('0' + (today.getMonth() + 1)).slice(-2);
+    			let day = ('0' + today.getDate()).slice(-2);
+    			let hours = ('0' + today.getHours()).slice(-2); 
+    			let minutes = ('0' + today.getMinutes()).slice(-2);
+    			let seconds = ('0' + today.getSeconds()).slice(-2);
+    			
+    			let now = year + '-' + month  + '-' + day + ' ' + hours + ':' + minutes;
+
+                //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
+				var str = "";
+				if(sessionId == cur_session){
+					if(!(year == chatY && month == chatM && day == chatD)){
+						str += "<div style='text-align: center; color: white;'>" + year + '-' + month  + '-' + day + "</div>"
+					}
+					str += "<div class='col-6 chatListBox' style='text-align: right; margin-left: 210px;'>";
+					str += "<div id='myChat'>"
+					str += "<div class='chatListContent'>" + message + "</div>";
+					str += "</div>"
+					str += "<div class='createdAt' style='margin-right: 5px;'>"+ hours + ':' + minutes +"</div>";
+					str += "</div>";
+					$("#msgArea").append(str); 
+				                     
+					element.scrollTop = element.scrollHeight;
+                 }
+                 else{
+                    if(!(year == chatY && month == chatM && day == chatD)){
+	                    str += "<div style='text-align: center; color: white;'>" + year + '-' + month  + '-' + day + "</div>"
+                    }
+                    str += "<div class='col-6 chatListBox' style='text-align: left;'>";
+                    str += "<div style='margin-left: 10px; color: darkgrey;'>" + sessionId + "</div>";
+                    str += "<div id='yourChat' style='margin-left: 8px;'>"
+                    str += "<div class='chatListContent' style='margin-left: 8px;'>" + message + "</div>";
+                    str += "</div>"
+                    str += "<div class='createdAt' style='margin-left: 10px;'>"+ hours + ':' + minutes +"</div>";
+                    str += "</div>";
+                    $("#msgArea").append(str);
+                     
+					element.scrollTop = element.scrollHeight;
+                 }
+                
+            }
+            
+            	
+		})
+            
+</script>
+
+</body>
+
+</html>

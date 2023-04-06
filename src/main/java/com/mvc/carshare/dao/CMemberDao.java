@@ -37,3 +37,4 @@ public interface CMemberDao {
 
 	CMemberVo selectOne (int id);
 }
+
