@@ -2,6 +2,7 @@ package com.mvc.carshare.service;
 
 import java.util.List;
 
+
 import org.springframework.stereotype.Service;
 
 import com.mvc.carshare.dao.CRoomsDao;
@@ -53,6 +54,5 @@ public class CRoomsServiceImpl implements CRoomsService {
 	public int checkRoom(CMemberDTO cMemberDTO) {
 		return cRoomsDao.checkRoom(cMemberDTO);
 	}
-
 
 }

@@ -21,10 +21,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mvc.carshare.service.CMemberService;
-import com.mvc.carshare.service.CPayMentService;
 import com.mvc.carshare.service.CProductService;
 import com.mvc.carshare.service.CRegistrationsService;
 import com.mvc.carshare.service.CReturnService;
+import com.mvc.carshare.service.CSPaymentService;
 import com.mvc.carshare.vo.CMemberVo;
 import com.mvc.carshare.vo.CPayMentVo;
 import com.mvc.carshare.vo.CProductVo;
@@ -40,9 +40,9 @@ public class CPayMentController {
 	private CMemberService mService;
 	private CRegistrationsService rService;
 	private CReturnService reService;
-	private CPayMentService pService;
+	private CSPaymentService pService;
 
-	public CPayMentController(CPayMentService pService,CProductService cService, CMemberService mService, CRegistrationsService rService,
+	public CPayMentController(CSPaymentService pService,CProductService cService, CMemberService mService, CRegistrationsService rService,
 			CReturnService reService) {
 		this.cService = cService; // Car
 		this.mService = mService; // member
