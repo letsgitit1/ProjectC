@@ -68,5 +68,11 @@
 		GROUP BY TRUNC(PAYMENT_DATE, 'YY')
 		ORDER BY PAYMENT_DATE
 	</select>
- 	
+ 	<insert id="paymentInsert" parameterType="CPayMentVo">
+		INSERT INTO C_PAYMENTS
+		(ORDER_NUMBER, REG_ID, RETURN_ID, PAYER_ID, PAYMENT_METHOD, PRICE, PAYMENT_DATE)
+		VALUES(payment_seq.nextval ,#{reg_id}, #{return_number},
+		#{payer_id}, #{payment_method},
+		#{price}, #{payment_date})
+	</insert>
  </mapper>

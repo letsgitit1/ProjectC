@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.mvc.carshare.dao.CSPaymentDao;
+import com.mvc.carshare.vo.CPayMentVo;
 import com.mvc.carshare.vo.CPaymentDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,9 @@ public class CPaymentServiceImpl implements CSPaymentService {
 	public List<CPaymentDTO> getYears() {
 		List<CPaymentDTO> list = cPaymentDao.getYears();
 		return list;
+	}
+	public int paymentInsert(CPayMentVo vo) {
+		return cPaymentDao.paymentInsert(vo);
 	}
 
 }
