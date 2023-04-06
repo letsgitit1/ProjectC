@@ -13,7 +13,10 @@
  	
  	<!-- 채팅방 들어가면 그 해당하는 방에서 채팅했던 목록 가져오기 -->									
  	<select id="getList" resultType="CChatmessageDTO">
- 		SELECT cm2.id, cm1.EMAIL, cm2.CONTENT, TO_CHAR(cm2.CREATED_AT, 'YYYY-MM-DD HH:MI') CREATED_AT, cm2.CHAT_ROOM_ID FROM C_MEMBERS cm1 JOIN C_MESSAGES cm2 ON cm1.ID = cm2.SENDER_ID WHERE cm2.CHAT_ROOM_ID = #{chat_room_id} ORDER BY cm2.CREATED_AT
+	SELECT cm2.id, cm1.EMAIL, cm2.CONTENT, TO_CHAR(cm2.CREATED_AT,
+	'YYYY-MM-DD HH24:MI') CREATED_AT, cm2.CHAT_ROOM_ID FROM C_MEMBERS cm1
+	JOIN C_MESSAGES cm2 ON cm1.ID = cm2.SENDER_ID WHERE cm2.CHAT_ROOM_ID =
+	#{chat_room_id} ORDER BY cm2.CREATED_AT
  	</select>
  	
 			<!-- 채팅 기록중 해당하는 닉네임으로 채팅한 기록이 있는지 확인 -->

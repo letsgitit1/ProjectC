@@ -14,7 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.mvc.carshare.service.CPaymentService;
+import com.mvc.carshare.service.CSPaymentService;
 import com.mvc.carshare.vo.CPaymentDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ExcelDownloadController {
 	
-	private final CPaymentService cPaymentService;
+	private final CSPaymentService cPaymentService;
 
     @GetMapping("/download")
     public void downloadExcel(HttpServletResponse response, String getList, String fileName) throws IOException {

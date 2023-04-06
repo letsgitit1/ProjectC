@@ -2,60 +2,68 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="com.mvc.carshare.dao.CRoomsDao">
- 	
- 	<!-- 방 만들기 -->
- 	<insert id="register">
- 		INSERT INTO C_CHAT_ROOMS
-		(ID, ROOM_NAME, REGISTRNUM)
-		VALUES(chat_room_seq.NEXTVAL, #{room_name}, #{registrNum})
- 	</insert>
- 	
- 	<!-- 대화방 -->
- 	<select id="getList" resultType="CRoomsVO">
-	 	SELECT m2.ID, m2.CREATED_AT, m2.ROOM_NAME, EMAIL FROM C_MEMBERS m1 JOIN 
-		(SELECT r.ID, r.CREATED_AT, r.ROOM_NAME, m.SENDER_ID FROM C_CHAT_ROOMS r JOIN C_MESSAGES m ON r.ID = m.CHAT_ROOM_ID) m2
-		ON m1.ID = m2.SENDER_ID WHERE EMAIL = #{email} GROUP BY m2.ID, m2.CREATED_AT, m2.ROOM_NAME, EMAIL ORDER BY m2.CREATED_AT
- 	</select>
- 	
- 	<!-- 시퀀스값 가져오기 -->
- 	<select id="getSeq" resultType="_int">
- 		SELECT chat_room_seq.CURRVAL FROM DUAL
- 	</select>
- 	
- 	<!-- 대화 내용 없는 방 검색 -->
- 	<select id="contentIsNull" resultType="CRoomsVO">
- 		SELECT r.ID FROM C_CHAT_ROOMS r LEFT OUTER JOIN C_MESSAGES m ON r.ID = m.CHAT_ROOM_ID WHERE CONTENT IS NULL
- 	</select>
- 	
- 	<!-- 방 지우기 -->
- 	<delete id="removeRoom">
- 		DELETE FROM C_CHAT_ROOMS
+<mapper namespace="com.mvc.carshare.dao.CRoomsDao">
+
+	<!-- 방 만들기 -->
+	<insert id="register">
+		INSERT INTO C_CHAT_ROOMS
+		(ID,created_at ,ROOM_NAME, REGISTRNUM)
+		VALUES(chat_room_seq.NEXTVAL,sysdate, #{room_name}, #{registrNum})
+	</insert>
+
+	<!-- 대화방 -->
+	<select id="getList" resultType="CRoomsVO">
+		SELECT m2.ID, m2.CREATED_AT, m2.ROOM_NAME, EMAIL FROM C_MEMBERS m1 JOIN
+		(SELECT r.ID, r.CREATED_AT, r.ROOM_NAME, m.SENDER_ID FROM C_CHAT_ROOMS
+		r JOIN C_MESSAGES m ON r.ID = m.CHAT_ROOM_ID) m2
+		ON m1.ID =
+		m2.SENDER_ID WHERE EMAIL = #{email} GROUP BY m2.ID, m2.CREATED_AT,
+		m2.ROOM_NAME, EMAIL ORDER BY m2.CREATED_AT
+	</select>
+
+	<!-- 시퀀스값 가져오기 -->
+	<select id="getSeq" resultType="_int">
+		SELECT chat_room_seq.CURRVAL FROM DUAL
+	</select>
+
+	<!-- 대화 내용 없는 방 검색 -->
+	<select id="contentIsNull" resultType="CRoomsVO">
+		SELECT r.ID FROM C_CHAT_ROOMS r LEFT OUTER JOIN C_MESSAGES m ON r.ID =
+		m.CHAT_ROOM_ID WHERE CONTENT IS NULL
+	</select>
+
+	<!-- 방 지우기 -->
+	<delete id="removeRoom">
+		DELETE FROM C_CHAT_ROOMS
 		WHERE ID = #{id}
- 	</delete>
- 	
- 	<!-- 판매 등록자의 대화방 리스트 -->
- 	<select id="registerList" resultType="CRoomsVO">
- 		SELECT m2.ID, m2.CREATED_AT, m2.ROOM_NAME, EMAIL FROM C_MEMBERS m1 JOIN
+	</delete>
+
+	<!-- 판매 등록자의 대화방 리스트 -->
+	<select id="registerList" resultType="CRoomsVO">
+		SELECT m2.ID, m2.CREATED_AT, m2.ROOM_NAME, EMAIL FROM C_MEMBERS m1 JOIN
 		(
-			SELECT d.ID, d.CREATED_AT, d.ROOM_NAME, c.OWNER_ID FROM C_CARS c JOIN
-			(
-			SELECT a.ID, a.CREATED_AT, a.ROOM_NAME, b.CAR_NUMBER FROM C_CHAT_ROOMS a JOIN
-			C_REGISTRATIONS b ON a.REGISTRNUM = b.ID
-			) d ON
-			c.ID = d.CAR_NUMBER
-		) m2 ON 
-		m2.OWNER_ID = m1.ID AND EMAIL = #{email} ORDER BY CREATED_AT
- 	</select>
- 	
- 	<!-- 기존에 대화중인 방이 있는지 중복 검사 -->
- 	<select id="checkRoom" resultType="_int">
- 		SELECT NVL(MAX(m2.ID),0) FROM C_MEMBERS m1 JOIN
+		SELECT d.ID, d.CREATED_AT, d.ROOM_NAME, c.OWNER_ID FROM C_CARS c JOIN
 		(
-		SELECT  r.ID, r.REGISTRNUM, m.SENDER_ID FROM C_CHAT_ROOMS r JOIN C_MESSAGES m ON r.ID = m.CHAT_ROOM_ID
+		SELECT a.ID, a.CREATED_AT, a.ROOM_NAME, b.CAR_NUMBER FROM C_CHAT_ROOMS a
+		JOIN
+		C_REGISTRATIONS b ON a.REGISTRNUM = b.ID
+		) d ON
+		c.car_id = d.CAR_NUMBER
 		) m2 ON
-		m1.ID = m2.SENDER_ID AND m2.REGISTRNUM = #{registrNum} AND m1.EMAIL = #{email}
- 	</select>
- 	
- 	
- </mapper>
+		m2.OWNER_ID = m1.ID AND EMAIL = #{email} ORDER BY CREATED_AT
+	</select>
+
+	<!-- 기존에 대화중인 방이 있는지 중복 검사 -->
+	<select id="checkRoom" resultType="_int">
+		SELECT NVL(MAX(m2.ID),0) FROM C_MEMBERS m1 JOIN
+		(
+		SELECT r.ID, r.REGISTRNUM,
+		m.SENDER_ID FROM C_CHAT_ROOMS r JOIN C_MESSAGES m ON r.ID =
+		m.CHAT_ROOM_ID
+		) m2 ON
+		m1.ID = m2.SENDER_ID AND m2.REGISTRNUM =
+		#{registrNum} AND m1.EMAIL = #{email}
+	</select>
+
+
+</mapper>

@@ -4,16 +4,16 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.mvc.carshare.dao.CPaymentDao;
+import com.mvc.carshare.dao.CSPaymentDao;
 import com.mvc.carshare.vo.CPaymentDTO;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CPaymentServiceImpl implements CPaymentService {
+public class CPaymentServiceImpl implements CSPaymentService {
 	
-	private final CPaymentDao cPaymentDao;
+	private final CSPaymentDao cPaymentDao;
 	
 //	일별 매출 조회
 	@Override
