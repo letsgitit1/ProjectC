@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>차량 판매 등록 페이지</title>
+<link rel="stylesheet" type="text/css" href="../css/carsale.css">
+</head>
+<body>
+	<div th:include="header.html"></div>
+	<div class="container">
+		<form th:action="@{/car/car_sReg}" method="post">
+			<div class="car-info">
+				<h2>CAR INFORMATION</h2>
+				<th:block th:each="pic,i:${#strings.setSplit(cmvo.car_image,',')}">
+					<img th:src="@{/uploads/}+${pic}" alt="이미지"
+						style="width: 200px; height: 200px; float: left; margin-right: 50px;">
+					<div class="car-item">
+						<label>CAR NUMBER:</label> <span>[[${cmvo.car_number}]]</span>
+					</div>
+					<div class="car-item">
+						<label>MODEL:</label> <span>[[${cmvo.car_model}]]</span>
+					</div>
+					<div class="car-item">
+						<label>MANUFACTURER:</label> <span>[[${cmvo.MANUFACTURER}]]</span>
+					</div>
+					<div class="car-item">
+						<label>TYPE:</label> <span>[[${cmvo.car_type}]]</span>
+					</div>
+					<div class="car-item">
+						<label>ENGINE:</label> <span>[[${cmvo.engine_type}]]</span>
+					</div>
+					<div class="car-item">
+						<label>YEAR:</label> <span>[[${cmvo.c_year}]]</span>
+					</div>
+					<input type="hidden" name="id" th:value="${cmvo.id}" />
+					<input type="hidden" name="car_number" th:value="${cmvo.car_id}" />
+			</div>
+			<div class="price">
+				<h2>PRICE INFORMATION</h2>
+				<div class="form-item">
+					<label for="price">PRICE:</label> <input type="text" id="price"
+						name="rent_price" placeholder="Please enter a price">
+				</div>
+				<div class="form-item">
+					<label for="rent-time">RENT TIME:</label> <select id="rent-time"
+						name="rent_time">
+						<option value="6">6 hours</option>
+						<option value="12">12 hours</option>
+						<option value="18">18 hours</option>
+						<option value="24">24 hours</option>
+						<option value="30">30 hours</option>
+						<option value="36">36 hours</option>
+						<option value="40">40 hours</option>
+					</select>
+				</div>
+
+			</div>
+			<div class="submit-btn" style="margin: 0 auto;">
+				<input type="submit" value="Registration">
+			</div>
+		</form>
+	</div>
+	<div th:include="footer.html"></div>
+</body>
+</html>

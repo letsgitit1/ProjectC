@@ -13,6 +13,8 @@ public CRegistrationsService (CRegistrationsDao dao) {this.dao=dao;}
 	public CRegistrationsVo selectRegByCarNumber (int car_number) {
 		return dao.selectRegByCarNumber(car_number);
 		}
-	
+	public int insertReg(CRegistrationsVo vo) {
+		return dao.insertReg(vo);
+	}
 	
 }

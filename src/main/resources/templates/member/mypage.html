@@ -48,6 +48,7 @@ main {
 	cursor: pointer;
 	font-size: 17px;
 	box-shadow: 5px 5px 5px #828282;
+	font-family:inter;
 	
 }
 .mypage_button:hover {
@@ -228,13 +229,15 @@ footer {
           <li class="header_nav_item"><a href="#">CHAT</a></li>
           <li class="header_nav_item"><a href="/mypage">MYPAGE</a></li>
       </ul>
+      </header>
 </div>
+
 <div class="nav_area" style="margin-top:200px;">
   <div class="mypage_div">
 		<h2 class="mypage_div_mypage">MY PAGE</h2> <br>
-		 <p class="mypage_div_p">닉네임 > [[${session.vo.name}]]</p>
-		<p class="mypage_div_p">주소 > [[${session.vo.address}]]</p>
-		<p class="mypage_div_p">적립금 > [[${session.vo.point}]]</p> -->
+		 <p class="mypage_div_p">Name > [[${session.vo.name}]]</p>
+		<p class="mypage_div_p">Address > [[${session.vo.address}]]</p>
+		<p class="mypage_div_p">Point > [[${session.vo.point}]]</p> -->
 	</div>
 </div>
 
@@ -258,16 +261,15 @@ footer {
       }
    });
 </script>
-</header>
 	
 	<div class="mypage_div_a">
-			<button class="mypage_button" onclick="location.href='/update'">회원정보수정</button> <br>
-			<button class="mypage_button" onclick="location.href='/carSel'">등록차량조회</button> <br>
-			<button class="mypage_button" onclick="location.href='/review/write'">후기작성/구현중</button> <br>
-			<button class="mypage_button" onclick="location.href='/review/writebyme'">내가쓴후기</button> <br>
-			<button class="mypage_button" onclick="location.href='/mypage'">결제내역/구현해야함</button> <br>
-			<button class="mypage_button" onclick="location.href='#'">회원탈퇴/구현해야함</button> <br>
-	</div>
+			<button class="mypage_button" onclick="location.href='/update'">Member modify</button> <br>
+			<button class="mypage_button" onclick="location.href='/carSel'">Car modify</button> <br>
+			<button class="mypage_button" onclick="location.href='/review/write'">Writing a review</button> <br>
+			<button class="mypage_button" onclick="location.href='/review/writebyme'">View reviews^</button> <br>
+			<button class="mypage_button" onclick="location.href='/mypage'">Payment^</button> <br>
+			<button class="mypage_button" onclick="location.href='#'">Member Bye</button> <br>
+		</div>
 	
 	<div class="mypage_div_list">
 		<h3 class="mypage_h">주문내역 조회</h3>

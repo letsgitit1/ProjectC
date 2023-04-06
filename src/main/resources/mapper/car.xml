@@ -2,39 +2,67 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="com.mvc.carshare.dao.CCarDao">
-     <!-- 내차등록 -->
-    <insert id="carReg" parameterType="CCarVo">
-       INSERT INTO C_CARS
-      (car_id, CAR_NUMBER, OWNER_ID, CAR_MODEL, MANUFACTURER, ENGINE_TYPE, CAR_TYPE, C_YEAR)
-      VALUES(cars_seq.nextval,#{car_number}, #{owner_id}, #{car_model},
-       #{manufacturer}, #{engine_type}, #{car_type}, #{c_year})
-    </insert>
-    
-    <!-- 등록된 차량 조회 -->
-    <select id="carSel" parameterType="String" resultType="CCarDto">
-       SELECT CAR_NUMBER ,CAR_MODEL ,MANUFACTURER ,ENGINE_TYPE ,CAR_TYPE ,C_YEAR ,driver_License_number, car_image, owner_id,car_id FROM 
-      C_CARS cc 
-      JOIN C_MEMBERS cm 
-      ON cm.ID =cc.OWNER_ID
-      WHERE username = #{username}
-      order by car_id
-    </select>
-    
-    <!-- 내차 평점 -->
-    <select id="carSc" parameterType="int" resultType="int">
-       SELECT nvl(AVG(CAR_SCORE),0) FROM C_REVIEWS cr 
-      WHERE cr.CAR_NUMBER IS NOT NULL AND CAR_NUMBER =#{car_number}
-    </select>
-    
-    <!-- 차 번호 구하기 -->
-     <select id="getCarNum" parameterType="String" resultType="int">
-       SELECT CAR_ID FROM 
-      C_CARS cc 
-      JOIN C_MEMBERS cm 
-      ON cm.ID =cc.OWNER_ID
-      WHERE EMAIl = #{email}
-    </select>
- 	
- 	
- </mapper>
+<mapper namespace="com.mvc.carshare.dao.CCarDao">
+	<!-- 내차등록 -->
+	<insert id="carReg" parameterType="CCarVo">
+		INSERT INTO C_CARS
+		(car_id, CAR_NUMBER, OWNER_ID, CAR_MODEL, MANUFACTURER, ENGINE_TYPE, CAR_TYPE,
+		C_YEAR)
+		VALUES(cars_seq.nextval,#{car_number}, #{owner_id}, #{car_model},
+		#{manufacturer}, #{engine_type}, #{car_type}, #{c_year})
+	</insert>
+
+	<!-- 판매 등록된 차량 조회 -->
+	<select id="carSel" parameterType="int" resultType="CCarDto">
+		SELECT r.CAR_NUMBER ,r.CAR_MODEL ,r.MANUFACTURER ,r.ENGINE_TYPE ,r.CAR_TYPE
+		,r.C_YEAR ,cm.driver_License_number, r.car_image,r.owner_id,r.car_id,r.car_model
+		,s.RENT_PRICE,s.RENT_TIME,s.RENT_TIME
+		FROM C_cars r
+		JOIN C_registrations s ON s.car_number = r.CAR_ID
+		JOIN C_MEMBERS cm ON r.OWNER_ID = cm.ID AND cm.ID=#{id}
+	</select>
+
+	<!-- 내차 평점 -->
+	<select id="carSc" parameterType="int" resultType="int">
+		SELECT nvl(AVG(CAR_SCORE),0) FROM C_REVIEWS cr
+		WHERE cr.CAR_NUMBER IS NOT NULL AND CAR_NUMBER =#{car_number}
+	</select>
+
+	<!-- 차 번호 구하기 -->
+	<select id="getCarNum" parameterType="String" resultType="int">
+		SELECT CAR_ID FROM
+		C_CARS cc
+		JOIN C_MEMBERS cm
+		ON cm.ID =cc.OWNER_ID
+		WHERE EMAIl = #{email}
+
+
+	</select>
+	<!--회원아이디, 차량id로 정보가져오기 -->
+	<select id="memberByCar" parameterType="map" resultType="CMDto">
+		SELECT
+		c.CAR_NUMBER,CAR_IMAGE,CAR_MODEL,c.MANUFACTURER,c.ENGINE_TYPE,c.CAR_TYPE,c.C_YEAR,c.CAR_ID,cm.id
+		FROM C_CARS c JOIN C_MEMBERS cm ON c.OWNER_ID = cm.ID AND cm.id=#{id}
+		AND car_id=#{car_id}
+	</select>
+
+	<!--등록되지 않은 차량정보 가져오기 -->
+	<select id="notregcar" parameterType="int"
+		resultType="CNotRegCarDto">
+		SELECT *
+		FROM C_CARS c
+		WHERE c.OWNER_ID = #{owner_id}
+		AND NOT EXISTS (
+		SELECT 1
+		FROM C_REGISTRATIONS r
+		WHERE r.CAR_NUMBER = c.CAR_ID
+		)
+	</select>
+	
+	    <!-- 등록차량 삭제 -->
+    <delete id="delete_car" parameterType="CCarVo">
+       DELETE FROM C_CARS
+      WHERE CAR_ID= #{car_id} AND OWNER_ID = #{owner_id}
+    </delete>
+
+</mapper>

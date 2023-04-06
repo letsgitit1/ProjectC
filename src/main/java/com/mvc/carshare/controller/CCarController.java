@@ -1,7 +1,6 @@
 package com.mvc.carshare.controller;
 //이동해
 
-import java.net.http.HttpRequest;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +11,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mvc.carshare.service.CCarService;
+import com.mvc.carshare.service.CRegistrationsService;
+import com.mvc.carshare.vo.CMDto;
 import com.mvc.carshare.vo.CMemberVo;
+import com.mvc.carshare.vo.CNotRegCarDto;
+import com.mvc.carshare.vo.CRegistrationsVo;
 import com.mvc.carshare.vo.CcarDto;
 import com.mvc.carshare.vo.CcarVo;
 
@@ -26,9 +30,10 @@ import lombok.extern.slf4j.Slf4j;
 public class CCarController {
 	private CCarService service;
 	private ObjectMapper objectMapper = new ObjectMapper();
-	
-	public CCarController(CCarService service) {
+	private CRegistrationsService rService;
+	public CCarController(CCarService service,CRegistrationsService rService) {
 		this.service = service;
+		this.rService=rService;
 	}
 	
 	// 내차등록페이지로 이동
@@ -53,24 +58,53 @@ public class CCarController {
 		HttpSession session = request.getSession();
 		CMemberVo vo = (CMemberVo)session.getAttribute("vo");
 		System.out.println(vo);
-		String username = vo.getUsername();
+		int id= vo.getId();
 		String email = vo.getEmail();
 		
 		//차의 평균 값 셋팅
-		List<CcarDto> list = service.getCarList(username);
+		List<CcarDto> list = service.getCarList(id);
 		List<Integer> list2 = service.getCarNum(email);
-		System.out.println(list);
-		
+		 List<CNotRegCarDto> list3=service.notregcar(vo.getId());
+		 model.addAttribute("list3",list3);
+		 System.out.println("차량리스트=======================>"+list);
+		System.out.println(list3);
 		for (int i = 0; i < list.size(); i++) {
 			if(list.get(i).getCar_score()!=0) {
 			list.get(i).setCar_score(service.carSc((int)list2.get(i)));//i차량 평점을 주입
 			}
 		}
-	
-		
 		model.addAttribute("list",list);
-		model.addAttribute("username",username);
+		model.addAttribute("id",id);
+		
 		return "car/carSel";
 	}
-	
+	//자동차 판매등록창
+	@GetMapping("/car/saleReg")
+	public String saleReg(@RequestParam("carId") int carId, HttpServletRequest request,Model model) {
+	    HttpSession session = request.getSession();
+	    CMemberVo vo = (CMemberVo) session.getAttribute("vo");
+	    CMDto cmvo = service.memberByCar(vo.getId(), carId);
+	    model.addAttribute("cmvo",cmvo);
+	   System.out.println(cmvo);
+	   
+	    return "car/saleReg";
+	}
+	//자동차 판매등록
+	@PostMapping("/car/car_sReg")
+	public String insertReg(@ModelAttribute CRegistrationsVo vo) {
+		String url="";
+		if(rService.insertReg(vo)==1) {
+			url="member/mypage";
+		}else {
+			url="car/regfail";
+		}
+		return url;
+	}
+	   //등록차량 삭제
+	   @PostMapping("/delete")
+	   public String delete_car(@ModelAttribute CcarVo vo) {
+	      log.info("controller vo = {}",vo);
+	      service.delete_car(vo);
+	      return "redirect:/";
+	   }
 }

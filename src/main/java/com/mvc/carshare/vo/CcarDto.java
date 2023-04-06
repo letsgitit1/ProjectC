@@ -1,4 +1,6 @@
 package com.mvc.carshare.vo;
+import java.sql.Timestamp;
+
 //이동해
 //평점 구하기용
 import lombok.AllArgsConstructor;
@@ -26,4 +28,8 @@ public class CcarDto {
 	private String car_type;		//자동차 타입
 	private String c_year;			//연식
 	private int car_score;
+	private int rent_price;
+	private int rent_time;
+	private Timestamp registered_at;
+	
 }

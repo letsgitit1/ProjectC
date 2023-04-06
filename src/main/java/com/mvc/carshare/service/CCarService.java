@@ -1,12 +1,16 @@
 package com.mvc.carshare.service;
 //이동해
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mvc.carshare.dao.CCarDao;
+import com.mvc.carshare.vo.CMDto;
+import com.mvc.carshare.vo.CNotRegCarDto;
 import com.mvc.carshare.vo.CcarDto;
 import com.mvc.carshare.vo.CcarVo;
 
@@ -30,7 +34,7 @@ public class CCarService {
 	}
 
 	// 차량조회
-	public List<CcarDto> getCarList(String id) {
+	public List<CcarDto> getCarList(int id) {
 		log.info("service id = {}", id);
 		return dao.carSel(id);
 	}
@@ -45,4 +49,19 @@ public class CCarService {
 	public List<Integer> getCarNum(String id) {
 		return dao.getCarNum(id);
 	}
+	
+	public CMDto memberByCar(int id, int car_id) {
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("id", id);
+	    params.put("car_id", car_id);
+	    return dao.memberByCar(params);
+	}
+	public List<CNotRegCarDto> notregcar(int owner_id) {
+		return dao.notregcar(owner_id);
+	}
+	 //등록차량 삭제
+	   public int delete_car(CcarVo vo) {
+	      log.info("service carvo = {}",vo);
+	      return dao.delete_car(vo);
+	   }
 }
