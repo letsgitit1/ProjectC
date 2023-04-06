@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.mvc.carshare.dao.CProductDao">
  	<select id="SelectAll" resultType="CProductVo">
- 			SELECT * FROM C_CARS ORDER BY id 
+ 			SELECT * FROM C_CARS
 	 </select>
 	 <insert id="wishlist_insert">
 		 INSERT INTO C_WISHLISTS
@@ -12,9 +12,17 @@
 		VALUES(wishlist_sequence.nextval, #{user_id},#{car_number} )
  	</insert>
  	<delete id="wishlist_delete">
- 		DELETE FROM C_WISHLISTS WHERE USER_ID=#{user_id} AND CAR_NUMBER=#{car_number}
+ 		DELETE FROM C_WISHLISTS WHERE USER_ID=#{user_id} AND car_number=#{car_number}
  	</delete>
  	<select id="check_wish" parameterType="CProductVo" resultType="int">
- 		SELECT count (*) FROM C_WISHLISTS WHERE USER_ID=#{user_id} AND CAR_NUMBER=#{car_number}
+ 		SELECT count (*) FROM C_WISHLISTS WHERE USER_ID=#{user_id} AND car_number=#{car_number}
+ 	</select>
+ 	
+   	<select id="selectCarByCar_number" resultType="CProductVo" parameterType="int">
+ 		select * from C_CARS where car_id=#{car_id}
+ 	</select>
+ 	
+ 	<select id="wishCount" resultType="int" parameterType="int">
+ 		SELECT car_number FROM C_wishlists WHERE user_id = #{user_id}
  	</select>
  </mapper>

@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="com.mvc.carshare.dao.CRegistrations">
- 	<select id="selectRegByCarNumber" parameterType="int" resultType="CRegistrationsVo">
- 		SELECT * FROM C_REGISTRATIONS WHERE CAR_NUMBER=#{car_number};
+ <mapper namespace="com.mvc.carshare.dao.CRegistrationsDao">
+ <select id="selectRegByCarNumber" parameterType="int" resultType="CRegistrationsVo">
+ 		SELECT * FROM C_REGISTRATIONS WHERE CAR_NUMBER=#{car_number}
  	</select>
+ 	<insert id="insertReg" parameterType="CRegistrationsVo">
+ 	INSERT INTO C_REGISTRATIONS
+	(ID, RETURN_REGION_ID, CAR_NUMBER, RENT_PRICE, RENT_TIME, REGISTERED_AT)
+	VALUES(registrations_seq.nextval, #{id}, #{car_number}, #{rent_price}, #{rent_time}, sysdate)
+ 	</insert>
  </mapper>

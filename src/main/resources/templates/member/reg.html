@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<style type="text/css">
+body {
+	background: black;
+	margin: 0px;
+}
+
+
+.reg_div {
+	width: 500px;
+	margin: auto;
+	background-color: white;
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.reg_table {
+	margin: auto;
+	width: 100%;
+}
+
+th, td {
+  padding: 15px 15px 10px 10px;
+}
+
+tr > td {
+  text-align: left;
+}
+
+th {
+	text-align: right;
+}
+
+.reg_button {
+	background: black;
+	color: white;
+	padding: 5px;
+	margin-left: 50px;
+	margin-bottom : 10px;
+	width: 80%;
+	height: 40px;
+	border-radius: 6px;
+	font-size: 15px;
+}
+
+.reg_button:hover {
+cursor: pointer;
+background-color: silver;
+border: 1px solid silver;
+}
+
+input[type="text"],[type="password"],[type="number"],[type="tel"],[type="email"] {
+	width: 70%;
+	height: 30px;
+	border: 1px solid silver;
+	border-radius: 4px;
+}
+.input_ph::-webkit-input-placeholder {
+	padding-left: 10px;
+}
+.input_ph:hover{
+	border: 1px solid black;
+}
+.idOK {
+	font-size: 9px;
+}
+
+.table_radio input[type=radio]{
+    display: none;
+}
+.table_radio input[type=radio]+label {
+	display: inline-block;
+    cursor: pointer;
+    height: 24px;
+    width: 120px;
+    border: 1px solid silver;
+    border-radius: 4px;
+    line-height: 24px;
+    text-align: center;
+    font-weight:bold;
+    font-size:13px;
+}
+.table_radio input[type=radio]+label{
+    background-color: #fff;
+    color: #333;
+}
+.table_radio input[type=radio]:checked+label{
+    background-color: #333;
+    color: #fff;
+}
+
+
+/* 모든 스크롤바 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+#sub_title{
+	     position: absolute;
+    font-family: inter;
+    top: 70%;
+    left: 188%;
+    width: 100%;
+    transform: translate(-90%, -10%);
+    font-size: 13px;
+    font-weight: 700;
+}
+li {
+  list-style: none;
+}
+header {
+  width: 100%;
+  position: relative;
+  height: 200px;
+  z-index:999;
+  background-color: #000;
+}
+#stick_div{
+	position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+}
+h1 {
+  color: #fff;
+  position: absolute;
+  font-family:Anton;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 58px;
+}
+.header_icon1,
+.header_nav {
+  color: #fff;
+  list-style: none;
+}
+.header_icon_area {
+  width: 100%;
+  position: absolute;
+  top: 60%;
+  left: 5%;
+}
+.header_icon {
+  display: flex;
+  justify-content: space-between; /* 각 li 요소를 동일한 간격으로 배치 */
+  list-style: none; /* li 요소의 리스트 마커 제거 */
+  padding: 0; /* ul 요소의 기본 패딩 제거 */
+}
+
+.header_icon > li {
+  margin: 0px 20px;
+      color: #fff;
+}
+.header_icon {
+  width: 320px;
+  height: 32px;
+}
+.header_nav {
+  position: absolute;
+  right: 100px;
+  top: 100px;
+  line-height: 50px;
+  font-size: 22px;
+  font-weight: bold;
+}
+.header_nav_item:first-child > a,
+.header_nav_item:nth-child(2) > a {
+	font-family: 'Anton', sans-serif;
+    font-weight: normal;
+    font-size: 1.5rem;
+  color: #fff;
+}
+.header_nav_item:nth-child(3) {
+  z-index: 999;
+  color: #000;
+}
+.header_nav_item:last-child {
+  z-index: 999;
+  color: #000;
+}
+.header_nav_item:nth-child(3) > a {
+	font-family: 'Anton', sans-serif;
+    font-weight: normal;
+    font-size: 1.5rem;
+  color: #000;
+}
+.header_nav_item:last-child > a {
+	font-family: 'Anton', sans-serif;
+    font-weight: normal;
+    font-size: 1.5rem;
+  color: #000;
+}
+</style>
+ <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link href="https://fonts.googleapis.com/css?family=Anton&display=swap"
+	rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Inter&display=swap"
+	rel="stylesheet">
+</head>
+<body>
+	<main>
+	
+	 <header>
+      <div class="header_icon_area">
+        <ul class="header_icon">
+          <li class="header_icon">
+            <a><i class="fa-brands fa-facebook fa-xl"></i></a>
+          </li>
+          <li class="header_icon">
+            <a><i class="fa-brands fa-instagram fa-xl"></i></a>
+          </li>
+          <li class="header_icon">
+            <a><i class="fa-brands fa-twitter fa-xl"></i></a>
+          </li>
+          <li class="header_icon">
+            <a><i class="fa-brands fa-discord fa-xl"></i></a>
+          </li>
+        </ul>
+      </div>
+      <h1 id="Buddy_title"><a href="/" style="color: #fff; text-decoration:none;" class="title_a">Buddy</a><span id="sub_title">with together</span></h1>
+    </header>
+		<div class="reg_div">
+		<form action="/reg" method="POST">
+			<table class="reg_table">
+				<tr>
+					<th><label for="email">아이디</label></th>
+					<td><input type="email" name="email" id="email" required class="input_ph" placeholder="이메일형식으로 작성해주세요"> <br>
+					<span id="idOK"></span> </td>
+				</tr>
+				<tr>
+					<th><label for="password">패스워드</label></th>
+					<td><input type="password" name="password" id="password" required class="input_ph" placeholder="8자 이상"> <br>
+					<div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
+					<div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다.</div></td>
+				</tr>
+				<tr>
+					<th><label for="password2"></label></th>
+					<td><input type="password" name="password2" id="password2" required placeholder="비밀번호 재입력" class="input_ph"></td>
+				</tr>
+				<tr>
+					<th><label for="rname">이름</label></th>
+					<td><input type="text" name="username" id="rname" required class="input_ph" ></td>
+				</tr>
+				<tr>
+					<th><label for="rage">나이</label></th>
+					<td><input type="number" name="age" id="rage" required class="input_ph" ></td>
+				</tr>
+				<tr>
+					<th>성별</th>
+					<td class="table_radio">
+						<input type="radio" name="gender" id="radio_man" value="남성" required checked>
+						<label for="radio_man" class="radio_man">남</label>
+    					<input type="radio" name="gender" id="radio_women" value="여성" required>
+						<label for="radio_women" class="radio_women">여</label>
+    				</td>	
+				</tr>
+				<tr>
+					<th><label for="raddress">주소</label></th>
+					<td><input type="text" name="address" id="raddress" required class="input_ph" ></td>
+				</tr>
+				<tr>
+					<th><label for="rphone">전화번호</label></th>
+					<td><input type="tel" name="phone_number" id="rphone" required class="input_ph" placeholder="(-)까지 입력해주세요."></td>
+				</tr>
+				<tr>
+					<th><label for="driver_license_number">운전면허</label></th>
+					<td><input type="text" name="driver_license_number" id="driver_license_number" required class="input_ph" >  <br>
+					<span id="lisenseOK"></span>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="name">닉네임</label></th>
+					<td><input type="text" name="name" id="name" required class="input_ph"> <br>
+					<span id="nickOK"></span>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><br>
+					<button class="reg_button">회원가입</button>
+					<button class="reg_button" type="button" onclick="location.href='./'">메인</button> </td>
+				</tr>
+			</table>
+		</form>
+		</div>
+		
+		
+<script type="text/javascript">
+
+//ajax 아이디확인
+$('#email').on('keyup', function() {
+	   const id = $('#email').val();
+	   const xhr = new XMLHttpRequest();
+	   const idOK = $('#idOK');
+	   
+	   
+	   // 이메일 형식 검증
+	   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	   if (!emailPattern.test(id)) {
+	      idOK.html('잘못된 이메일 형식입니다.');
+	      idOK.css('color', 'red');
+	      idOK.css('font-size', '14px');
+	      
+	      return;
+	   }
+	   
+
+	   $.ajax({
+	      type: 'post',
+	      url: "/checkid/"+id,
+	      dataType: 'json',
+	      success: function(response) {
+	         if (JSON.parse(response) == 0) {
+	            idOK.html('사용가능한 아이디입니다.');
+	            idOK.css('color', 'blue');
+	            idOK.css('font-size', '14px');
+	         } else {
+	            idOK.html('중복된 아이디입니다.');
+	            idOK.css('color', 'red');
+	            idOK.css('font-size', '14px');
+	         }
+	      },
+	      error: function() {
+	    		console.log("실패");
+	    	}
+	   })
+	});
+	
+//ajax 닉네임확인
+$('#name').on('keyup', function() {
+	   const name = $('#name').val();
+	   const xhr = new XMLHttpRequest();
+	   const nickOK = $('#nickOK');
+	    	  console.log(name)
+
+	   $.ajax({
+	      type: 'post',
+	      url: "/checkname/"+name,
+	      dataType: 'json',
+	      success: function(response) {
+	    	  console.log(response)
+	         if (JSON.parse(response) == 0) {
+	        	 nickOK.html('사용가능한 닉네임입니다.');
+	        	 nickOK.css('color', 'blue');
+	        	 nickOK.css('font-size', '14px');
+	         } else {
+	        	 nickOK.html('중복된 닉네임입니다.');
+	        	 nickOK.css('color', 'red');
+	        	 nickOK.css('font-size', '14px');
+	         }
+	      },
+	      error: function() {
+	    		console.log("실패");
+	    	}
+	   })
+	});
+	
+//ajax 운전면허확인
+$('#driver_license_number').on('keyup', function() {
+	   const driver_license_number = $('#driver_license_number').val();
+	   const xhr = new XMLHttpRequest();
+	   const lisenseOK = $('#lisenseOK');
+	    	  console.log(driver_license_number)
+
+	   $.ajax({
+	      type: 'post',
+	      url: "/checklisense/"+driver_license_number,
+	      dataType: 'json',
+	      success: function(response) {
+	    	  console.log(response)
+	         if (JSON.parse(response) == 0) {
+	        	 lisenseOK.html('사용가능한 운전면허입니다.');
+	        	 lisenseOK.css('color', 'blue');
+	        	 lisenseOK.css('font-size', '14px');
+	         } else {
+	        	 lisenseOK.html('중복된 운전면허입니다.');
+	        	 lisenseOK.css('color', 'red');
+	        	 lisenseOK.css('font-size', '14px');
+	         }
+	      },
+	      error: function() {
+	    		console.log("실패");
+	    	}
+	   })
+	});
+	
+	
+	
+	
+//ajax 비밀번호확인
+$(function(){
+    $("#alert-success").hide();
+    $("#alert-danger").hide();
+    
+    $("#password2").keyup(function(){
+        var pwd1=$("#password").val();
+        var pwd2=$("#password2").val();
+        
+        
+        if(pwd1 != "" || pwd2 != ""){
+            if(pwd1 == pwd2){
+            	$("#alert-success").css('color', 'blue');
+            	$("#alert-success").css('font-size', '14px');
+                $("#alert-success").show();
+                $("#alert-danger").hide();
+                $("#submit").removeAttr("disabled");
+            }else{
+                $("#alert-success").hide();
+                $("#alert-danger").show();
+                $("#alert-danger").css('color', 'red');
+                $("#alert-success").css('font-size', '14px');
+                $("#submit").attr("disabled", "disabled");
+            }    	
+        }
+    });
+});
+	
+	
+</script>
+	</main>
+</body>
+</html>

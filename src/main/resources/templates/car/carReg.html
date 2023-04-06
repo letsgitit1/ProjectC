@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>내차등록</title>
+<style type="text/css">
+body {
+	margin: 0px;
+}
+
+.carReg_div {
+	width: 500px;
+	margin: auto;
+	background-color: white;
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+.carReg_table {
+	margin: auto;
+	width: 100%;
+}
+
+th, td {
+  padding: 15px 15px 10px 10px;
+}
+
+tr > td {
+  text-align: left;
+}
+
+th {
+	text-align: right;
+}
+
+.carReg_button {
+	background: black;
+	color: white;
+	padding: 5px;
+	margin-left: 50px;
+	margin-bottom : 10px;
+	width: 80%;
+	height: 40px;
+	border-radius: 6px;
+	font-size: 15px;
+}
+
+.carReg_button:hover {
+cursor: pointer;
+background-color: silver;
+border: 1px solid silver;
+}
+
+.carReg_input::-webkit-input-placeholder {
+	padding-left: 10px;
+}
+.carReg_input:hover{
+	border: 1px solid black;
+}
+
+input[type="text"]{
+	width: 70%;
+	height: 30px;
+	border: 1px solid silver;
+	border-radius: 4px;
+}
+
+.carReg_radio input[type=radio]{
+    display: none;
+}
+.carReg_radio input[type=radio]+label {
+	display: inline-block;
+    cursor: pointer;
+    height: 24px;
+    width: 68px;
+    border: 1px solid silver;
+    border-radius: 4px;
+    line-height: 24px;
+    text-align: center;
+    font-weight:bold;
+    font-size:13px;
+}
+.carReg_radio input[type=radio]+label{
+    background-color: #fff;
+    color: #333;
+}
+.carReg_radio input[type=radio]:checked+label{
+    background-color: #333;
+    color: #fff;
+}
+
+
+
+/* 모든 스크롤바 */
+body {
+  background-color: black;
+  z-index: 0;	
+}
+
+/* 모든 스크롤바 */
+::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+li {
+  list-style: none;
+}
+header {
+  width: 100%;
+  position: relative;
+  height: 200px;
+}
+h1 {
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 58px;
+}
+.header_icon,
+.header_nav {
+  color: #fff;
+  list-style: none;
+}
+.header_icon_area {
+  width: 100%;
+  position: absolute;
+  top: 60%;
+  left: 5%;
+}
+.header_icon {
+  display: flex;
+  justify-content: space-between; /* 각 li 요소를 동일한 간격으로 배치 */
+  list-style: none; /* li 요소의 리스트 마커 제거 */
+  padding: 0; /* ul 요소의 기본 패딩 제거 */
+}
+
+.header_icon > li {
+  margin: 0px 20px;
+}
+.header_icon {
+  width: 32px;
+  height: 32px;
+}
+.header_nav {
+  position: absolute;
+  right: 100px;
+  top: 100px;
+  line-height: 50px;
+  font-size: 22px;
+  font-weight: bold;
+  display: block;
+}
+.header_nav_item:first-child > a,
+.header_nav_item:nth-child(2) > a {
+  color: #fff;
+}
+.header_nav_item:nth-child(3) {
+  z-index: 999;
+  color: #000;
+}
+.header_nav_item:last-child {
+  z-index: 999;
+  color: #000;
+}
+.header_nav_item:nth-child(3) > a {
+  color: white;
+}
+.header_nav_item:last-child > a {
+  color: white;
+}
+
+</style>
+<link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+</head>
+<body>
+	<main>
+	
+	 <header>
+      <div class="header_icon_area">
+        <ul class="header_icon">
+          <li class="header_icon">
+            <a><i class="fa-brands fa-facebook fa-xl"></i></a>
+          </li>
+          <li class="header_icon">
+            <a><i class="fa-brands fa-instagram fa-xl"></i></a>
+          </li>
+          <li class="header_icon">
+            <a><i class="fa-brands fa-twitter fa-xl"></i></a>
+          </li>
+          <li class="header_icon">
+            <a><i class="fa-brands fa-discord fa-xl"></i></a>
+          </li>
+        </ul>
+      </div>
+      <h1>Buddy</h1>
+      <ul class="header_nav">
+        <li class="header_nav_item"><a href="#">JOIN</a></li>
+        <li class="header_nav_item"><a href="#">SIGNIN</a></li>
+        <li class="header_nav_item"><a href="#">CHAT</a></li>
+        <li class="header_nav_item"><a href="#">MYPAGE</a></li>
+      </ul>
+    </header>
+    
+    	
+	 <br>
+	 <br>
+	 <br>
+	 <br>
+	 <br>
+	 <br>
+	 <br>
+			<div class="carReg_div">
+			<form action="/carReg" method="POST">
+				<table class="carReg_table">
+				<tr>
+					<td><input type="hidden" name="owner_id" th:value="${session.vo.id}"></td>
+				</tr>
+				 <tr>
+				 	<th><label for="car_number">자동차백넘버</label></th>
+				 	<td><input class="carReg_input" id="car_number" name="car_number" type="text"></td>
+				 </tr>
+				 <tr>
+				 	<th><label for="car_model">모델</label></th>
+				 	<td><input class="carReg_input" id="car_model" name="car_model" type="text"></td>
+				 </tr>
+				 <tr>
+				 	<th><label for="manufacturer">제조사</label></th>
+				 	<td><input class="carReg_input" id="manufacturer" name="manufacturer" type="text"></td>
+				 </tr>
+				 <tr>
+				 	<th>엔진종류</th>
+				 	<td class="carReg_radio">
+				 		<input class="engine_type1" id="engine_type1" name="engine_type" type="radio" value="Electric" checked>
+				 		<label for="engine_type1">전기</label>
+				 		
+				 		<input class="engine_type2" id="engine_type2" name="engine_type" type="radio" value="diesel">
+				 		<label for="engine_type2">경유</label>
+				 		
+				 		<input class="engine_type3" id="engine_type3" name="engine_type" type="radio" value="Gasoline">
+				 		<label for="engine_type3">휘발유</label>
+				 	</td>
+				 </tr>
+				 <tr>
+				 <th>자동차타입</th>
+				 <td class="carReg_radio">
+				 	<input class="car_type1" id="car_type1" name="car_type" type="radio" value="소형" checked>
+				 	<label for="car_type1">소형</label>
+				 	
+				 	<input class="car_type2" id="car_type2" name="car_type" type="radio" value="중형">
+				 	<label for="car_type2">중형</label>
+				 	
+				 	<input class="car_type3" id="car_type3" name="car_type" type="radio" value="대형">
+				 	<label for="car_type3">대형</label>
+				 </tr>
+				 <tr>
+				 	<th><label for="c_year">연식</label></th>
+				 	<td>
+				 		<select id="c_year" name="c_year">
+				 		<option value=""></option>
+				 		<script>
+				 		for (var i = 1980; i <= 2023; i++) {
+				 		      document.write('<option value="' + i + '">' + i + '</option>');
+				 		    }
+						</script>
+				 		</select>
+				 	</td>
+				 </tr>
+				 <tr>
+				 	<td colspan="2"><br>
+				 	<button class="carReg_button">등록</button>
+				 	<button class="carReg_button" type="button" onclick="location.href='./'">메인</button> </td>
+				 </tr>
+				</table>
+			</form>
+			</div>
+	</main>
+</body>
+</html>

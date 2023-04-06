@@ -3,6 +3,67 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.mvc.carshare.dao.CMemberDao">
+ 	<!-- 이동해 -->
+ 	
+ 	<!-- 회원가입 -->
+ 	<insert id="member_reg" parameterType="CMemberVo">
+ 		INSERT INTO C_MEMBERS
+		(ID, EMAIL, USERNAME, PASSWORD, NAME, AGE, GENDER, ADDRESS, 
+		PHONE_NUMBER, DRIVER_LICENSE_NUMBER)
+		VALUES
+		(members_seq.nextval, #{email}, #{username}, #{password},
+		 #{name}, #{age}, #{gender},
+		 #{address}, #{phone_number}, #{driver_license_number}) 
+ 	</insert>
+ 	
+ 	<!-- 로그인 -->
+ 	<select id="login" parameterType="java.util.Map" resultType="CMemberVo">
+ 		SELECT * FROM C_MEMBERS  
+ 		WHERE email=#{email} and password=#{password}
+ 	</select>
+ 	
+ 	<!-- ajax id확인 -->
+ 	<select id="idCheck" parameterType="String" resultType="int">
+       SELECT count(*) from C_MEMBERS
+       where email=#{email}
+    </select>
+    
+ 	<!-- ajax name확인 -->
+ 	<select id="nameCheck" parameterType="String" resultType="int">
+       SELECT count(*) from C_MEMBERS
+       where name=#{name}
+    </select>
+    
+ 	<!-- ajax 운전면허증 확인 -->
+ 	<select id="lisenseCheck" parameterType="String" resultType="int">
+       SELECT count(*) from C_MEMBERS
+       where driver_license_number=#{driver_license_number}
+    </select>
+    
+  	<!-- 로그인시 ID,비밀번호 확인 
+ 	<select id="loginCheck" parameterType="CMemberVo" resultType="int">
+       	SELECT count(*) from C_MEMBERS
+		where email= #{email} AND PASSWORD = #{password}
+    </select> -->
+
+    
+    <!-- 아이디찾기 -->
+    <select id="find_id" parameterType="CMemberVo" resultType="String">
+    SELECT email FROM C_MEMBERS cm 
+	WHERE PHONE_NUMBER = #{phone_number} and DRIVER_LICENSE_NUMBER = #{driver_license_number}
+    </select>
+    
+    <!-- 비밀번호찾기 -->
+    <select id="find_pass" parameterType="CMemberVo" resultType="String">
+    SELECT password FROM C_MEMBERS cm 
+	WHERE EMAIL = #{email} AND USERNAME = #{username} AND DRIVER_LICENSE_NUMBER = #{driver_license_number}
+    </select>
+    
+    <select id="selectOne" parameterType="int" resultType="CMemberVo">
+ 		select * from c_members where id=#{id}
+ 	</select>
+ 	
+//
  	<delete id="remove">
  		DELETE FROM C_MEMBERS
 		WHERE Email = #{email}
@@ -32,5 +93,4 @@
 		) m2
 		ON m1.CAR_NUMBER = m2.ID WHERE m1.ID = #{id}
  	</select>
- 	
  </mapper>

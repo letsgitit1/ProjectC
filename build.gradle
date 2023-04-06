@@ -39,6 +39,11 @@ dependencies {
 	
 	//엑셀로 받기위한 소스
     implementation 'org.apache.poi:poi-ooxml:5.2.0'
+	   //oogle에서 제공하는 JSON 파싱 라이브러리
+   implementation 'com.google.code.gson:gson:2.8.9'
+   
+   //간이 전자 우편 전송 프로토콜(Simple Mail Transfer Protocol, SMTP)
+   implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {

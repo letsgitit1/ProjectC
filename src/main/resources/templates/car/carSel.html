@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>내차조회</title>
+</head>
+<style>
+main{
+	min-height: 1300px;
+}
+.reg_sel{
+border: 1px solid black;
+    background-color: black;
+    color: white;
+    height: 30px;
+    text-align: center;
+    padding-top: 2px;
+    border-radius: 4px;
+}
+#rel_button1{
+position: absolute;
+    bottom: 26px;
+    width: 110px;
+        right: 15px;
+    margin-right:0px;
+    font-size:15px;
+    font-family: inter;
+}
+#rel_button2{
+    position: absolute;
+    width: 110px;
+    bottom: 26px;
+    left: 175px;
+    margin-right:0px;
+    font-size:15px;
+    padding-top: 4.5px;
+    font-family: inter;
+}
+.carSel_div_button {
+    width: 100%;
+    height: 100px;
+    background-color: white;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+.carSel_button {
+	float: right;
+	cursor: pointer;
+	background-color: black;
+	color: white;
+	border: 1px solid black;
+	border-radius: 4px;
+	width: 100px;
+	height: 30px;
+	margin-right: 20px;
+}
+.carSel_button:hover {
+	background-color: silver;
+	border: 1px solid silver;
+}
+.carSel_div_car {
+	border: 1px solid silver;
+	width: 430px;
+	height: 250px;
+	display: inline-block;
+	margin: 30px 0px 30px 61px;
+	border-radius: 4px;
+	background-color: white;
+	box-shadow: 5px 5px 5px silver;
+	    position: relative;
+	
+}
+.carSel_p {
+	margin: 8px;
+	display: inline;
+}
+.carSel_a {
+	float: right; 
+	margin-right: 20px; 
+	border: 1px solid black;
+	background-color: black;
+	color: white;
+	width: 40px;
+	height: 30px;
+	text-align: center;
+	padding-top: 2px;
+	border-radius: 4px;
+}
+#rel_button1:hover {
+	border: 1px solid silver;
+	background-color: silver;
+}
+#rel_button2:hover {
+	border: 1px solid silver;
+	background-color: silver;
+}
+
+
+.mypage_div_a {
+	width: 270px;
+	height: 430px;
+	position: absolute;
+	left: 30px;
+	bottom: 30px;
+	background-color: white;
+}
+.mypage_button {
+	margin: 10px 0px 10px 23px;
+	border: 1px solid silver;
+	border-radius: 4px;
+	background-color: #828282;
+	color: white;
+	width: 200px;
+	height: 50px;
+	cursor: pointer;
+	font-size: 17px;
+	box-shadow: 5px 5px 5px #828282;
+	font-family:inter;
+	
+}
+.mypage_button:hover {
+	border: 1px solid silver;
+	background-color: silver;
+	box-shadow: 5px 5px 5px silver;
+}
+#car_text{
+    padding-top: 20px;
+    font-size: 18px;
+    font-family: inter;
+    padding-left: 180px;
+}
+#car_text>p{
+        line-height: 28px;
+}
+#car_text1{
+    padding-top: 20px;
+    FONT-FAMILY: INTER;
+    padding-left: 185px;
+}
+   
+</style>
+	 <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+<body>
+	<main>
+	<div th:include="header.html"></div>
+		<div class="mypage_div_a">
+			<button class="mypage_button" onclick="location.href='/update'">Member modify</button> <br>
+			<button class="mypage_button" onclick="location.href='/carSel'">Car modify</button> <br>
+			<button class="mypage_button" onclick="location.href='/review/write'">Writing a review</button> <br>
+			<button class="mypage_button" onclick="location.href='/review/writebyme'">View reviews^</button> <br>
+			<button class="mypage_button" onclick="location.href='/mypage'">Payment^</button> <br>
+			<button class="mypage_button" onclick="location.href='#'">Member Bye</button> <br>
+		</div>
+		<h3 style="text-align:center; margin:30px 0px; font-size:32px;">Registered vehicles</h3>
+		<div style="float: right; width: 80%; height:100%;">
+			<div th:each="list : ${list}" class="carSel_div_car">
+				<th:block th:each="pic,i:${#strings.setSplit(list.car_image,',')}">
+				<img th:src="@{/uploads/}+${pic}" alt="이미지" style="width: 150px; height: 200px; float: left; margin-left: 20px;margin-top: 20px; ">
+				<div style=" padding-top: 20px;" id="car_text1">
+					NUMBER : <p class="carSel_p" th:text="${list.car_number}"></p> <br>
+					MODEL : <p class="carSel_p" th:text="${list.car_model}"></p> <br>
+					MANUFACTURER: <p class="carSel_p" th:text="${list.manufacturer}"></p> <br>
+					TYPE : <p class="carSel_p" th:text="${list.car_type}"></p> <br>
+					ENGINE : <p class="carSel_p" th:text="${list.engine_type}"></p> <br>
+					YEAR : <p class="carSel_p" th:text="${list.c_year}"></p> <br>
+					SCORE : <p class="carSel_p" th:text="${list.car_score}"></p> <br>
+					PRICE : <p class="carSel_p" th:text="${list.rent_price}"></p> <br>
+					<form action="/delete" method="POST" >
+               <input type="submit" value="Delete" class="carSel_a"  id="rel_button1" >
+               <input type="hidden" th:value="${session.vo.id}" name="owner_id">
+               <input type="hidden" th:value="${list.car_id}" name="car_id">
+               </form>
+					<a class="carSel_a" th:href="@{/review/review(car_id=${list.car_id})}" id="rel_button2" >Review</a>
+				</div>
+				</th:block>
+			</div>
+			<h3 style="text-align:center; margin:30px 0px; font-size:32px; transform: translateX(-12%);">An unregistered car</h3>
+			<!--등록되지 않은 차량  -->
+			<div th:each="list3 : ${list3}" class="carSel_div_car">
+				<th:block th:each="pic,i:${#strings.setSplit(list3.car_image,',')}">
+				<img th:src="@{/uploads/}+${pic}" alt="이미지" style="width: 150px; height: 200px; float: left; margin-left: 20px;margin-top: 20px; ">
+				<div style=" padding-top: 20px;" id="car_text">
+					NUMBER:<p class="carSel_p" th:text="${list3.car_number}"></p> <br>
+					MODEL:<p class="carSel_p" th:text="${list3.car_model}"></p> <br>
+					MANUFACTURER:<p class="carSel_p" th:text="${list3.manufacturer}"></p> <br>
+					TYPE:<p class="carSel_p" th:text="${list3.car_type}"></p> <br>
+					ENGINE:<p class="carSel_p" th:text="${list3.engine_type}"></p> <br>
+					YEAR:<p class="carSel_p" th:text="${list3.c_year}"></p> <br>
+				<a class="reg_sel" id="rel_button2" th:href="@{/car/saleReg(carId=${list3.car_id})}" >Registration</a>
+					<form action="/delete" method="POST" >
+               <input type="submit" value="Delete" class="carSel_a" id="rel_button1">
+               <input type="hidden" th:value="${session.vo.id}" name="owner_id">
+               <input type="hidden" th:value="${list3.car_id}" name="car_id">
+               </form>
+				</div> 
+				</th:block>
+			</div> 
+			<div style="margin-top:200px;"></div>
+		</div>
+			<div class="carSel_div_button">
+			<input class="carSel_button" type="button" onclick="location.href='./carReg'" value="등록으로"> 
+			<input class="carSel_button" type="button" onclick="location.href='./'" value="메인으로"> 
+		</div>
+	</main>
+	
+	<div th:include="footer.html"></div>
+
+
+
+
+
+
+</body>
+</html>

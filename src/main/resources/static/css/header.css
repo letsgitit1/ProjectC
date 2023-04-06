@@ -1,0 +1,174 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+#sub_title{
+	     position: absolute;
+    font-family: inter;
+    top: 70%;
+    left: 188%;
+    width: 100%;
+    transform: translate(-90%, -10%);
+    font-size: 13px;
+    font-weight: 700;
+}
+li {
+  list-style: none;
+}
+header {
+  width: 100%;
+  position: relative;
+  height: 200px;
+  z-index:999;
+  background-color: #000;
+}
+#stick_div{
+	position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+}
+h1 {
+  color: #fff;
+  position: absolute;
+  font-family:Anton;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 58px;
+}
+.header_icon1,
+.header_nav {
+  color: #fff;
+  list-style: none;
+}
+.header_icon_area {
+  width: 100%;
+  position: absolute;
+  top: 60%;
+  left: 5%;
+}
+.header_icon {
+  display: flex;
+  justify-content: space-between; /* 각 li 요소를 동일한 간격으로 배치 */
+  list-style: none; /* li 요소의 리스트 마커 제거 */
+  padding: 0; /* ul 요소의 기본 패딩 제거 */
+}
+
+.header_icon > li {
+  margin: 0px 20px;
+      color: #fff;
+}
+.header_icon {
+  width: 320px;
+  height: 32px;
+}
+.header_nav {
+  position: absolute;
+  right: 100px;
+  top: 100px;
+  line-height: 50px;
+  font-size: 22px;
+  font-weight: bold;
+}
+.header_nav_item:first-child > a,
+.header_nav_item:nth-child(2) > a {
+	font-family: 'Anton', sans-serif;
+    font-weight: normal;
+    font-size: 1.5rem;
+  color: #fff;
+}
+.header_nav_item:nth-child(3) {
+  z-index: 999;
+  color: #000;
+}
+.header_nav_item:last-child {
+  z-index: 999;
+  color: #000;
+}
+.header_nav_item:nth-child(3) > a {
+	font-family: 'Anton', sans-serif;
+    font-weight: normal;
+    font-size: 1.5rem;
+  color: #000;
+}
+.header_nav_item:last-child > a {
+	font-family: 'Anton', sans-serif;
+    font-weight: normal;
+    font-size: 1.5rem;
+  color: #000;
+}
+.nav_area {
+  width: 100%;
+  height: 200px;
+  background-color: #fff;
+  z-index: 1;
+      position: relative;
+}
+.nav_text {
+  display: flex;
+  justify-content: center;
+  height: 100%; /* 추가 */
+  align-items: center;
+}
+
+.nav_detail_text {
+  font-size: 30px;
+  font-weight: bold;
+  margin: 0px 100px; /* 간격 조절을 위한 마진 */
+}
+.nav_detail_text > a {
+  color: #000;
+  font-family: Inter;
+}
+a {
+  text-decoration: none;
+}
+.info_area {
+  width: 100%;
+  background-image: url(../image/main.jpg);
+  height: 525px;
+  position: relative;
+  overflow: hidden; /* 이미지가 div 영역을 벗어나지 않도록 설정 */
+  z-index: 1; /* 그림자가 배경 이미지 위에 그려지도록 설정 */
+}
+
+/* 이미지에 블러 효과를 적용 */
+.info_area:before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: inherit;
+  filter: blur(2px); /* 블러 효과 적용 */
+  z-index: -1; /* 배경 이미지보다 뒤에 위치하도록 설정 */
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 그림자 효과 추가 */
+.info_area::after {
+  content: "";
+  position: absolute;
+  top: 100%; /* div 하단에 위치하도록 설정 */
+  left: 0;
+  width: 100%;
+  height: 30px;
+  box-shadow: 20px 0px 5px rgba(0, 0, 0, 0.7); /* 그림자 효과 설정 */
+}
+
+.info_area_text {
+  position: absolute;
+  color: #fff;
+  font-size: 44px;
+  left: 25%;
+  bottom: 0;
+  font-weight: bold;
+  transform: translate(-50%, -50%);
+}

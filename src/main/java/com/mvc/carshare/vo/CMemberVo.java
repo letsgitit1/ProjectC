@@ -1,5 +1,4 @@
 package com.mvc.carshare.vo;
-
 import lombok.Data;
 
 @Data
@@ -18,3 +17,4 @@ public class CMemberVo {
 	private String mannerscore;
 	private String auth;
 }
+

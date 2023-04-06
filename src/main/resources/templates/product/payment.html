@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <head>
 <title>결제하기</title>
-<script src="https://js.tosspayments.com/v1/payment"></script>
 </head>
 <body>
 	<div class="payment-method" style="clear: both;">
@@ -19,21 +18,33 @@
 			<br>
 			<button id="payment-button" class="payment_bottom">결제하기</button>
 		</div>
-<script>
+<script src="https://js.tosspayments.com/v1/payment"></script>
+<script th:inline="javascript">
   let tossPayments = TossPayments("test_ck_4vZnjEJeQVxO9apBvMP3PmOoBN0k");
   let button = document.getElementById("payment-button");
   let orderId = new Date().getTime();
+  
+  //보내줄 변수 설정
+  let price='[[${rvo.rent_price}]]';
+  let orderName='[[${cvo.car_model}]]';
+  let customerName='[[${mvo.id}]]';
+  //쿼리스트링으로 보낼 변수 설정
+  let rid='[[${rvo.id}]]';
+  let reid='[[${revo.id}]]';
+  let cid='[[${cvo.car_id}]]';
+  let mid='[[${mvo.id}]]';
+  
   button.addEventListener("click", function () {
   	let select_v=document.getElementById('city');
 		if(city.options[select_v.selectedIndex].value==='카드'){
 			tossPayments.requestPayment('카드', { // 결제 수단 파라미터
 				  // 결제 정보 파라미터
-				  amount:1000,
+				  amount:price,
 				  orderId: orderId,
-				  orderName: '정지호',
-				  customerName: '냥냥',
+				  orderName: orderName,
+				  customerName: customerName,
 				  customerEmail:"moonnetworkqq@naver.com",
-				  successUrl: 'http://localhost:8088/index',
+				  successUrl: 'http://localhost:8088/product/paymentSuccess?rid='+rid+'&mid='+mid+'&reid='+reid,
 				  failUrl: 'http://localhost:8082/travel/toss/fail.jsp',
 				})
 				

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>아이디 찾기</title>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<style type="text/css">
+body {
+	background-color: black;
+}
+.find_id_div {
+	width: 500px;
+	margin: auto;
+	background-color: white;
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 5px;
+	height: 300px;
+}
+.find_id_div_inner {
+	margin-top: 43px;
+}
+.find_id_p {
+	text-align: center;
+	margin-bottom: 20px;
+}
+.find_id_input {
+	margin-left: 50px;
+	margin-bottom: 20px;
+}
+.find_id_input::-webkit-input-placeholder {
+	padding-left: 10px;
+}
+.find_id_input:hover{
+	border: 1px solid black;
+}
+
+.find_id_button {
+	background: black;
+	color: white;
+	padding: 5px;
+	margin-left: 50px;
+	margin-bottom : 10px;
+	width: 80%;
+	height: 40px;
+	border-radius: 6px;
+	font-size: 15px;
+}
+.find_id_button:hover {
+cursor: pointer;
+background-color: silver;
+border: 1px solid silver;
+}
+input[type="text"],[type="password"] {
+	width: 80%;
+	height: 30px;
+	border: 1px solid silver;
+	border-radius: 4px;}
+</style>
+ <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+</head>
+<body>
+	<div th:include="header.html"></div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="find_id_div">
+<form action="/find_id" method="POST" id="findIdForm">
+	<div class="find_id_div_inner">
+		<p class="find_id_p">FIND ID</p>	
+		<input class="find_id_input" type="text" placeholder="핸드폰번호입력(-)포함" id="phone_number" name="phone_number"> <br>
+		<input class="find_id_input" type="text" placeholder="운전면허번호입력(-)포함" id="driver_license_number" name="driver_license_number"> <br>
+		<input class="find_id_button" type="submit" value="찾기" id="find_id_btn"> <br>
+	</div>
+</form>
+</div>
+<div style="height:200px;"></div>
+	<div th:include="footer.html"></div>
+</body>
+</html>

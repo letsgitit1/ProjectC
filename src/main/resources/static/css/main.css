@@ -1,0 +1,155 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: black;
+  z-index: 0;
+}
+.content_area {
+  width: 100%;
+  margin-top: 150px;
+  height: 4000px;
+}
+.box {
+  height: 600px;
+  width: 100%;
+  position: relative;
+  left: -100%;
+  opacity: 0;
+  transition: all 1.5s ease-out;
+}
+.content1 {
+  width: 1200px;
+  margin: 100px auto;
+  display: flex;
+}
+
+.content2 {
+  width: 1200px;
+  margin: 400px auto;
+  display: flex;
+}
+.content3 {
+  width: 1200px;
+  margin: 400px auto;
+  display: flex;
+}
+.content1_img {
+  background-image: url(../image/v1_10.png);
+  width: 600px;
+  height: 600px;
+}
+.content2_img {
+  background-image: url(../image/v2_31.png);
+  width: 600px;
+  height: 600px;
+  background-size: cover;
+}
+.content3_img {
+  background-image: url(../image/Sustainability.jpg);
+  width: 600px;
+  height: 600px;
+  background-size: cover;
+}
+.content_text_area {
+  margin-left: 100px;
+}
+.content1_title {
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 20px;
+}
+.content_detail_text1 {
+  font-size: 24px;
+  color: #fff;
+  bottom: 0;
+  word-wrap: break-word;
+  width: 450px; /* 내가 원하는 너비로 지정 */
+  position: absolute;
+  bottom: 0;
+  font-family: Inter;
+}
+.content_detail_text2 {
+  font-size: 24px;
+  color: #fff;
+  bottom: 0;
+  word-wrap: break-word;
+  width: 450px; /* 내가 원하는 너비로 지정 */
+  position: absolute;
+  bottom: 0;
+  font-family: Inter;
+}
+/***notice***/
+#press {
+	margin-top:300px;
+  background-color: #f2f2f2;
+  padding: 60px 0;
+}
+.container{
+	       width: 1400px;
+    margin: 0 auto;
+}
+.section-title {
+	    font-family: Inter;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.press-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.press-item {
+  width: calc(33.33% - 20px);
+  margin-bottom: 40px;
+  background-color: #fff;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.press-image {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.press-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding-top:40px;
+}
+
+.press-info {
+  padding: 20px;
+}
+
+.press-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+      font-family: inter;
+}
+
+.press-date {
+  color: #999;
+  margin-bottom: 20px;
+}
+.press-info> a{
+	text-decoration:underline;
+}
+.press-description {
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #666;
+}
+
+ 
+

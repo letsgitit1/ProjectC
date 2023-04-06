@@ -1,0 +1,13 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.mvc.carshare.dao.CReturnDao">
+ 	<select id="selectById" resultType="CReturnVo" parameterType="int">
+ 		select * from C_RETURNS where id=#{id}
+ 	</select>
+ 	
+ 	<select id="ReturnDate" resultType="RentDto">
+ 	SELECT re.RENT_AT+(r.rent_time/24) remaining_time,re.ID ,re.user_id FROM C_REGISTRATIONS r JOIN C_RETURNS re
+ ON r.CAR_NUMBER= re.CAR_NUMBER AND re.RETURNED_AT IS NULL
+ 	</select>
+ </mapper>

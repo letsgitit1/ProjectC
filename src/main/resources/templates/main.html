@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Buddy</title>
+<link href="../css/main.css" rel="stylesheet">
+</head>
+<body>
+	<div th:include="header.html"></div>
+	<!-- content_area시작 -->
+	<div class="info_area">
+		<span class="info_area_text">Company Introduction</span>
+	</div>
+	<div class="content_area">
+		<div class="box">
+			<div class="content1">
+				<div class="content1_img"></div>
+				<div class="content_text_area">
+					<div class="content1_title">Introduction to Services</div>
+					<div class="content_detail_text1">Buddy is a car rental and
+						sales platform that aims to provide affordable transportation
+						solutions in real time. It connects car owners with renters in a
+						direct and efficient manner, thanks to its innovative chat
+						feature. By doing so, Buddy eliminates the need for intermediaries
+						and provides personalized and cost-effective services.
+						Additionally, Buddy is committed to ensuring that all its users
+						have a seamless experience by providing top-notch customer service
+						and support. So, whether you need a car for a day or want to sell
+						your car quickly and easily, Buddy is the perfect solution for
+						you.</div>
+				</div>
+			</div>
+		</div>
+		<div class="box">
+			<div class="content2">
+				<div class="content2_img"></div>
+				<div class="content_text_area">
+					<div class="content1_title">Sustainability</div>
+					<div class="content_detail_text2">Buddy is an advanced
+						platform for car rental and sales, offering a wide variety of cars
+						from compact to luxury to match your needs and budget. Its
+						streamlined chat feature ensures fast communication between car
+						owners and renters, resulting in a smooth rental or sales
+						experience. You can rent a car for a day, week, or month, and
+						choose flexible pick-up and drop-off locations. Buddy's 24/7
+						customer support is always available to help with any questions or
+						concerns. Sign up now and experience the convenience and ease of
+						car rental and sales with Buddy.</div>
+				</div>
+			</div>
+		</div>
+		<div class="box">
+			<div class="content3">
+				<div class="content3_img"></div>
+				<div class="content_text_area">
+					<div class="content1_title">eco-friendly promise</div>
+					<div class="content_detail_text2">Buddy is an advanced We not
+						only provide comfortable transportation for people to their
+						destinations, but also help them order food quickly and
+						affordably. We break down barriers to medical services and develop
+						new solutions for cargo transportation reservations. We also help
+						companies provide smooth transportation solutions for their
+						employees. In addition, we help drivers generate income through
+						operations and deliveries.</div>
+				</div>
+			</div>
+		</div>
+		<!-- notice -->
+		<h2
+			style="color: white; text-align: center; font-size: 48px; transform: translateY(200px);">PRESS</h2>
+		<section id="press">
+			<div class="container">
+				<div class="press-list">
+					<div class="press-item">
+						<div class="press-image">
+							<img src="../image/logo-black.png" alt="Press Image 1">
+						</div>
+						<div class="press-info">
+							<h3 class="press-title">Press Title 1</h3>
+							<p class="press-date">July 1, 2022</p>
+							<p class="press-description">We are committed to providing
+								the best service to our customers, always.</p>
+							<a href="#" class="press-link">Read More</a>
+						</div>
+					</div>
+					<div class="press-item">
+						<div class="press-image">
+							<img src="../image/megaphone.jpg" alt="Press Image 2">
+						</div>
+						<div class="press-info">
+							<h3 class="press-title">Press Title 2</h3>
+							<p class="press-date">June 15, 2022</p>
+							<p class="press-description">Join the discussion: be part of
+								our community and stay informed about our products and services.</p>
+							<a href="#" class="press-link">Read More</a>
+						</div>
+					</div>
+					<div class="press-item">
+						<div class="press-image">
+							<img src="../image/question.png" alt="Press Image 3">
+						</div>
+						<div class="press-info">
+							<h3 class="press-title">Press Title 3</h3>
+							<p class="press-date">May 30, 2022</p>
+							<p class="press-description">Click here to view more
+								information</p>
+							<a href="#" class="press-link">Read More</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--NOTICE끝  -->
+	</div>
+
+	<div th:include="footer.html"></div>
+</body>
+<script>
+let observer = new IntersectionObserver((entries) => {
+	  entries.forEach((entry) => {
+	    if (entry.isIntersecting) {
+	      // 요소가 뷰포트 내부에 있을 때
+	      entry.target.style.left = "0%";
+	      entry.target.style.opacity = 1;
+	    } else {
+	      // 요소가 뷰포트 밖으로 나갈 때
+	      entry.target.style.left = "-50%";
+	      entry.target.style.opacity = 0;
+	    }
+	  });
+	}, {
+	  threshold: [0, 1] // 뷰포트 내부에서 진입할 때, 완전히 벗어날 때 모두 애니메이션 실행
+	});
+	let boxes = document.querySelectorAll(".box");
+	boxes.forEach((box) => {
+	  observer.observe(box);
+	});
+
+  </script>
+</html>

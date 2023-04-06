@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>마이페이지</title>
+<link href="https://fonts.googleapis.com/css?family=Anton&display=swap"
+	rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Inter&display=swap"
+	rel="stylesheet">
+<style type="text/css">
+main {
+	min-height: 1000px;
+}
+.mypage_div {
+	border: 1px solid black;
+	width: 100%;
+	background-color: black;
+	height: 200px;
+}
+.mypage_div_p {
+	color: white;
+	font-size: 20px;
+	margin-left: 170px;
+	display: inline-block;
+	
+}
+.mypage_div_mypage {
+	color: white;
+	font-size: 20px;
+	margin: 20px 0px 0px 100px;
+}
+.mypage_div_a {
+	width: 270px;
+	height: 430px;
+	position: absolute;
+	left: 30px;
+	bottom: 30px;
+	background-color: white;
+}
+.mypage_button {
+	margin: 10px 0px 10px 23px;
+	border: 1px solid silver;
+	border-radius: 4px;
+	background-color: #828282;
+	color: white;
+	width: 200px;
+	height: 50px;
+	cursor: pointer;
+	font-size: 17px;
+	box-shadow: 5px 5px 5px #828282;
+	font-family:inter;
+	
+}
+.mypage_button:hover {
+	border: 1px solid silver;
+	background-color: silver;
+	box-shadow: 5px 5px 5px silver;
+}
+.mypage_div_list {
+	width: 80%;
+	height: 600px;
+	float: right;
+	margin-top: 50px;
+	margin-right: 50px;
+}
+.mypage_h {
+	margin-left: 150px;
+	margin-top: 20px;
+}
+table {
+	border-top: 3px solid black;
+	border-bottom : 1px solid black;
+	width: 80%;
+	height: 50px;
+	float: left;
+	margin-left: 150px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+#sub_title{
+	     position: absolute;
+    font-family: inter;
+    top: 70%;
+    left: 188%;
+    width: 100%;
+    transform: translate(-90%, -10%);
+    font-size: 13px;
+    font-weight: 700;
+}
+li {
+  list-style: none;
+}
+header {
+  width: 100%;
+  position: relative;
+  height: 200px;
+  z-index:999;
+  background-color: #000;
+}
+#stick_div{
+	position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+}
+h1 {
+  color: #fff;
+  position: absolute;
+  font-family:Anton;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 58px;
+}
+.header_icon1,
+.header_nav {
+  color: #fff;
+  list-style: none;
+}
+.header_icon_area {
+  width: 100%;
+  position: absolute;
+  top: 60%;
+  left: 5%;
+}
+.header_icon {
+  display: flex;
+  justify-content: space-between; /* 각 li 요소를 동일한 간격으로 배치 */
+  list-style: none; /* li 요소의 리스트 마커 제거 */
+  padding: 0; /* ul 요소의 기본 패딩 제거 */
+}
+
+.header_icon > li {
+  margin: 0px 20px;
+      color: #fff;
+}
+.header_icon {
+  width: 320px;
+  height: 32px;
+}
+
+footer {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 50px 0;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-section {
+  width: 20%;
+}
+
+.footer-section h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.footer-section ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-section li {
+  margin-bottom: 10px;
+}
+
+.footer-section li a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.footer-section li a:hover {
+  text-decoration: underline;
+}
+
+</style>
+
+</head>
+<link href="../css/header.css" rel="stylesheet"/>
+ <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+<body>
+<main>
+<div id="stick_div">
+   <header>
+
+      <div class="header_icon_area">
+         <ul class="header_icon">
+            <li class="header_icon">
+               <a><i class="fa-brands fa-facebook fa-xl"></i></a>
+            </li>
+            <li class="header_icon">
+               <a><i class="fa-brands fa-instagram fa-xl"></i></a>
+            </li>
+            <li class="header_icon">
+               <a><i class="fa-brands fa-twitter fa-xl"></i></a>
+            </li>
+            <li class="header_icon">
+               <a><i class="fa-brands fa-discord fa-xl"></i></a>
+            </li>
+         </ul>
+      </div>
+
+      <h1 id="Buddy_title"><a href="/" style="color: #fff;" class="title_a">Buddy</a><span id="sub_title">with together</span></h1>
+      <ul class="header_nav">
+         <li class="header_nav_item"><a href="/reg">JOIN</a></li>
+          <li th:if="${session.vo}!=null" class="header_nav_item"><a href="/logout">LOGOUT</a></li>
+         <li th:unless="${session.vo}!=null" class="header_nav_item"><a href="#modal1" rel="modal:open">LOGIN</a></li>
+          <li class="header_nav_item"><a href="#">CHAT</a></li>
+          <li class="header_nav_item"><a href="/mypage">MYPAGE</a></li>
+      </ul>
+      </header>
+</div>
+
+<div class="nav_area" style="margin-top:200px;">
+  <div class="mypage_div">
+		<h2 class="mypage_div_mypage">MY PAGE</h2> <br>
+		 <p class="mypage_div_p">Name > [[${session.vo.name}]]</p>
+		<p class="mypage_div_p">Address > [[${session.vo.address}]]</p>
+		<p class="mypage_div_p">Point > [[${session.vo.point}]]</p> -->
+	</div>
+</div>
+
+<script>
+   const headerNav = document.querySelector(".header_nav"); // ul 요소 가져오기
+   const headerNavItems = headerNav.querySelectorAll("li>a"); // li 요소 가져오기
+   console.log( headerNavItems[2])
+   window.addEventListener("scroll", function() {
+      if (window.scrollY > 80) {
+         headerNavItems[0].style.display = "none";
+         headerNavItems[1].style.display = "none";
+         headerNavItems[2].style.display = "none";
+         headerNavItems[3].style.display = "none";
+
+      } else if(window.scrollY < 80) {
+         headerNavItems[0].style.display = "block";
+         headerNavItems[1].style.display = "block";
+         headerNavItems[2].style.display = "block";
+         headerNavItems[3].style.display = "block";
+
+      }
+   });
+</script>
+	
+	<div class="mypage_div_a">
+			<button class="mypage_button" onclick="location.href='/update'">Member modify</button> <br>
+			<button class="mypage_button" onclick="location.href='/carSel'">Car modify</button> <br>
+			<button class="mypage_button" onclick="location.href='/review/write'">Writing a review</button> <br>
+			<button class="mypage_button" onclick="location.href='/review/writebyme'">View reviews^</button> <br>
+			<button class="mypage_button" onclick="location.href='/mypage'">Payment^</button> <br>
+			<button class="mypage_button" onclick="location.href='#'">Member Bye</button> <br>
+		</div>
+	
+	<div class="mypage_div_list">
+		<h3 class="mypage_h">주문내역 조회</h3>
+		<br>
+		<table class="mypage_table">
+			<tr>
+				<th class="td_1">상품정보</th>
+				<th class="td_2">주문일자</th>
+				<th class="td_3">주문번호</th>
+				<th class="td_4">주문금액</th>
+			</tr>
+		</table>
+	</div>
+	
+</main>
+	
+	
+	<footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>고객지원 센터 방문</h3>
+          <ul>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">문의하기</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>기업 정보</h3>
+          <ul>
+            <li><a href="#">회사 소개</a></li>
+            <li><a href="#">투자자</a></li>
+            <li><a href="#">채용 정보</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Buddy 서비스</h3>
+          <ul>
+            <li><a href="#">차량 서비스</a></li>
+            <li><a href="#">운행</a></li>
+            <li><a href="#">배달 (Buddy Eats)</a></li>
+            <li><a href="#">Buddy for Business</a></li>
+            <li><a href="#">Buddy Freight</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>세계 시민 의식</h3>
+          <ul>
+            <li><a href="#">안전</a></li>
+            <li><a href="#">다양성과 포용성</a></li>
+            <li><a href="#">지속 가능성</a></li>
+            <li><a href="#">출장 (공항/도시)</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+	
+</body>
+</html>

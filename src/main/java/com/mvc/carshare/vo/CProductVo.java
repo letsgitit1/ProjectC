@@ -14,14 +14,14 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 public class CProductVo {
-	int id;
+	int car_id;
 	String car_Number;
 	int owner_id;
-	int review_id;
 	String car_image;
 	String car_model;
 	String manufacturer;
 	String engine_type;
 	String car_type;
 	String c_year;
+		
 }

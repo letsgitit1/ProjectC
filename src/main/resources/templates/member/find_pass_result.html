@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>비밀번호 찾기 결과</title>
+
+<style type="text/css">
+body {
+	background-color: black;
+}
+
+</style>
+
+</head>
+<link href="../css/serviceheader.css" rel="stylesheet"/>
+ <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+<body>
+	<div th:include="header.html"></div>
+
+<main>
+
+
+
+<div class="find_pass_div" style="margin: auto; width: 100%; height: 200px; text-align: center; background-color: white;">
+	<img src=../image/email.png/ style="width:80px; height:80px; object-fit: contain; margin-bottom:30px;">
+	<h2 th:text= "${email}" style="margin: 5px 0px 5px; "></h2>
+	<p style="font-size: 18px;">비밀번호 메일이 발송되었습니다.</p>
+</div>
+
+	<div th:include="footer.html"></div>
+
+</main>
+</body>
+</html>
