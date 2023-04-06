@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	input{
+		margin-bottom: 30px;
+		font-size: 21px;
+		margin-left: 100px;
+	    border: 1px solid black;
+	}
+	
+	.inputBox{
+		font-size: 20px;
+	}
+	
+	button{
+		font-size: 20px;
+	    border-radius: 10px;
+	    border-color: black;
+	    color: white;
+	    background-color: black;
+	}
+	
+	button:hover {
+		cursor: pointer;
+	}
+	
+</style>
+</head>
+<body>
+<div style="width: 500px; height: 610px; margin: 0 auto;">
+	<div style="width: 100%; margin-top: 100px;">
+		<h1 style="text-align: center; margin-bottom: 60px;">회원 포인트 조회</h1>
+		<form action="/">
+			<div class="inputBox">이름<input type="text" name="username" th:value="${member.username}" readonly="readonly"></div>
+			<div class="inputBox">닉네임<input type="text" name="name" th:value="${member.name}" style="margin-left: 80px;" readonly="readonly"></div>
+			<div class="inputBox">포인트<input type="text" name="point" th:value="${member.point}" style="margin-left: 80px;" readonly="readonly"></div>
+			<div>
+				<input type="hidden" name="email" th:value="${member.email}">
+			</div>
+			<div style="text-align: center; margin-top: 20px;">
+				<button>확인</button>
+			</div>
+		</form>
+	</div>
+</div>	
+	
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.mvc.carshare.dao.CMessageDao">
+ 
+	<!-- 채팅 내용 저장 --> 
+ 	<insert id="register">
+ 		INSERT INTO C_MESSAGES
+		(ID, CHAT_ROOM_ID, SENDER_ID, CONTENT)
+		VALUES(messages_seq.NEXTVAL, #{chat_room_id}, #{sender_id}, #{content})
+ 	</insert>
+ 	
+ 	<!-- 채팅방 들어가면 그 해당하는 방에서 채팅했던 목록 가져오기 -->									
+ 	<select id="getList" resultType="CChatmessageDTO">
+ 		SELECT cm2.id, cm1.EMAIL, cm2.CONTENT, TO_CHAR(cm2.CREATED_AT, 'YYYY-MM-DD HH:MI') CREATED_AT, cm2.CHAT_ROOM_ID FROM C_MEMBERS cm1 JOIN C_MESSAGES cm2 ON cm1.ID = cm2.SENDER_ID WHERE cm2.CHAT_ROOM_ID = #{chat_room_id} ORDER BY cm2.CREATED_AT
+ 	</select>
+ 	
+			<!-- 채팅 기록중 해당하는 닉네임으로 채팅한 기록이 있는지 확인 -->
+ 	<select id="getListByEamil" resultType="_int">
+ 		SELECT COUNT(CONTENT) FROM C_MEMBERS cm1 JOIN C_MESSAGES cm2 ON cm1.id = cm2.SENDER_ID WHERE EMAIL = #{email}
+ 	</select>
+ 	
+ </mapper>
