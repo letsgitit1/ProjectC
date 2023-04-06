@@ -111,7 +111,7 @@ input[type="text"],[type="password"] {
           <li class="header_nav_item"><a href="/reg">JOIN</a></li>
           <li th:if="${session.vo}!=null" class="header_nav_item"><a href="/logout">LOGOUT</a></li>
          <li th:unless="${session.vo}!=null" class="header_nav_item"><a href="#modal1" rel="modal:open">LOGIN</a></li>
-          <li class="header_nav_item"><a href="/rooms/register">CHAT</a></li>
+          <li class="header_nav_item"><a href="/rooms/rooms">CHAT</a></li>
           <li class="header_nav_item"><a href="/mypage">MYPAGE</a></li>
         </ul>
       </header>
