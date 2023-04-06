@@ -104,5 +104,6 @@ public class CMemberService {
 		javaMailSender.send(simpleMessage);
 	}
 	  public CMemberVo selectOne(int id) { return dao.selectOne(id); }
-	
+	  
+	  
 }

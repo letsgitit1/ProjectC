@@ -63,7 +63,6 @@
  		select * from c_members where id=#{id}
  	</select>
  	
-//
  	<delete id="remove">
  		DELETE FROM C_MEMBERS
 		WHERE Email = #{email}
@@ -89,8 +88,8 @@
  	<select id="findByEamilAtRegisterId" resultType="string">
  		SELECT EMAIL FROM C_REGISTRATIONS m1 JOIN 
 		(
-		SELECT c.ID, m.EMAIL FROM C_MEMBERS m JOIN C_CARS c ON m.ID = c.OWNER_ID
+		SELECT c.car_id, m.EMAIL FROM C_MEMBERS m JOIN C_CARS c ON m.ID = c.OWNER_ID
 		) m2
-		ON m1.CAR_NUMBER = m2.ID WHERE m1.ID = #{id}
+		ON m1.CAR_NUMBER = m2.car_id WHERE m1.ID = #{id}
  	</select>
  </mapper>

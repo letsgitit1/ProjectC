@@ -1,6 +1,5 @@
 package com.mvc.carshare.controller;
-import java.net.URL;
-import java.util.HashMap;
+import java.util.List;
 //이동해
 import java.util.Map;
 
@@ -17,7 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mvc.carshare.service.CMemberService;
+import com.mvc.carshare.service.CSMemberService;
+import com.mvc.carshare.service.CSPaymentService;
 import com.mvc.carshare.vo.CMemberVo;
+import com.mvc.carshare.vo.CPaymentDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,12 +29,15 @@ import lombok.extern.slf4j.Slf4j;
 public class CMemberController {
 	private CMemberService service;
 	private ObjectMapper objectMapper = new ObjectMapper();
+	private final CSMemberService cSMemberService;
+	private final CSPaymentService cSPaymentService;
 	
 	
 	
-	
-	public CMemberController(CMemberService service) {
+	public CMemberController(CMemberService service,CSMemberService cSMemberService,CSPaymentService cSPaymentService) {
 		this.service = service;
+		this.cSMemberService=cSMemberService;
+		this.cSPaymentService=cSPaymentService;
 	}
 
 	// 회원가입 페이지로 이동
@@ -58,7 +63,7 @@ public class CMemberController {
 	
 	// 로그인
 	@PostMapping("/login")
-	public String login(@RequestParam Map<String, String> param,
+	public String login(@RequestParam Map<String, String> param, Model model,
 			RedirectAttributes reattr,
 			HttpSession session) {
 		String message = "로그인 계정 정보가 다릅니다.";
@@ -67,6 +72,21 @@ public class CMemberController {
 			reattr.addFlashAttribute("err",message);
 		} else {
 			session.setAttribute("vo", vo);
+		}
+		
+		if(vo.getEmail().equals("admin")) {
+			
+			List<CPaymentDTO> dailyList = cSPaymentService.getDaily();
+			List<CPaymentDTO> weeksList = cSPaymentService.getWeeks();
+			List<CPaymentDTO> monthsList = cSPaymentService.getMonths();
+			List<CPaymentDTO> yearsList = cSPaymentService.getYears();
+			
+			model.addAttribute("dailyList", dailyList);
+			model.addAttribute("weeksList", weeksList);
+			model.addAttribute("monthsList", monthsList);
+			model.addAttribute("yearsList", yearsList);
+			
+			return "/member/adminPage";
 		}
 		System.out.println("member"+vo);
 		return "redirect:/";
@@ -126,7 +146,31 @@ public class CMemberController {
 	      
 	      return "/member/modify";
 	   }
-	
+	   @GetMapping("/remove")
+		public String remove(String email) {
+		   cSMemberService.remove(email);
+			return "redirect:/";
+		}
+		
+		@GetMapping("/modify")
+		public String modyfy(Model model, String email) {
+			model.addAttribute("member", cSMemberService.findByEmailAll(email));
+			return "/member/modify";
+		}
+		
+		@PostMapping("/modify")
+		public String modyfy(CMemberVo cMemberVo) {
+			cSMemberService.modify(cMemberVo);
+			return "redirect:/";
+		}
+		
+		@GetMapping("/point")
+		public String findByPoint(Model model, String email) {
+			model.addAttribute("member", cSMemberService.findByEmailAll(email));
+			return "/member/point";
+		}
+		
+		
 
 	
 	

@@ -36,5 +36,12 @@ public interface CMemberDao {
 	
 
 	CMemberVo selectOne (int id);
+	
+	//상훈이형
+		public void remove(String email);
+		public void modify(CMemberVo cMemberVo);
+		public CMemberVo findByEmailAll(String email);
+		public int findByEmail(String email);
+		public String findByEamilAtRegisterId(int id);
 }
 

@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CMemberServiceImpl implements CMemberService {
+public class CMemberServiceImpl implements CSMemberService {
 
 	@Autowired
 	private final CMemberDao cMemberDao;
@@ -39,5 +39,7 @@ public class CMemberServiceImpl implements CMemberService {
 	public String findByEamilAtRegisterId(int id) {
 		return cMemberDao.findByEamilAtRegisterId(id);
 	}
+	
+	
 
 }

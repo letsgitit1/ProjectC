@@ -1,15 +1,20 @@
 package com.mvc.carshare.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
-import com.mvc.carshare.vo.CPaymentDTO;
+import com.mvc.carshare.dao.CPayMentDao;
+import com.mvc.carshare.vo.CPayMentVo;
 
 @Service
-public interface CPaymentService {
-	public List<CPaymentDTO> getDaily();
-	public List<CPaymentDTO> getWeeks();
-	public List<CPaymentDTO> getMonths();
-	public List<CPaymentDTO> getYears();
+public class CPayMentService {
+private CPayMentDao dao;
+	
+	public CPayMentService(CPayMentDao dao) {
+		this.dao=dao;
+	}
+	public int paymentInsert(CPayMentVo vo) {
+		return dao.paymentInsert(vo);
+	}
+	
+	
 }
