@@ -32,9 +32,10 @@ public class CRoomsController {
 	
 //	방 만드는 페이지		필요 없음
     @GetMapping("/register")
-    public String register(Model model, String email,HttpSession request) {
+    public String register(Model model, int registrNum,HttpSession request) {
     	CMemberVo vo = (CMemberVo) request.getAttribute("vo");		//임시로 만든 세션에 담긴 값
     	model.addAttribute("email", vo.getEmail());
+    	model.addAttribute("registrNum",registrNum);
         return "rooms/register";
     }
     

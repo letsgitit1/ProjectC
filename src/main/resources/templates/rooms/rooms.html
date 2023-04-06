@@ -5,74 +5,86 @@
 <title>Insert title here</title>
 
 <style type="text/css">
-	button{
-		float: right;
-	    margin-bottom: 50px;
-		font-size: 20px;
-	    border-radius: 10px;
-	    border-color: black;
-	    color: white;
-	    background-color: black;
-	}
-	
-	button:hover {
-		cursor: pointer;
-	}
-	
-	th{
-		font-size: 20px;
-	}
-	
-	td{
-		font-size: 20px;
-	}
-	
-	a{
-		color: white;
-		text-decoration: none;
-		font-size: 22px;
-	}
+button {
+	float: right;
+	margin-bottom: 50px;
+	font-size: 20px;
+	border-radius: 10px;
+	border-color: black;
+	color: white;
+	background-color: black;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+th {
+	font-size: 20px;
+	border-right: 1px solid black;
+}
+
+td {
+	font-size: 20px;
+}
+
+a {
+	color: white;
+	text-decoration: none;
+}
 </style>
 
 </head>
 <body>
+	<div th:include="header.html"></div>
+	<div style="width: 650px; height: 610px; margin: 0 auto;">
+		<div style="margin-top: 100px;">
+			<h1 style="text-align: center; margin-bottom: 60px;">대화방 목록</h1>
 
-<div style="width: 650px; height: 610px; margin: 0 auto;">
-	<div style="width: 100%; margin-top: 100px;">
-		<h1 style="text-align: center; margin-bottom: 60px;">대화방 목록</h1>
-		<button type="button" onclick="location.href='/'">홈으로</button>
-		<div>
-			<form action="/chat">
-				<div th:if="${list} != null">
-					<table style="width: 100%; text-align: center;">
-						<tr>
-							<th style="width: 70px;">번호</th>
-							<th>방 이름</th>
-							<th style="width: 100px;">입장</th>
-							<th style="width: 100px;">삭제</th>
-						</tr>
-						<!-- 상품등록을 하면 메신저 버튼이 생긴다 그럼 방이 만들어진다 근데 받는 사람(상품 등록한 사람은 어떻게 문자를 받을까)
+			<div>
+				<form action="/chat">
+					<div th:if="${list} != null"
+						style="height: 300px; border: 5px solid black;">
+						<table style="width: 100%; text-align: center;">
+							<tr>
+								<th style="width: 70px;">번호</th>
+								<th>방 이름</th>
+								<th style="width: 100px;">입장</th>
+								<th style="width: 100px;">삭제</th>
+							</tr>
+							<!-- 상품등록을 하면 메신저 버튼이 생긴다 그럼 방이 만들어진다 근데 받는 사람(상품 등록한 사람은 어떻게 문자를 받을까)
 							상품등록할떄 상품 번호와 방 번호를 붙여서 해당하는 채팅방에 문자를 남기면 방이 생기니까 그 방에 들어갈 수 있게 상대방쪽에 방 리스트 목록을 뿌린다  
 							결국 메신저 방 테이블에 상품 번호 테이블 컬럼을 추가시켜서 상품을 등록할때 상품 번호 값이 있으니까 방을 만들때 그 상품 번호를 같이 가져와서
 							방을 만들게 되면 문자를 남겼을때는 방이 생성되니까 판매자에게 표시가 되게 만들면 되는거시다 -->
 							<tr th:each="room, index : ${list}">
-								<td th:text="${index.count}"></td><!-- 방 순서를 위한 인덱스 추출 -->
+								<td th:text="${index.count}"></td>
+								<!-- 방 순서를 위한 인덱스 추출 -->
 								<td th:text="${room.room_name}">방 이름</td>
-								<td style="border: 1px solid; border-radius: 10px; background-color: black;"><a th:href="@{/chat(roomId=${room.id})}">대화하기</a></td>
-								<td style="border: 1px solid; border-radius: 10px; background-color: black;"><a th:href="@{/rooms/remove(id=${room.id})}">삭제하기</a></td>
+								<td
+									style="border: 1px solid; border-radius: 10px; background-color: black;"><a
+									th:href="@{/chat(roomId=${room.id})}">대화하기</a></td>
+								<td
+									style="border: 1px solid; border-radius: 10px; background-color: black;"><a
+									th:href="@{/rooms/remove(id=${room.id})}">삭제하기</a></td>
+
 							</tr>
-					</table>
-				</div>
-				<div th:if="${list} == null">
-					<span>만든방이 없따</span>
-				</div>
-			</form>
+						</table>
+					</div>
+					<div th:if="${list} == null">
+						<span>대화 내역이 없습니다.</span>
+					</div>
+				</form>
+
+			</div>
+		</div>
+		<div
+			style="display: flex; justify-content: center; margin-top: 150px;">
+			<button type="button" onclick="location.href='/'">홈으로</button>
 		</div>
 	</div>
-</div>		
-		
-		
-		
-		
+	<div th:include="footer.html"></div>
+
+
+
 </body>
 </html>

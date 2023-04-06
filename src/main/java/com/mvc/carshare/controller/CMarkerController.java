@@ -47,7 +47,7 @@ public class CMarkerController {
 	    int user_id = 2; // 사용자 아이디 임시 값
 	    model.addAttribute("user_id", user_id);
 	    model.addAttribute("rent_id", 1);	// 임시데이터
-	  
+	    System.out.println(list);
 	    // 해당 사용자가 찜한 상품 번호 리스트를 가져옴
 	    List<Integer> wishList = pservice.wishCount(user_id);
 	    model.addAttribute("wishList", wishList);
