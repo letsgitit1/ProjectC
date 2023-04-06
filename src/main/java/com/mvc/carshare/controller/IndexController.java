@@ -14,6 +14,9 @@ public class IndexController {
 	public String map() {
 		return"kakaomapTest";
 	}
-	
+	@GetMapping("/people")
+	public String people() {
+		return"people";
+	}
 }
 
