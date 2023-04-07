@@ -28,36 +28,52 @@ import ch.qos.logback.core.util.SystemInfo;
 @Controller
 public class CMarkerController {
 
-    private ObjectMapper objectMapper= new ObjectMapper();
+    private ObjectMapper objectMapper = new ObjectMapper();
     private CMarkerService service;
     private CProductService pservice;
     private CRegistrationsService rservice;
 
-    public CMarkerController(CMarkerService service ,CProductService pservice , CRegistrationsService  rservice ){
-        this.service= service; //marker
-        this.pservice= pservice; //product
-        this.rservice= rservice; //reg
+    public CMarkerController(CMarkerService service, CProductService pservice, CRegistrationsService rservice) {
+        this.service = service; //marker
+        this.pservice = pservice; //product
+        this.rservice = rservice; //reg
     }
 
     @GetMapping("/Map/MapTestKyung")
     public String map(Model model,HttpSession session) {
         List<CMarkerJoinCarDTO> list = null;
         list = service.getAllMarkersJoinCars();
-        model.addAttribute("markers" ,list);
-       
-       CMemberVo vo= (CMemberVo) session.getAttribute("vo");
-        //테스트용찜
-       
-	    int user_id = 2; // 사용자 아이디 임시 값
-	    model.addAttribute("user_id", vo.getId());
-	    model.addAttribute("rent_id", 1);	// 임시데이터
+        model.addAttribute("markers", list);
 
-	    // 해당 사용자가 찜한 상품 번호 리스트를 가져옴
-	    List<Integer> wishList = pservice.wishCount(user_id);
-	    model.addAttribute("wishList", wishList);
-        return"Map/MapTestKyung";
+        //테스트용찜
+
+        int user_id = 2; // 사용자 아이디 임시 값
+        model.addAttribute("user_id", user_id);
+        model.addAttribute("rent_id", 1);    // 임시데이터
+
+        // 해당 사용자가 찜한 상품 번호 리스트를 가져옴
+        List<Integer> wishList = pservice.wishCount(user_id);
+        model.addAttribute("wishList", wishList);
+        return "Map/MapTestKyung";
     }
 
+    @GetMapping("/Map/MapTestKyung2")
+    public String map2(Model model) {
+        List<CMarkerJoinCarDTO> list = null;
+        list = service.getAllMarkersJoinCars();
+        model.addAttribute("markers", list);
+
+        //테스트용찜
+
+        int user_id = 2; // 사용자 아이디 임시 값
+        model.addAttribute("user_id", user_id);
+        model.addAttribute("rent_id", 1);    // 임시데이터
+
+        // 해당 사용자가 찜한 상품 번호 리스트를 가져옴
+        List<Integer> wishList = pservice.wishCount(user_id);
+        model.addAttribute("wishList", wishList);
+        return "Map/MapTestKyung2";
+    }
     @PostMapping("/Map/Insert")
     @ResponseBody //이렇게 선언해야 ajax 데이타 받을 수 있음
     public String insert(@RequestBody CMarker vo) throws JsonProcessingException {
@@ -70,5 +86,6 @@ public class CMarkerController {
         json=objectMapper.writeValueAsString(result);
         return json;
     }
+
 }
 

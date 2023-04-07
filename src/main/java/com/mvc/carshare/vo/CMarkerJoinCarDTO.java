@@ -31,15 +31,11 @@ public class CMarkerJoinCarDTO {
 
 
     /////////////////////////////
-
-
-
     private  int rid;
     private  int return_region_id;
     private int car_numberproduct;
     private int rent_price;
     private  int rent_time;
     private  Timestamp registered_at;
-
 
 }
