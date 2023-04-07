@@ -58,11 +58,11 @@ public class CMarkerController {
     @GetMapping("/Map/MapTestKyung2")
     public String map2(Model model,HttpSession session) {
         List<CMarkerjoinCarDTO2> list = null;
+        
         //테스트용찜
         CMemberVo vo= (CMemberVo) session.getAttribute("vo");
         list = service.selectBySell(vo.getId());
-        System.out.println(vo);
-        System.out.println(list);
+        System.out.println("list=>>>>>>>>>>>>>>>"+list);
         model.addAttribute("markers", list);
         model.addAttribute("user_id",vo.getId() );
         model.addAttribute("rent_id", 1);    // 임시데이터
@@ -77,10 +77,10 @@ public class CMarkerController {
     @PostMapping("/Map/Insert")
     @ResponseBody //이렇게 선언해야 ajax 데이타 받을 수 있음
     public String insert(@RequestBody CMarker vo) throws JsonProcessingException {
-        vo.setCar_number(3);
+    	System.out.println(vo.getCar_number());
         int cnt=service.insertMarker(vo);
         Map<String, Object> result=new HashMap<>();
-
+        	
         result.put("cnt", cnt);
         String json=null;
         json=objectMapper.writeValueAsString(result);

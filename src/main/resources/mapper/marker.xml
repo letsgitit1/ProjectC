@@ -5,32 +5,36 @@
 <mapper namespace="com.mvc.carshare.dao.CMarkerDao">
 
 
-    <select id="getAllMarkers" resultType="CMarker">
-        select * from CMarker
-    </select>
+	<select id="getAllMarkers" resultType="CMarker">
+		select * from CMarker
+	</select>
 
-    <select id="getAllMarkersJoinCars" resultType="CMarkerJoinCarDTO">
-        SELECT *
-        FROM CMarker c
-                 JOIN C_cars r ON c.car_number = r.CAR_ID
-                 JOIN C_registrations s ON r.CAR_ID = s.car_number
-    </select>
+	<select id="getAllMarkersJoinCars"
+		resultType="CMarkerJoinCarDTO">
+		SELECT *
+		FROM CMarker c
+		JOIN C_cars r ON c.car_number = r.CAR_ID
+		JOIN C_registrations s ON r.CAR_ID = s.car_number
+	</select>
 
-    <insert id="insertMarker" parameterType="CMarker">
-        INSERT INTO CMARKER
-            (ID, LATITUDE, LONGITUDE,CAR_NUMBER)
-        VALUES(marker_seq.nextval, #{latitude}, #{longitude},#{car_number})
-    </insert>
-    <select id="selectByCarid" resultType="int" parameterType="int">
-    SELECT r.id rid FROM c_cars c  JOIN C_REGISTRATIONS r 
-	ON c.CAR_ID = r.CAR_NUMBER WHERE c.CAR_ID=#{car_id}
-    </select>
-    
-    <select id="selectBySell" resultType="CMarkerjoinCarDTO2">
-    	SELECT cm.LATITUDE,cm.LONGITUDE,c.CAR_ID ,c.CAR_IMAGE,
-					c.CAR_MODEL,me.ID m_id,cr.ID r_id,cr.RENT_PRICE,cr.RENT_TIME
-	FROM CMARKER cm JOIN C_CARS c ON cm.CAR_NUMBER=c.CAR_ID
-	JOIN C_MEMBERS me ON me.ID= c.OWNER_ID AND c.OWNER_ID=#{owner_id}
-	JOIN C_REGISTRATIONS cr ON c.CAR_ID = cr.CAR_NUMBER
-    </select>
+	<insert id="insertMarker" parameterType="CMarker">
+		INSERT INTO CMARKER
+		(ID, LATITUDE, LONGITUDE,CAR_NUMBER)
+		VALUES(marker_seq.nextval, #{latitude}, #{longitude},#{car_number})
+	</insert>
+	<select id="selectByCarid" resultType="int" parameterType="int">
+		SELECT r.id rid FROM c_cars c JOIN C_REGISTRATIONS r
+		ON c.CAR_ID = r.CAR_NUMBER WHERE c.CAR_ID=#{car_id}
+	</select>
+
+	<select id="selectBySell" resultType="CMarkerjoinCarDTO2" parameterType="int">
+		SELECT mno, CAR_IMAGE,car_model,cno, LATITUDE,LONGITUDE,
+		cr.RENT_PRICE,cr.RENT_TIME,cr.ID FROM C_REGISTRATIONS cr JOIN
+		(select mno, CAR_IMAGE,car_model,cno, cma.LATITUDE,cma.LONGITUDE FROM CMARKER
+		cma JOIN
+		(SELECT cm.ID mno , cc.CAR_IMAGE,cc.CAR_MODEL,cc.CAR_ID cno FROM
+		C_MEMBERS cm JOIN C_CARS cc ON cm.ID=cc.OWNER_ID ) cmc ON cma.CAR_NUMBER =
+		cmc.cno) tr
+		ON cr.CAR_NUMBER= tr.cno AND mno=#{mno}
+	</select>
 </mapper>
