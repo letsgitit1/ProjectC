@@ -19,6 +19,7 @@ body {
 	padding: 10px;
 	border: 1px solid black;
 	border-radius: 5px;
+	padding: 20px;
 }
 
 .reg_table {
@@ -57,7 +58,7 @@ border: 1px solid silver;
 }
 
 input[type="text"],[type="password"],[type="number"],[type="tel"],[type="email"] {
-	width: 70%;
+	width: 85%;
 	height: 30px;
 	border: 1px solid silver;
 	border-radius: 4px;
@@ -79,7 +80,7 @@ input[type="text"],[type="password"],[type="number"],[type="tel"],[type="email"]
 	display: inline-block;
     cursor: pointer;
     height: 24px;
-    width: 120px;
+    width: 135px;
     border: 1px solid silver;
     border-radius: 4px;
     line-height: 24px;
@@ -248,8 +249,8 @@ h1 {
 				<tr>
 					<th><label for="password">패스워드</label></th>
 					<td><input type="password" name="password" id="password" required class="input_ph" placeholder="8자 이상"> <br>
-					<div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
-					<div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다.</div></td>
+					<div class="alert alert-success" id="alert-success">비밀번호 일치</div>
+					<div class="alert alert-danger" id="alert-danger">비밀번호 불일치</div></td>
 				</tr>
 				<tr>
 					<th><label for="password2"></label></th>
@@ -278,7 +279,9 @@ h1 {
 				</tr>
 				<tr>
 					<th><label for="rphone">전화번호</label></th>
-					<td><input type="tel" name="phone_number" id="rphone" required class="input_ph" placeholder="(-)까지 입력해주세요."></td>
+					<td><input type="tel" name="phone_number" id="rphone" required class="input_ph" placeholder="(-)빼고 입력해주세요."> <br>
+					<span id="ageOK"></span>
+					</td>
 				</tr>
 				<tr>
 					<th><label for="driver_license_number">운전면허</label></th>

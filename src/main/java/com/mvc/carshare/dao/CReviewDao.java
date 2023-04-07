@@ -16,4 +16,6 @@ public interface CReviewDao {
 	//내가쓴 리뷰 조회
 	List<CReviewVo> writebyme(int author_id);
 	
+	//리뷰 작성
+	int insertReview(CReviewVo vo);
 }

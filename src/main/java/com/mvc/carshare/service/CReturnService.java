@@ -20,4 +20,12 @@ public class CReturnService {
 	public List<RentDto> ReturnDate() {
 		return dao.ReturnDate();
 	}
+	
+	
+	//이동해
+	//반납한 차량중 리뷰안쓴 차량 조회
+	public List<CReturnVo> retunCarNotreview(int user_id) {
+		
+		return dao.retunCarNotreview(user_id);
+	}
 }
