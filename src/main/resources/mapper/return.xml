@@ -6,8 +6,9 @@
  		select * from C_RETURNS where id=#{id}
  	</select>
  	
+ 	<!--반납해야하는 날짜 구하기  -->
  	<select id="ReturnDate" resultType="RentDto">
- 	SELECT re.RENT_AT+(r.rent_time/24) remaining_time,re.ID ,re.user_id FROM C_REGISTRATIONS r JOIN C_RETURNS re
- ON r.CAR_NUMBER= re.CAR_NUMBER AND re.RETURNED_AT IS NULL
+ 	SELECT re.RENT_AT+(r.rent_time/24) remaining_time,re.ID ,re.USER_ID FROM C_REGISTRATIONS r JOIN C_RETURNS re
+ ON r.CAR_NUMBER= re.CAR_ID AND re.RETURNED_AT IS NULL
  	</select>
  </mapper>

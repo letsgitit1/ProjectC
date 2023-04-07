@@ -435,10 +435,10 @@
 		});
 
 		function markerfordb() {
-
-			const jobj = {"longitude": clickmouse1, "latitude": clickmouse2}
+			console.log(markerData.car_id)
+			console.log("확인=>>>>>>>"+markerData.cno)
+			const jobj = {"longitude": clickmouse1, "latitude": clickmouse2,"car_number":markerData.cno}
 			const jstl = JSON.stringify(jobj)
-			console.log(jstl);
 			const xhr = new XMLHttpRequest()
 			xhr.open('POST', '/Map/Insert')
 			xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
