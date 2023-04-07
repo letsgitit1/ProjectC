@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,7 @@ import com.mvc.carshare.service.CProductService;
 import com.mvc.carshare.service.CRegistrationsService;
 import com.mvc.carshare.vo.CMarker;
 import com.mvc.carshare.vo.CMarkerJoinCarDTO;
+import com.mvc.carshare.vo.CMemberVo;
 import com.mvc.carshare.vo.CProductVo;
 
 import ch.qos.logback.core.util.SystemInfo;
@@ -37,7 +40,7 @@ public class CMarkerController {
     }
 
     @GetMapping("/Map/MapTestKyung")
-    public String map(Model model) {
+    public String map(Model model,HttpSession session) {
         List<CMarkerJoinCarDTO> list = null;
         list = service.getAllMarkersJoinCars();
         model.addAttribute("markers", list);
@@ -71,9 +74,6 @@ public class CMarkerController {
         model.addAttribute("wishList", wishList);
         return "Map/MapTestKyung2";
     }
-
-
-
     @PostMapping("/Map/Insert")
     @ResponseBody //이렇게 선언해야 ajax 데이타 받을 수 있음
     public String insert(@RequestBody CMarker vo) throws JsonProcessingException {

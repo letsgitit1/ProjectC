@@ -13,5 +13,5 @@ public interface CMarkerDao {
     public List<CMarker> getAllMarkers();
     public List<CMarkerJoinCarDTO> getAllMarkersJoinCars();
     public int insertMarker(CMarker vo);
-
+    public int selectByCarid(int rid);
 }

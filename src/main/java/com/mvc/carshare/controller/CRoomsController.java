@@ -5,10 +5,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.mvc.carshare.service.CMarkerService;
 import com.mvc.carshare.service.CMessageService;
 import com.mvc.carshare.service.CRoomsService;
 import com.mvc.carshare.service.CSMemberService;
@@ -30,11 +33,20 @@ public class CRoomsController {
 	
 	private final CSMemberService cMemberService;
 	
+	private final CMarkerService cMarkerService;
+	
+	
+	
 //	방 만드는 페이지		필요 없음
     @GetMapping("/register")
-    public String register(Model model, String email,HttpSession request) {
+
+    public String register( Model model, @RequestParam int car_number,HttpSession request) {
+    	System.out.println("룸 들어옴"+car_number);
+    	
     	CMemberVo vo = (CMemberVo) request.getAttribute("vo");		//임시로 만든 세션에 담긴 값
     	model.addAttribute("email", vo.getEmail());
+    	model.addAttribute("registrNum", cMarkerService.selectByCarid(car_number));
+
         return "rooms/register";
     }
     

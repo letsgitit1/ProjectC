@@ -8,7 +8,6 @@ import java.sql.Timestamp;
 
 @Data
 public class CMarkerJoinCarDTO {
-
     private int id;
     private double latitude;
     private double longitude;
@@ -32,11 +31,7 @@ public class CMarkerJoinCarDTO {
 
 
     /////////////////////////////
-
-
-
-
-    private  int id2;
+    private  int rid;
     private  int return_region_id;
     private int car_numberproduct;
     private int rent_price;

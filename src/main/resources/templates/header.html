@@ -43,20 +43,26 @@
 	border: 1px solid silver;
 	
 }
-input[type="text"],[type="password"] {
-	margin-bottom: 20px;
-	width: 300px;
-	height: 30px;
-}
 .modal_button_left {
 	margin-left: 57px;
 }
-.input_ph::-webkit-input-placeholder {
+.login_input::-webkit-input-placeholder {
 	padding-left: 10px;
 	border-radius: 4px;
 }
+
 .logincheck {
 	color: red;
+}
+.login_input {
+	width: 100%; 
+	height: 30px; 
+	border: 1px solid silver; 
+	border-radius: 4px; 
+	margin-bottom: 10px;
+}
+.login_input:hover{
+	border: 1px solid black;
 }
 </style>
 <body>
@@ -67,10 +73,10 @@ input[type="text"],[type="password"] {
 		<form action="/login" method="POST">
 			<table class="modal_table">
 				<tr>
-					<td><input class="input_ph" type="text" name="email" placeholder="아이디" id="id"></td>
+					<td><input class="login_input" type="text" name="email" placeholder="아이디" id="id"></td>
 				</tr> 
 				<tr>
-					<td><input class="input_ph" type="password" name="password" id="password" placeholder="비밀번호"> <br>
+					<td><input class="login_input" type="password" name="password" id="password" placeholder="비밀번호"> <br>
 						<span class="loginOK"></span>
 					</td>
 				</tr>
@@ -111,7 +117,7 @@ input[type="text"],[type="password"] {
           <li class="header_nav_item"><a href="/reg">JOIN</a></li>
           <li th:if="${session.vo}!=null" class="header_nav_item"><a href="/logout">LOGOUT</a></li>
          <li th:unless="${session.vo}!=null" class="header_nav_item"><a href="#modal1" rel="modal:open">LOGIN</a></li>
-          <li class="header_nav_item"><a href="/rooms/register">CHAT</a></li>
+          <li class="header_nav_item"><a href="/rooms/rooms">CHAT</a></li>
           <li class="header_nav_item"><a href="/mypage">MYPAGE</a></li>
         </ul>
       </header>

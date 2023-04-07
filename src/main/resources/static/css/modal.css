@@ -1,0 +1,42 @@
+@charset "UTF-8";
+.modal_h3 {
+	text-align: center;
+}
+.modal_table, .modal_div {
+	margin: auto;
+}
+.modal_button {
+	border: none;
+	background-color: white;
+	cursor: pointer;
+	margin-left: 20px;
+}
+.modal_submit {
+	width: 310px;
+	height: 35px;
+	background-color: black;
+	color: white;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+}
+.modal_submit:hover {
+	background-color: silver;
+	border: 1px solid silver;
+	
+}
+input[type="text"],[type="password"] {
+	margin-bottom: 20px;
+	width: 300px;
+	height: 30px;
+}
+.modal_button_left {
+	margin-left: 57px;
+}
+.input_ph::-webkit-input-placeholder {
+	padding-left: 10px;
+	border-radius: 4px;
+}
+.logincheck {
+	color: red;
+}
