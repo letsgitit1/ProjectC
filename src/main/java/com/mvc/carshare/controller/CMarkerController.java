@@ -64,7 +64,8 @@ public class CMarkerController {
         System.out.println(vo);
         System.out.println(list);
         model.addAttribute("markers", list);
-        model.addAttribute("user_id",vo.getId() );
+        model.addAttribute("user_id",vo.getId()
+        );
         model.addAttribute("rent_id", 1);    // 임시데이터
 
         // 해당 사용자가 찜한 상품 번호 리스트를 가져옴

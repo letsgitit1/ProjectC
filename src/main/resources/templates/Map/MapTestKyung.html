@@ -4,6 +4,7 @@
 	<link href="../css/serviceheader.css" rel="stylesheet" />
 	<meta charset="utf-8">
 	<title>맵맵맵맵맵테스트트트트트</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
 
@@ -116,6 +117,11 @@
 <div>
 	<button onClick="roadmap()">누르면 지도</button>
 	<button onClick="skyview()">누르면 스카이뷰</button>
+	<p>
+<!--		반납하기 버튼을 누르면 맵에 모든 마커가 생성됩니다. !-->
+<!--		반납하기를 만약 차를 빌리지 않은 사람이면 display='none'으로 처리하고 만약 빌렸다면 block-->
+		<button id ="returncar" onclick="showMarkers()" style="display: none;">반납하기버튼이에요 </button>
+	</p>
 </div>
 
 
@@ -130,72 +136,28 @@
 <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d11d96d8bf1e2f7032da54bfc050846&libraries=services,clusterer"></script>
 <script th:inline="javascript">
-	function searchPlace() {
-		var place = document.getElementById('searchBox').value;
-
-		// 장소 검색 객체를 생성합니다
-		var places = new kakao.maps.services.Places();
-
-		// 지역 검색을 요청합니다
-		places.keywordSearch(place, function(result, status) {
-
-			// 정상적으로 검색이 완료됐으면
-			if (status === kakao.maps.services.Status.OK) {
-
-				var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-				// 마커를 생성합니다
-				var marker = new kakao.maps.Marker({
-					map: map,
-					position: coords
-				});
-
-				// 검색된 위치로 지도 중심을 이동시킵니다
-				map.setCenter(coords);
-				map.setLevel(3);
-			}
-		});
-	}
 
 
-	// 검색 버튼 클릭 시 searchPlace 함수 호출
-	document.getElementById('searchButton').addEventListener('click', searchPlace)
-
-	function moveToCurrentPosition() {
-		if (navigator.geolocation) {
-			// 사용자의 현재 위치를 요청합니다.
-			navigator.geolocation.getCurrentPosition(function(position) {
-				// 현재 위치의 위도와 경도를 저장합니다.
-				var lat = position.coords.latitude;
-				var lng = position.coords.longitude;
-
-				// 현재 위치로 지도를 이동합니다.
-				var moveLatLon = new kakao.maps.LatLng(lat, lng);
-				map.panTo(moveLatLon);
-				alert("현재 접속중인 위치를 기반으로 안내해드리겠습니다")
-			});
-		} else {
-			alert("현재위치를 찾을수 없습니다 ㅠㅠ");
-		}
-		// 버튼 클릭 시 moveToCurrentPosition 함수를 호출합니다.
-
-	}
-	document.getElementById('myarea').addEventListener('click', moveToCurrentPosition);
-
-
-	var mapContainer = document.getElementById('map'); // 지도를 표시할 div
+//지도 생성
+	var mapContainer = document.getElementById('map');
 	var mapOption = {
 		center: new kakao.maps.LatLng(37.50000717025944, 127.03515956607703), // 지도의 중심좌표 역삼역으로 했슴다
 		level: 14 // 지도의 확대 레벨
-
 	};
 	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
 
-	var clusterer = new kakao.maps.MarkerClusterer({
-		map: map,
-		averageCenter: true,
-		minLevel: 10
+	//오버레이 초기값 생성
+	var overlay = new kakao.maps.CustomOverlay({
+		content: "",
+		map: null,
+		position: new kakao.maps.LatLng(0, 0), // 초기 위치는 지도 밖으로 설정
 	});
+//마커 클러스터러입니다
+var clusterer = new kakao.maps.MarkerClusterer({
+	map: map,
+	averageCenter: true,
+	minLevel: 10
+});
 
 	var imageSrc = "/image/pngegg.png";
 	var imageSize = new kakao.maps.Size(30, 30);
@@ -203,27 +165,18 @@
 	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
 	var markerListString = [[${markers}]];
-
-	var overlay = new kakao.maps.CustomOverlay({
-		content: "",
-		map: null,
-		position: new kakao.maps.LatLng(0, 0), // 초기 위치는 지도 밖으로 설정
-	});
-
-
-
 	var markers = []; // 지도에 표시된 마커 객체를 가지고 있을 배열입니다.
 	for (var i = 0; i < markerListString.length; i++) {
 		var markerData = markerListString[i];
-		console.log(markerListString);
 		var marker = new kakao.maps.Marker({
 			position: new kakao.maps.LatLng(
 					parseFloat(markerData.latitude),
 					parseFloat(markerData.longitude)
 			),
 			image: markerImage,
+			clickable: true // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
 		});
-		console.log(markerData.id2);
+
 		// 생성된 마커를 배열에 추가합니다
 		markers.push(marker);
 
@@ -231,242 +184,325 @@
 		marker.setMap(map);
 		clusterer.addMarkers(markers);
 
+// "마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
+		function showMarkers() {
+			for (var i = 0; i < markers.length; i++) {
+				markers[i].setMap(map);
+			}
+			clusterer.addMarkers(markers); // 클러스터러에 마커를 추가합니다
+			alert('반납이 완료되었습니다 이용해주셔서 정말 감사합니다!')
+		}
+// "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
+		function hideMarkers() {
+			for (var i = 0; i < markers.length; i++) {
+				clusterer.removeMarker(markers[i]); // 클러스터러에서 해당 마커를 제거합니다
+			}
+			if (overlay) {
+				overlay.setMap(null); // 오버레이가 존재하면 지도에서 제거합니다
+			}
+
+			document.getElementById('returncar').style.display ='block';
+
+
+			alert('이용해주셔서 감사합니다 반납하기 버튼을 누르시거나 허브존을 클릭하면 반납이 완료됩니다.')
+		}
+
 		// 지도 타입 정보를 가지고 있을 객체입니다
-		// map.addOverlayMapTypeId 함수로 추가된 지도 타입은
-		// 가장 나중에 추가된 지도 타입이 가장 앞에 표시됩니다
-		// 이 예제에서는 지도 타입을 추가할 때 지적편집도, 지형정보, 교통정보, 자전거도로 정보 순으로 추가하므로
-		// 자전거 도로 정보가 가장 앞에 표시됩니다
-		var mapTypes = {
-			terrain : kakao.maps.MapTypeId.TERRAIN,
-			traffic :  kakao.maps.MapTypeId.TRAFFIC,
-			bicycle : kakao.maps.MapTypeId.BICYCLE,
-			useDistrict : kakao.maps.MapTypeId.USE_DISTRICT
-		};
+			// map.addOverlayMapTypeId 함수로 추가된 지도 타입은
+			// 가장 나중에 추가된 지도 타입이 가장 앞에 표시됩니다
+			// 이 예제에서는 지도 타입을 추가할 때 지적편집도, 지형정보, 교통정보, 자전거도로 정보 순으로 추가하므로
+			// 자전거 도로 정보가 가장 앞에 표시됩니다
+			var mapTypes = {
+				terrain: kakao.maps.MapTypeId.TERRAIN,
+				traffic: kakao.maps.MapTypeId.TRAFFIC,
+				bicycle: kakao.maps.MapTypeId.BICYCLE,
+				useDistrict: kakao.maps.MapTypeId.USE_DISTRICT
+			};
 
-		// 체크 박스를 선택하면 호출되는 함수입니다
-		function setOverlayMapTypeId() {
-			var chkTerrain = document.getElementById('chkTerrain'),
-					chkTraffic = document.getElementById('chkTraffic'),
-					chkBicycle = document.getElementById('chkBicycle'),
-					chkUseDistrict = document.getElementById('chkUseDistrict');
+			// 체크 박스를 선택하면 호출되는 함수입니다
+			function setOverlayMapTypeId() {
+				var chkTerrain = document.getElementById('chkTerrain'),
+						chkTraffic = document.getElementById('chkTraffic'),
+						chkBicycle = document.getElementById('chkBicycle'),
+						chkUseDistrict = document.getElementById('chkUseDistrict');
 
-			// 지도 타입을 제거합니다
-			for (var type in mapTypes) {
-				map.removeOverlayMapTypeId(mapTypes[type]);
+				// 지도 타입을 제거합니다
+				for (var type in mapTypes) {
+					map.removeOverlayMapTypeId(mapTypes[type]);
+				}
+
+				// 지적편집도정보 체크박스가 체크되어있으면 지도에 지적편집도정보 지도타입을 추가합니다
+				if (chkUseDistrict.checked) {
+					map.addOverlayMapTypeId(mapTypes.useDistrict);
+				}
+
+				// 지형정보 체크박스가 체크되어있으면 지도에 지형정보 지도타입을 추가합니다
+				if (chkTerrain.checked) {
+					map.addOverlayMapTypeId(mapTypes.terrain);
+				}
+
+				// 교통정보 체크박스가 체크되어있으면 지도에 교통정보 지도타입을 추가합니다
+				if (chkTraffic.checked) {
+					map.addOverlayMapTypeId(mapTypes.traffic);
+				}
+
+				// 자전거도로정보 체크박스가 체크되어있으면 지도에 자전거도로정보 지도타입을 추가합니다
+				if (chkBicycle.checked) {
+					map.addOverlayMapTypeId(mapTypes.bicycle);
+				}
+
 			}
 
-			// 지적편집도정보 체크박스가 체크되어있으면 지도에 지적편집도정보 지도타입을 추가합니다
-			if (chkUseDistrict.checked) {
-				map.addOverlayMapTypeId(mapTypes.useDistrict);
+			/*****************지호*******************/
+			let wishList = [[${wishList}]];
+			let wish = '';
+			if (wishList.includes(markerData.car_id)) {
+				wish = '찜완료'
+			} else {
+				wish = '찜하기';
 			}
 
-			// 지형정보 체크박스가 체크되어있으면 지도에 지형정보 지도타입을 추가합니다
-			if (chkTerrain.checked) {
-				map.addOverlayMapTypeId(mapTypes.terrain);
-			}
 
-			// 교통정보 체크박스가 체크되어있으면 지도에 교통정보 지도타입을 추가합니다
-			if (chkTraffic.checked) {
-				map.addOverlayMapTypeId(mapTypes.traffic);
-			}
+			//각 마커에 클릭 이벤트를 등록 클릭 이벤트가 발생되면 오버레이를 클릭한 마커 위치로 이동, 오버레이 내용을 해당 마커 데이터로 갱신
+			kakao.maps.event.addListener(marker, 'click', (function (markerData) {
+				return function () {
 
-			// 자전거도로정보 체크박스가 체크되어있으면 지도에 자전거도로정보 지도타입을 추가합니다
-			if (chkBicycle.checked) {
-				map.addOverlayMapTypeId(mapTypes.bicycle);
-			}
+					var carImage = '<img src="/image/' + markerData.car_image + '" style="width:100%;">';
+					// 클릭된 마커 위치로 오버레이 이동 약 30픽셀정도 이동시킴
+					overlay.setPosition(new kakao.maps.LatLng(parseFloat(markerData.latitude) + 0.0005, parseFloat(markerData.longitude)));
+					// 오버레이 내용 갱신(추후 차 정보로 바꿔 줄 예정입니다)
+					overlay.setContent('<div class="overlaybox" id="overlaybox" >' +
+							'    <div class="boxtitle">차 대여 정보입니다</div>' +
+							'    <div class="image-wrapper">' +
+							'        <div class="image">' +
+							'            ' + carImage +
+							'    <div class="first">' +
+							'        <p id ="realchange" class="triangle text" onclick="hideMarkers()" style="color: crimson; position: absolute; background-color: #2b2d36; border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none">대여하기</p>' +
+							'        <a class="triangle text" href="/rooms/register?registrNum=2" style="color: crimson;position: absolute; right:0; background-color: #2b2d36;  border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none' +
+							'" >' +
+							'1:1채팅으로</a>' +
+							'        <div class="movietitle text">' + markerData.car_model + '</div>' +
+							'    </div>' +
+							'    <ul>' +
+							'        <li class="up">' +
+							'            <span class="number">차 엔진 타입 </span>' +
+							'            <span class="title">' + markerData.engine_type + '</span>' +
+							'        </li>' +
+							'        <li>' +
+							'            <span class="number">차의 대여 가격</span>' +
+							'            <span class="title">' + markerData.rent_price + '</span>' +
+							'        </li>' +
+							'        <li>' +
+							'            <span class="number">차의 년식</span>' +
+							'            <span class="title">' + markerData.c_year + '</span>' +
+							'        </li>' +
+							'        <li>' +
+							'            <span class="number">등록날짜</span>' +
+							'            <span class="title">' + markerData.registered_at + '</span>' +
+							'        </li>' +
+							'        <li>' +
+							'            <span class="number">최대 대여가능시간</span>' +
+							'            <span class="title">' + markerData.rent_time + '</span>' +
+							'        </li>' +
+							'    </ul>' +
+							'</div>' +
+							'<button "id="wishlist' + markerData.car_id + '" class="wishlist-btn" style="width: 100px;height: 45px;position: absolute; top: 0;right: 0;">' +
+							'<span >' + wish + '</span>' +
+							'</button>');
 
-		}
-
-		/*****************지호*******************/
-		let wishList=[[${wishList}]];
-		let wish='';
-		if(wishList.includes(markerData.car_id)){
-			wish='찜완료'
-		}else{
-			wish='찜하기';
-		}
+					overlay.setMap(map);
 
 
-		//각 마커에 클릭 이벤트를 등록 클릭 이벤트가 발생되면 오버레이를 클릭한 마커 위치로 이동, 오버레이 내용을 해당 마커 데이터로 갱신
-		kakao.maps.event.addListener(marker, 'click', (function(markerData) {
-			return function() {
+				}
 
-				var carImage = '<img src="/image/' + markerData.car_image + '" style="width:100%;">';
-				// 클릭된 마커 위치로 오버레이 이동 약 30픽셀정도 이동시킴
-				overlay.setPosition(new kakao.maps.LatLng(parseFloat(markerData.latitude) + 0.0005, parseFloat(markerData.longitude)));
-				// 오버레이 내용 갱신(추후 차 정보로 바꿔 줄 예정입니다)
-				overlay.setContent('<div class="overlaybox">' +
+			})(markerData));
+
+//오버레이 닫는 style
+		kakao.maps.event.addListener(map, 'click', function() {
+
+		document.getElementById('overlaybox').style.display =  'none';
+
+		});
+
+			function createOverlay(markerData) {
+				var overlay;
+				var content = '<div class="overlaybox" id="overlaybox">' +
 						'    <div class="boxtitle">차 대여 정보입니다</div>' +
+						'<button "id="wishlist' + markerData.car_id + '" class="wishlist-btn" style="width:100%; height:100px; position:absolute; top:50px">' +
+						'<span >' + wish + '</span>'
+						+ '</button>' +
 						'    <div class="image-wrapper">' +
 						'        <div class="image">' +
 						'            ' + carImage +
 						'    <div class="first">' +
 						'        <a class="triangle text" href="./" style="color: crimson; position: absolute; background-color: #2b2d36; border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none">대여하기</a>' +
-						'        <a class="triangle text" href="/rooms/register?registrNum=2" style="color: crimson;position: absolute; right:0; background-color: #2b2d36;  border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none' +
+						'        <a class="triangle text" href="/rooms/register?car_id=' + markerData.car_id + ' style="color: crimson;position: absolute; right:0; background-color: #2b2d36;  border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none' +
 						'" >' +
 						'1:1채팅으로</a>' +
-						'        <div class="movietitle text">'+markerData.car_model+'</div>' +
+						'        <div class="movietitle text">' + markerData.car_model + '</div>' +
 						'    </div>' +
 						'    <ul>' +
 						'        <li class="up">' +
 						'            <span class="number">차 엔진 타입 </span>' +
-						'            <span class="title">'+markerData.engine_type+'</span>' +
+						'            <span class="title">' + markerData.engine_type + '</span>' +
 						'        </li>' +
 						'        <li>' +
 						'            <span class="number">차의 대여 가격</span>' +
-						'            <span class="title">'+markerData.rent_price+'</span>' +
+						'            <span class="title">' + markerData.rent_price + '</span>' +
 						'        </li>' +
 						'        <li>' +
 						'            <span class="number">차의 년식</span>' +
-						'            <span class="title">'+markerData.c_year+'</span>' +
+						'            <span class="title">' + markerData.c_year + '</span>' +
 						'        </li>' +
 						'        <li>' +
 						'            <span class="number">등록날짜</span>' +
-						'            <span class="title">'+markerData.registered_at+'</span>' +
+						'            <span class="title">' + markerData.registered_at + '</span>' +
 						'        </li>' +
 						'        <li>' +
 						'            <span class="number">최대 대여가능시간</span>' +
-						'            <span class="title">'+markerData.rent_time+'</span>' +
+						'            <span class="title">' + markerData.rent_time + '</span>' +
 						'        </li>' +
 						'    </ul>' +
-						'</div>'+
-						'<button "id="wishlist'+markerData.car_id+'" class="wishlist-btn" style="width: 100px;height: 45px;position: absolute; top: 0;right: 0;">'+
-						'<span >'+wish+'</span>'+
-						'</button>');
+						'</div> ';
+				overlay = new kakao.maps.CustomOverlay({
+					content: content,
+					map: null,
+					position: marker.getPosition()
+				});
 
-				overlay.setMap(map);
+				return overlay;
 			}
 
-		})(markerData));
 
-		function createOverlay(markerData) {
-			var content = '<div class="overlaybox">' +
-					'    <div class="boxtitle">차 대여 정보입니다</div>' +
-					'<button "id="wishlist'+markerData.car_id+'" class="wishlist-btn" style="width:100%; height:100px; position:absolute; top:50px">'+
-					'<span >'+wish+'</span>'
-					+'</button>'+
-					'    <div class="image-wrapper">' +
-					'        <div class="image">' +
-					'            ' + carImage +
-					'    <div class="first">' +
-					'        <a class="triangle text" href="./" style="color: crimson; position: absolute; background-color: #2b2d36; border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none">대여하기</a>' +
-					'        <a class="triangle text" href="/rooms/register?car_id='+markerData.car_id+' style="color: crimson;position: absolute; right:0; background-color: #2b2d36;  border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none' +
-					'" >' +
-					'1:1채팅으로</a>' +
-					'        <div class="movietitle text">'+markerData.car_model+'</div>' +
-					'    </div>' +
-					'    <ul>' +
-					'        <li class="up">' +
-					'            <span class="number">차 엔진 타입 </span>' +
-					'            <span class="title">'+markerData.engine_type+'</span>' +
-					'        </li>' +
-					'        <li>' +
-					'            <span class="number">차의 대여 가격</span>' +
-					'            <span class="title">'+markerData.rent_price+'</span>' +
-					'        </li>' +
-					'        <li>' +
-					'            <span class="number">차의 년식</span>' +
-					'            <span class="title">'+markerData.c_year+'</span>' +
-					'        </li>' +
-					'        <li>' +
-					'            <span class="number">등록날짜</span>' +
-					'            <span class="title">'+markerData.registered_at+'</span>' +
-					'        </li>' +
-					'        <li>' +
-					'            <span class="number">최대 대여가능시간</span>' +
-					'            <span class="title">'+markerData.rent_time+'</span>' +
-					'        </li>' +
-					'    </ul>' +
-					'</div> ';
-			var overlay = new kakao.maps.CustomOverlay({
-				content: content,
-				map: null,
-				position: marker.getPosition()
-			});
-			return overlay;
-			function closeOverlay() {
-				overlay.setMap(null);
-			}
-		}
 
-	}
-	// 원
-	for (var i = 0; i < markerListString.length; i++) {
-		var cicleData = markerListString[i];
-		var circle = new kakao.maps.Circle({
-			center: new kakao.maps.LatLng(parseFloat(cicleData.clatitude), parseFloat(cicleData.clongitude)),
-			radius: 150,
-			strokeWeight: 5,
-			strokeColor: '#75B8FA',
-			strokeOpacity: 1,
-			strokeStyle: 'dashed',
-			fillColor: '#CFE7FF',
-			fillOpacity: 0.7
-		});
+}
 
-		// 클로저를 이용하여 각 원에 대한 클릭 이벤트 추가
-		(function (circle) {
-			// 원에 마우스오버 이벤트가 발생했을 때 변경할 채우기 옵션입니다
-			var mouseoverOption = {
-				fillColor: '#EFFFED',
-				fillOpacity: 0.8
-			};
-			// 원에 마우스아웃 이벤트가 발생했을 때 변경할 채우기 옵션입니다
-			var mouseoutOption = {
-				fillColor: '#A2FF99',
+		// 원
+		for (var i = 0; i < markerListString.length; i++) {
+			var cicleData = markerListString[i];
+			var circle = new kakao.maps.Circle({
+				center: new kakao.maps.LatLng(parseFloat(cicleData.clatitude), parseFloat(cicleData.clongitude)),
+				radius: 150,
+				strokeWeight: 5,
+				strokeColor: '#75B8FA',
+				strokeOpacity: 1,
+				strokeStyle: 'dashed',
+				fillColor: '#CFE7FF',
 				fillOpacity: 0.7
-			};
-
-			// 원의 마우스오버 이벤트를 등록합니다
-			kakao.maps.event.addListener(circle, 'mouseover', function () {
-				// 원의 채우기 옵션을 변경합니다
-				this.setOptions(mouseoverOption);
 			});
 
-			kakao.maps.event.addListener(circle, 'mouseout', function () {
-				// 원의 채우기 옵션을 변경합니다
-				this.setOptions(mouseoutOption);
-			});
+			// 클로저를 이용하여 각 원에 대한 클릭 이벤트 추가
+			(function (circle) {
+				// 원에 마우스오버 이벤트가 발생했을 때 변경할 채우기 옵션입니다
+				var mouseoverOption = {
+					fillColor: '#EFFFED',
+					fillOpacity: 0.8
+				};
+				// 원에 마우스아웃 이벤트가 발생했을 때 변경할 채우기 옵션입니다
+				var mouseoutOption = {
+					fillColor: '#A2FF99',
+					fillOpacity: 0.7
+				};
 
-			// 원에 클릭 이벤트를 등록합니다
-			kakao.maps.event.addListener(circle, 'click', function () {
-				let resultDiv = document.getElementById('result');
-				alert('허브존에 반납하시면 요금할인이 있습니다.')
-			});
-		})(circle);
+				// 원의 마우스오버 이벤트를 등록합니다
+				kakao.maps.event.addListener(circle, 'mouseover', function () {
+					// 원의 채우기 옵션을 변경합니다
+					this.setOptions(mouseoverOption);
+				});
 
-		circle.setMap(map);
+				kakao.maps.event.addListener(circle, 'mouseout', function () {
+					// 원의 채우기 옵션을 변경합니다
+					this.setOptions(mouseoutOption);
+				});
 
+				// 원에 클릭 이벤트를 등록합니다
+				kakao.maps.event.addListener(circle, 'click', function () {
+					let resultDiv = document.getElementById('result');
+					alert('허브존에 반납하시면 요금할인이 있습니다.')
+				});
+			})(circle);
 
-		//인포 닫는 코드
-		kakao.maps.event.addListener(marker, 'click', function () {
-			overlay.setMap(null);
-		});
-
+			circle.setMap(map);
 
 
 // 지도 확대, 축소 컨트롤에서 확대 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
-		function zoomIn() {
-			map.setLevel(map.getLevel() - 1);
-		}
+			function zoomIn() {
+				map.setLevel(map.getLevel() - 1);
+			}
 
 // 지도 확대, 축소 컨트롤에서 축소 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
-		function zoomOut() {
-			map.setLevel(map.getLevel() + 1);
-		}
-		function roadmap() {
-			map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP);
-		}
+			function zoomOut() {
+				map.setLevel(map.getLevel() + 1);
+			}
 
-		function skyview() {
-			map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);
-		}
+			function roadmap() {
+				map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP);
+			}
+
+			function skyview() {
+				map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);
+			}
+			//검색기능
+			function searchPlace() {
+				var place = document.getElementById('searchBox').value;
+
+				// 장소 검색 객체를 생성합니다
+				var places = new kakao.maps.services.Places();
+
+				// 지역 검색을 요청합니다
+				places.keywordSearch(place, function(result, status) {
+
+					// 정상적으로 검색이 완료됐으면
+					if (status === kakao.maps.services.Status.OK) {
+
+						var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+						// 마커를 생성합니다
+						var marker = new kakao.maps.Marker({
+							map: map,
+							position: coords
+						});
+
+						// 검색된 위치로 지도 중심을 이동시킵니다
+						map.setCenter(coords);
+						map.setLevel(3);
+					}
+				});
+			}
+
+			// 검색 버튼 클릭 시 searchPlace 함수 호출
+			document.getElementById('searchButton').addEventListener('click', searchPlace)
+
+			function moveToCurrentPosition() {
+				if (navigator.geolocation) {
+					// 사용자의 현재 위치를 요청합니다.
+					navigator.geolocation.getCurrentPosition(function(position) {
+						// 현재 위치의 위도와 경도를 저장합니다.
+						var lat = position.coords.latitude;
+						var lng = position.coords.longitude;
+
+						// 현재 위치로 지도를 이동합니다.
+						var moveLatLon = new kakao.maps.LatLng(lat, lng);
+						map.panTo(moveLatLon);
+						alert("현재 접속중인 위치를 기반으로 안내해드리겠습니다")
+					});
+				} else {
+					alert("현재위치를 찾을수 없습니다 ㅠㅠ");
+				}
+				// 버튼 클릭 시 moveToCurrentPosition 함수를 호출합니다.
+
+			}
+			document.getElementById('myarea').addEventListener('click', moveToCurrentPosition);
+
+
+
+
+
 	}
 </script>
 <script>
 	const headerNav = document.querySelector(".header_nav"); // ul 요소 가져오기
 	const headerNavItems = headerNav.querySelectorAll("li>a"); // li 요소 가져오기
-	console.log( headerNavItems[2])
 	window.addEventListener("scroll", function() {
 		if (window.scrollY > 80) {
 			headerNavItems[0].style.display = "none";
@@ -490,7 +526,7 @@
 		wishlist(2, markerData.car_id);
 	});
 	function wishlist(user_id, car_number) {
-		console.log("들어옴")
+
 		var button_id = "#wishlist" + car_number;
 		var isWished = $(button_id).hasClass("btn-secondary");
 		$.ajax({
