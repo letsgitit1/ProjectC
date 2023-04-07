@@ -43,8 +43,6 @@
 		ON cm.ID =cc.OWNER_ID
 		WHERE EMAIl
 		= #{email}
-
-
 	</select>
 	<!--회원아이디, 차량id로 정보가져오기 -->
 	<select id="memberByCar" parameterType="map" resultType="CMDto">
