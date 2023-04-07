@@ -170,6 +170,25 @@ h1 {
   color: white;
 }
 
+select {
+	width: 72%;
+	height: 34px;
+	padding-left: 10px;
+	font-size: 13px;
+	border: 1px solid silver;
+	border-radius: 4px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background: url('select-arrow.png') no-repeat 95% 50%; /* 화살표 아이콘 추가 */
+	cursor: pointer;
+}
+select::-ms-expand {
+	display: none;
+}
+select:hover {
+	border: 1px solid black;
+}
 </style>
 <link
       rel="stylesheet"
@@ -217,7 +236,7 @@ h1 {
 	 <br>
 	 <br>
 			<div class="carReg_div">
-			<form action="/carReg" method="POST">
+			<form action="/carReg" method="POST" enctype="multipart/form-data">
 				<table class="carReg_table">
 				<tr>
 					<td><input type="hidden" name="owner_id" th:value="${session.vo.id}"></td>
@@ -274,6 +293,9 @@ h1 {
 				 </tr>
 				 <tr>
 				 	<td colspan="2"><br>
+				 	<div >
+				 	<input type="file" name="file">
+				 	</div>
 				 	<button class="carReg_button">등록</button>
 				 	<button class="carReg_button" type="button" onclick="location.href='./'">메인</button> </td>
 				 </tr>

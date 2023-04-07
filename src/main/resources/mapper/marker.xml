@@ -21,4 +21,8 @@
             (ID, LATITUDE, LONGITUDE,CAR_NUMBER)
         VALUES(marker_seq.nextval, #{latitude}, #{longitude},#{car_number})
     </insert>
+    <select id="selectByCarid" resultType="int" parameterType="int">
+    SELECT r.id rid FROM c_cars c  JOIN C_REGISTRATIONS r 
+	ON c.CAR_ID = r.CAR_NUMBER WHERE c.CAR_ID=#{car_id}
+    </select>
 </mapper>

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,7 @@ import com.mvc.carshare.service.CProductService;
 import com.mvc.carshare.service.CRegistrationsService;
 import com.mvc.carshare.vo.CMarker;
 import com.mvc.carshare.vo.CMarkerJoinCarDTO;
+import com.mvc.carshare.vo.CMemberVo;
 import com.mvc.carshare.vo.CProductVo;
 
 import ch.qos.logback.core.util.SystemInfo;
@@ -37,17 +40,18 @@ public class CMarkerController {
     }
 
     @GetMapping("/Map/MapTestKyung")
-    public String map(Model model) {
+    public String map(Model model,HttpSession session) {
         List<CMarkerJoinCarDTO> list = null;
         list = service.getAllMarkersJoinCars();
         model.addAttribute("markers" ,list);
        
+       CMemberVo vo= (CMemberVo) session.getAttribute("vo");
         //테스트용찜
        
 	    int user_id = 2; // 사용자 아이디 임시 값
-	    model.addAttribute("user_id", user_id);
+	    model.addAttribute("user_id", vo.getId());
 	    model.addAttribute("rent_id", 1);	// 임시데이터
-	  
+	    System.out.println("LIst=>>>>>>>>>>>>>>>>>>>>>"+list);
 	    // 해당 사용자가 찜한 상품 번호 리스트를 가져옴
 	    List<Integer> wishList = pservice.wishCount(user_id);
 	    model.addAttribute("wishList", wishList);

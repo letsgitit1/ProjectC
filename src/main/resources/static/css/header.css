@@ -58,6 +58,8 @@ h1 {
   justify-content: space-between; /* 각 li 요소를 동일한 간격으로 배치 */
   list-style: none; /* li 요소의 리스트 마커 제거 */
   padding: 0; /* ul 요소의 기본 패딩 제거 */
+      overflow: visible;
+
 }
 
 .header_icon > li {
