@@ -291,6 +291,7 @@
 
         //각 마커에 클릭 이벤트를 등록 클릭 이벤트가 발생되면 오버레이를 클릭한 마커 위치로 이동, 오버레이 내용을 해당 마커 데이터로 갱신
         kakao.maps.event.addListener(marker, 'click', (function(markerData) {
+        
             return function() {
                 var carImage = '<img src="/image/' + markerData.car_image + '" style="width:100%;">';
                 // 클릭된 마커 위치로 오버레이 이동 약 30픽셀정도 이동시킴
@@ -303,7 +304,8 @@
                     '            ' + carImage +
                     '    <div class="first">' +
                     '        <a class="triangle text" href="./" style="color: crimson; position: absolute; background-color: #2b2d36; border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none">대여하기</a>' +
-                  '        <a class="triangle text" href="/rooms/register?registrNum='+markerData.id2+'" style="color: crimson;position: absolute; right:0; background-color: #2b2d36;  border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none' +
+
+                  '        <a class="triangle text" href="/rooms/register?car_number='+markerData.car_number+'" style="color: crimson;position: absolute; right:0; background-color: #2b2d36;  border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none' +
                   '" >' +
                   '1:1채팅으로</a>' +
                     '        <div class="movietitle text">'+markerData.car_model+'</div>' +
@@ -341,6 +343,7 @@
         })(markerData));
 
         function createOverlay(markerData) {
+        	console.log(markerData.car_number)
             var content = '<div class="overlaybox">' +
                '    <div class="boxtitle">차 대여 정보입니다</div>' +
                '<button "id="wishlist'+markerData.car_id+'" class="wishlist-btn" style="width:100%; height:100px; position:absolute; top:50px">'+
@@ -351,7 +354,9 @@
                '            ' + carImage +
                '    <div class="first">' +
                '        <a class="triangle text" href="./" style="color: crimson; position: absolute; background-color: #2b2d36; border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none">대여하기</a>' +
-               '        <a class="triangle text" href="./" style="color: crimson;position: absolute; right:0; background-color: #2b2d36;  border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none' +
+
+               '        <a class="triangle text" href="/rooms/register?car_number='+markerData.car_number+' style="color: crimson;position: absolute; right:0; background-color: #2b2d36;  border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none' +
+
                '" >' +
                '1:1채팅으로</a>' +
                '        <div class="movietitle text">'+markerData.car_model+'</div>' +

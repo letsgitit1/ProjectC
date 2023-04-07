@@ -25,6 +25,9 @@ public class CMarkerService {
     public int insertMarker(CMarker vo) {
     	return dao.insertMarker(vo);
     }
+    public int selectByCarid(int rid) {
+    	return dao.selectByCarid(rid);
+    }
 
 
 }
