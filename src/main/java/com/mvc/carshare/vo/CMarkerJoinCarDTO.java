@@ -17,7 +17,7 @@ public class CMarkerJoinCarDTO {
     private int car_number;					//자동차ID
     ///////////////////////////////////////////////마커마커마커마커마커//////////////
 
-
+    
     private String car_numberjoin;		//자동차번호
     private int car_id;		//자동차번호
     private int owner_id;			//소유주
@@ -28,18 +28,13 @@ public class CMarkerJoinCarDTO {
     private String engine_type;		//엔진종류
     private String car_type;		//자동차 타입
     private String c_year;          //차의 년식
-
-
-    /////////////////////////////
-
-
-
+    
+    
+    /////////////////////////////판매정보///////////////////////////////////////////////////
     private  int rid;
     private  int return_region_id;
     private int car_numberproduct;
     private int rent_price;
     private  int rent_time;
     private  Timestamp registered_at;
-
-
 }

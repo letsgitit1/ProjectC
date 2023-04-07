@@ -4,6 +4,8 @@ import com.mvc.carshare.dao.CMarkerDao;
 import com.mvc.carshare.dao.CProductDao;
 import com.mvc.carshare.vo.CMarker;
 import com.mvc.carshare.vo.CMarkerJoinCarDTO;
+import com.mvc.carshare.vo.CMarkerjoinCarDTO2;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +30,8 @@ public class CMarkerService {
     public int selectByCarid(int rid) {
     	return dao.selectByCarid(rid);
     }
-
+    public List<CMarkerjoinCarDTO2> selectBySell(int owner_id){
+    	return dao.selectBySell(owner_id);
+    }
 
 }
