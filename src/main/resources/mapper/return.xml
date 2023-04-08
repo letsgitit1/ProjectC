@@ -36,8 +36,8 @@
 	</select>
 	<insert id="insertRent" parameterType="CReturnVo">
 		INSERT INTO C_RETURNS
-	(ID, regist_number, RENT_AT, RETURN_REGION_ID, USER_ID, CAR_NUMBER)
-	VALUES(returns_seq.nextval, #{regist_number}, sysdate, #{return_region_id}, #{user_id}, #{car_number})
+	(ID, regist_number,car_id, RENT_AT, RETURN_REGION_ID, USER_ID, CAR_NUMBER)
+	VALUES(returns_seq.nextval,#{car_id}, #{regist_number}, sysdate, #{return_region_id}, #{user_id}, #{car_number})
 	</insert>
 </mapper>
 

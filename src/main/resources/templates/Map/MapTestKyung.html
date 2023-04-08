@@ -210,6 +210,7 @@ var clusterer = new kakao.maps.MarkerClusterer({
 		let regist_number=markerData.rid;
 		let car_number=markerData.car_number_join;
 		let return_region_id=markerData.return_region_id;
+		let car_id=markerData.car_id;
 		console.log(regist_number)
 		// 생성된 마커를 배열에 추가합니다
 		markers.push(marker);
@@ -234,10 +235,11 @@ var clusterer = new kakao.maps.MarkerClusterer({
 					    type: "POST",
 					    url: "/Map/rentInsert",
 					    contentType: 'application/json',
-					    data: JSON.stringify({return_region_id: return_region_id,regist_number: regist_number,user_id: user_id,car_number:car_number}),
+					    data: JSON.stringify({return_region_id: return_region_id,regist_number: regist_number,user_id: user_id,car_number:car_number,car_id:car_id}),
 					    success: function (response) {
 					      if (response === "success") {
 					    	  alert('이용해주셔서 감사합니다 반납하기 버튼을 누르시거나 허브존을 클릭하면 반납이 완료됩니다.')
+					    	  document.getElementById('returncar').style.display ='block';
 					    	  for (var i = 0; i < markers.length; i++) {
 				clusterer.removeMarker(markers[i]); // 클러스터러에서 해당 마커를 제거합니다
 			}
