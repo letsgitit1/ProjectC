@@ -28,4 +28,9 @@ public class CReturnService {
 		
 		return dao.retunCarNotreview(user_id);
 	}
+
+	 public int insertRent(CReturnVo vo) {
+	    	return dao.insertRent(vo);
+	    }
+
 }

@@ -236,7 +236,7 @@ select:hover {
 	 <br>
 	 <br>
 			<div class="carReg_div">
-			<form action="/carReg" method="POST">
+			<form action="/carReg" method="POST" enctype="multipart/form-data">
 				<table class="carReg_table">
 				<tr>
 					<td><input type="hidden" name="owner_id" th:value="${session.vo.id}"></td>
@@ -293,6 +293,9 @@ select:hover {
 				 </tr>
 				 <tr>
 				 	<td colspan="2"><br>
+				 	<div >
+				 	<input type="file" name="file">
+				 	</div>
 				 	<button class="carReg_button">등록</button>
 				 	<button class="carReg_button" type="button" onclick="location.href='./'">메인</button> </td>
 				 </tr>

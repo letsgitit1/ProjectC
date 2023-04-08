@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class ApplicationConfig implements WebMvcConfigurer {
 	private String urlPath="/uploads/**";		//http 프로토콜로 접근할 url
-	private String location = "file:///C:/ProjectC/ProjectC/src/main/resources/static/image/";   //로컬(서버)컴퓨터의 경로. 반드시 경로 마지막 /필요함
+	private String location = "file:///C:/uploadimage/";   //로컬(서버)컴퓨터의 경로. 반드시 경로 마지막 /필요함
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

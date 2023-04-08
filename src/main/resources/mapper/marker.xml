@@ -3,22 +3,47 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mvc.carshare.dao.CMarkerDao">
+	<!--맵 들어올 때 회원의 대여 여부  -->
+	<select id="booleanRent" parameterType="int" resultType="int">
+	SELECT count(*) FROM C_RETURNS cr JOIN 
+	C_MEMBERS cm ON  cr.USER_ID=cm.id 
+	AND  cr.RETURNED_AT IS NULL
+	AND cr.RENT_AT is NOT NULL AND cm.id=#{id}
+	</select>
 
+	<select id="getAllMarkers" resultType="CMarker">
+		select * from CMarker
+	</select>
 
-    <select id="getAllMarkers" resultType="CMarker">
-        select * from CMarker
-    </select>
+	<select id="getAllMarkersJoinCars"
+		resultType="CMarkerJoinCarDTO">
+		SELECT c.ID, c.LATITUDE, c.LONGITUDE, c.CLONGITUDE, c.CLATITUDE, c.CAR_NUMBER, r.CAR_NUMBER AS car_number_join, 
+r.CAR_ID, r.OWNER_ID, r.CAR_IMAGE, r.CAR_MODEL, r.MANUFACTURER, r.ENGINE_TYPE, r.CAR_TYPE, r.C_YEAR, 
+s.ID AS rid, s.RETURN_REGION_ID, s.CAR_NUMBER AS car_number_product,
+s.RENT_PRICE, s.RENT_TIME, s.REGISTERED_AT
+FROM CMarker c
+JOIN C_cars r ON c.car_number = r.CAR_ID
+JOIN C_registrations s ON r.CAR_ID = s.car_number
+	</select>
 
-    <select id="getAllMarkersJoinCars" resultType="CMarkerJoinCarDTO">
-        SELECT *
-        FROM CMarker c
-                 JOIN C_cars r ON c.car_number = r.CAR_ID
-                 JOIN C_registrations s ON r.CAR_ID = s.car_number
-    </select>
+	<insert id="insertMarker" parameterType="CMarker">
+		INSERT INTO CMARKER
+		(ID, LATITUDE, LONGITUDE,CAR_NUMBER)
+		VALUES(marker_seq.nextval, #{latitude}, #{longitude},#{car_number})
+	</insert>
+	<select id="selectByCarid" resultType="int" parameterType="int">
+		SELECT r.id rid FROM c_cars c JOIN C_REGISTRATIONS r
+		ON c.CAR_ID = r.CAR_NUMBER WHERE c.CAR_ID=#{car_id}
+	</select>
 
-    <insert id="insertMarker" parameterType="CMarker">
-        INSERT INTO CMARKER
-            (ID, LATITUDE, LONGITUDE,CAR_NUMBER)
-        VALUES(marker_seq.nextval, #{latitude}, #{longitude},#{car_number})
-    </insert>
+	<select id="selectBySell" resultType="CMarkerjoinCarDTO2" parameterType="int">
+		SELECT mno, CAR_IMAGE,car_model,cno, LATITUDE,LONGITUDE,
+		cr.RENT_PRICE,cr.RENT_TIME,cr.ID FROM C_REGISTRATIONS cr JOIN
+		(select mno, CAR_IMAGE,car_model,cno, cma.LATITUDE,cma.LONGITUDE FROM CMARKER
+		cma JOIN
+		(SELECT cm.ID mno , cc.CAR_IMAGE,cc.CAR_MODEL,cc.CAR_ID cno FROM
+		C_MEMBERS cm JOIN C_CARS cc ON cm.ID=cc.OWNER_ID ) cmc ON cma.CAR_NUMBER =
+		cmc.cno) tr
+		ON cr.CAR_NUMBER= tr.cno AND mno=#{mno}
+	</select>
 </mapper>
