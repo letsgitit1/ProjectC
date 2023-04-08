@@ -40,7 +40,7 @@ public class CRoomsController {
 //	방 만드는 페이지		필요 없음
     @GetMapping("/register")
 
-    public String register( Model model,  int car_id,HttpSession request) {
+    public String register( Model model, int car_id,HttpSession request) {
     	System.out.println("룸 들어옴"+car_id);
     	
     	CMemberVo vo = (CMemberVo) request.getAttribute("vo");		//임시로 만든 세션에 담긴 값

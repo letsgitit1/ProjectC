@@ -18,10 +18,9 @@ public class CMarkerJoinCarDTO {
     ///////////////////////////////////////////////마커마커마커마커마커//////////////
 
     
-    private String car_numberjoin;		//자동차번호
+    private String car_number_join;		//자동차번호
     private int car_id;		//자동차번호
     private int owner_id;			//소유주
-    private int review_id;			//후기번호
     private String car_image;		//차량 이미지
     private String car_model;		//자동차 모델
     private String manufacturer;	//제조사

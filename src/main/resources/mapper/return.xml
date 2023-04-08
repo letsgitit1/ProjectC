@@ -1,14 +1,21 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="com.mvc.carshare.dao.CReturnDao">
- 	<select id="selectById" resultType="CReturnVo" parameterType="int">
- 		select * from C_RETURNS where id=#{id}
- 	</select>
- 	
- 	<!--반납해야하는 날짜 구하기  -->
- 	<select id="ReturnDate" resultType="RentDto">
- 	SELECT re.RENT_AT+(r.rent_time/24) remaining_time,re.ID ,re.USER_ID FROM C_REGISTRATIONS r JOIN C_RETURNS re
- ON r.CAR_NUMBER= re.CAR_ID AND re.RETURNED_AT IS NULL
- 	</select>
- </mapper>
+<mapper namespace="com.mvc.carshare.dao.CReturnDao">
+	<select id="selectById" resultType="CReturnVo"
+		parameterType="int">
+		select * from C_RETURNS where id=#{id}
+	</select>
+
+	<!--반납해야하는 날짜 구하기 -->
+	<select id="ReturnDate" resultType="RentDto">
+		SELECT re.RENT_AT+(r.rent_time/24) remaining_time,re.ID ,re.USER_ID FROM
+		C_REGISTRATIONS r JOIN C_RETURNS re
+		ON r.ID= re.regist_number AND re.RETURNED_AT IS NULL
+	</select>
+	<insert id="insertRent" parameterType="CReturnVo">
+		INSERT INTO C_RETURNS
+	(ID, regist_number, RENT_AT, RETURN_REGION_ID, USER_ID, CAR_NUMBER)
+	VALUES(returns_seq.nextval, #{regist_number}, sysdate, #{return_region_id}, #{user_id}, #{car_number})
+	</insert>
+</mapper>
