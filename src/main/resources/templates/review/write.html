@@ -5,13 +5,15 @@
 <title>후기작성</title>
 <style type="text/css">
 .write_table {
-	margin: auto;
-	border: 1px solid black;
-	width: 700px;
+	width: 44%;
 	height: 300px;
 	background-color: white;
+	border-radius: 4px;
+	margin-left: 550px;
 }
-
+td {
+	padding: 10px;
+}
 .write_table_td {
 	margin: 10px;
 }
@@ -54,7 +56,8 @@
 	border-radius: 4px;
 	cursor: pointer;
 	float: right;
-	margin: 0px 30px 10px 0px;
+	margin: 0px 5px 10px 0px;
+	
 }
 
 .write_table_button:hover {
@@ -75,6 +78,51 @@
 	z-index: -1; /* 배경 이미지보다 뒤에 위치하도록 설정 */
 	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
 }
+
+
+select {
+	width: 11%;
+	height: 34px;
+	padding-left: 10px;
+	font-size: 13px;
+	border: 1px solid silver;
+	border-radius: 4px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background: url('select-arrow.png') no-repeat 95% 50%; /* 화살표 아이콘 추가 */
+	cursor: pointer;
+	padding-left: 10px;
+}
+select::-ms-expand {
+	display: none;
+}
+select:hover {
+	border: 1px solid black;
+}
+.review_textarea {
+	resize: none; 
+	border: 1px solid silver; 
+	border-radius: 4px; 
+	background-color:#FAFAFA;
+}
+.review_textarea:hover {
+	background-color: white;
+	border: 1px solid black; 
+}
+.write_score {
+	width: 60px; 
+	height: 30px; 
+	background-color: #FAFAFA; 
+	border:silver 1px solid; 
+	color: #666666; 
+	border-radius: 4px;
+}
+.write_score:hover {
+	background-color: white;
+	border: 1px solid black;
+}
+
 </style>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -98,36 +146,54 @@
 
 			<form action="write" method="post">
 				<table class="write_table">
+				
 					<tr>
-						<td class="write_table_td">작성자</td>
+						<td><input type="hidden" name="author_id" th:value="${session.vo.id}"> </td>
+					</tr>
+					<tr>
+						<th class="write_table_td">Writer</th>
 						<td class="write_table_td" th:if="${session.vo}!=null">[[${session.vo.name}]]</td>
 					</tr>
 					<tr>
-						<td class="write_table_td">이용차량</td>
-						<td class="write_table_td"><select>
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
+					
+						<th class="write_table_td">Car</th>
+						<td th:each="list : ${list}">
+						<select name="car_number">
+								<option th:text="${list.car_number}"></option>
 						</select></td>
+						
 					</tr>
 					<tr>
-						<td class="write_table_td">내용</td>
-						<td class="write_table_td"><textarea rows="30" cols="80"
-								style="resize: none;" required></textarea></td>
+						<th class="write_table_td">Content</th>
+						<td class="write_table_td"><textarea class="review_textarea" rows="30" cols="100"required name="content"></textarea></td>
 					</tr>
 					<tr>
-						<td class="write_table_td">점수</td>
-						<td class="write_table_td">점수주세욤</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<button class="write_table_button" type="button"
-								onclick="location.href='/'">메인으로</button>
-							<button class="write_table_button" type="submit">작성</button>
+						<th class="write_table_td">Review Score</th>
+						<td class="write_table_td">
+						<input class="write_score" id="write_text" type="text" maxlength="3" name="car_score"> 
+						
+						<button class="write_table_button" type="button"
+								onclick="location.href='/'">메인</button>
+							<button id="play" class="write_table_button" type="submit">작성</button>
 						</td>
 					</tr>
 				</table>
 			</form>
+			<script type="text/javascript">
+				const writeText = document.getElementById('write_text').value;
+				const play = document.getElementById('play');
+				
+				play.addEventListener("click", function() {
+					if(writeText>100 || writeText<0) {
+						alert('점수는 0~100점 입니다.')
+					}				
+					
+					play.submit();
+				});				
+			</script>
+			
+			<br>
+			<br>
 		</main>
 		<br>
 		<div th:include="footer.html"></div>

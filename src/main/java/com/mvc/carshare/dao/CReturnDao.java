@@ -11,5 +11,10 @@ import com.mvc.carshare.vo.RentDto;
 public interface CReturnDao {
 	CReturnVo selectById (int id);
 	List<RentDto> ReturnDate();
+	//이동해
+	//반납한 차량중 리뷰안쓴 차량 조회
+	List<CReturnVo> retunCarNotreview(int user_id);
+
 	 public int insertRent(CReturnVo vo);
+
 }
