@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class CReturnVo {
 	int id; //반납아이디
+	int car_id;
 	int regist_number; //판매아이디
 	Timestamp returned_at; //반납기준 시간
 	Timestamp rent_at; //대여기준 시간
