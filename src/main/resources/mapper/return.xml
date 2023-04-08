@@ -1,6 +1,27 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="com.mvc.carshare.dao.CReturnDao">
+ 	<select id="selectById" resultType="CReturnVo" parameterType="int">
+ 		select * from C_RETURNS where id=#{id}
+ 	</select>
+ 	
+ 	<select id="ReturnDate" resultType="RentDto">
+ 	SELECT re.RENT_AT+(r.rent_time/24) remaining_time,re.ID ,re.user_id FROM C_REGISTRATIONS r JOIN C_RETURNS re
+ ON r.CAR_NUMBER= re.CAR_NUMBER AND re.RETURNED_AT IS NULL
+ 	</select>
+ 	
+ 	<!-- 이동해 -->
+ 	<!-- 후기 안쓴 반납한 차량 조회 -->
+ 	<select id="retunCarNotreview" parameterType="int" resultType="CReturnVo">
+ 		SELECT c.CAR_NUMBER FROM C_REVIEWS cr
+		right OUTER JOIN C_RETURNS c
+		ON c."CAR_id" = cr.CAR_NUMBER 
+		WHERE user_id =#{user_id}
+ 	</select>
+ </mapper>
+
 <mapper namespace="com.mvc.carshare.dao.CReturnDao">
 	<select id="selectById" resultType="CReturnVo"
 		parameterType="int">
@@ -19,3 +40,4 @@
 	VALUES(returns_seq.nextval, #{regist_number}, sysdate, #{return_region_id}, #{user_id}, #{car_number})
 	</insert>
 </mapper>
+

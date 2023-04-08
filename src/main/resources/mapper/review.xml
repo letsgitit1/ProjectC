@@ -16,6 +16,11 @@
 		WHERE AUTHOR_ID = #{author_id}
  	</select>
  	
+ 	<insert id="insertReview" parameterType="CReviewVo">
+ 		INSERT INTO C_REVIEWS
+		(ID, CAR_NUMBER, AUTHOR_ID, CAR_SCORE, CONTENT, CREATED_AT)
+		VALUES(#{id}, #{car_number}, #{author_id}, #{car_score}, #{content}, sysdate)
+ 	</insert>
 
  	
  </mapper>

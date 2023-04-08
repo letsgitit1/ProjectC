@@ -32,4 +32,10 @@ public class CReviewService {
 		
 		return dao.writebyme(author_id);
 	}
+	
+	//리뷰쓰기
+	public int insertReview(CReviewVo vo) {
+		
+		return dao.insertReview(vo);
+	}
 }
