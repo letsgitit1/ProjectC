@@ -5,6 +5,7 @@ import com.mvc.carshare.dao.CProductDao;
 import com.mvc.carshare.vo.CMarker;
 import com.mvc.carshare.vo.CMarkerJoinCarDTO;
 import com.mvc.carshare.vo.CMarkerjoinCarDTO2;
+import com.mvc.carshare.vo.CReturnVo;
 
 import org.springframework.stereotype.Service;
 
@@ -33,5 +34,8 @@ public class CMarkerService {
     public List<CMarkerjoinCarDTO2> selectBySell(int owner_id){
     	return dao.selectBySell(owner_id);
     }
-
+    public int booleanRent (int id) {
+    	return dao.booleanRent(id);
+    }
+   
 }

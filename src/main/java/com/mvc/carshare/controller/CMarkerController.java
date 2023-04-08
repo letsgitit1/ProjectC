@@ -18,10 +18,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mvc.carshare.service.CMarkerService;
 import com.mvc.carshare.service.CProductService;
 import com.mvc.carshare.service.CRegistrationsService;
+import com.mvc.carshare.service.CReturnService;
 import com.mvc.carshare.vo.CMarker;
 import com.mvc.carshare.vo.CMarkerJoinCarDTO;
 import com.mvc.carshare.vo.CMarkerjoinCarDTO2;
 import com.mvc.carshare.vo.CMemberVo;
+import com.mvc.carshare.vo.CReturnVo;
 
 
 @Controller
@@ -31,11 +33,13 @@ public class CMarkerController {
     private CMarkerService service;
     private CProductService pservice;
     private CRegistrationsService rservice;
+    private CReturnService reService; //REturn serviece
 
-    public CMarkerController(CMarkerService service, CProductService pservice, CRegistrationsService rservice) {
+    public CMarkerController(CMarkerService service, CProductService pservice, CRegistrationsService rservice,CReturnService reService) {
         this.service = service; //marker
         this.pservice = pservice; //product
         this.rservice = rservice; //reg
+        this.reService=reService;
     }
 
     @GetMapping("/Map/MapTestKyung")
@@ -43,14 +47,17 @@ public class CMarkerController {
         List<CMarkerJoinCarDTO> list = null;
         list = service.getAllMarkersJoinCars();
         model.addAttribute("markers", list);
-
+        CMemberVo vo= (CMemberVo)session.getAttribute("vo");
+        //회원의 렌트여부를 담음
+        int rentB = service.booleanRent(vo.getId());
+        model.addAttribute("rentB",rentB);
         //테스트용찜
-        CMemberVo vo= (CMemberVo) session.getAttribute("vo");
         model.addAttribute("user_id",vo.getId() );
         model.addAttribute("rent_id", 1);    // 임시데이터
 
         // 해당 사용자가 찜한 상품 번호 리스트를 가져옴
         List<Integer> wishList = pservice.wishCount(vo.getId());
+        System.out.println("list=>>>>>>>>>>>>>>>>>>>>>"+list);
         model.addAttribute("wishList", wishList);
         return "Map/MapTestKyung";
     }
@@ -85,6 +92,19 @@ public class CMarkerController {
         String json=null;
         json=objectMapper.writeValueAsString(result);
         return json;
+    }
+    
+    //대여 정보 삽입
+    @PostMapping("/Map/rentInsert")
+    @ResponseBody //이렇게 선언해야 ajax 데이타 받을 수 있음
+    public String insert(@RequestBody CReturnVo vo)  {
+    	System.out.println("vo=>>>>>>>>>>>>"+vo);
+    	String result="";
+    	if(reService.insertRent(vo)==1) {
+    		result="success";
+          return result;
+    	}
+    	return"";
     }
 
 }

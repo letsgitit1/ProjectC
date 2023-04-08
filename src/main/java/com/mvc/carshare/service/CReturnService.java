@@ -20,4 +20,7 @@ public class CReturnService {
 	public List<RentDto> ReturnDate() {
 		return dao.ReturnDate();
 	}
+	 public int insertRent(CReturnVo vo) {
+	    	return dao.insertRent(vo);
+	    }
 }

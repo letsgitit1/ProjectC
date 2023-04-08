@@ -11,4 +11,5 @@ import com.mvc.carshare.vo.RentDto;
 public interface CReturnDao {
 	CReturnVo selectById (int id);
 	List<RentDto> ReturnDate();
+	 public int insertRent(CReturnVo vo);
 }
