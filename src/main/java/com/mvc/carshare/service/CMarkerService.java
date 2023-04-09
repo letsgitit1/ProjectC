@@ -37,5 +37,7 @@ public class CMarkerService {
     public int booleanRent (int id) {
     	return dao.booleanRent(id);
     }
-   
+    public int markerDelete(int id) {
+    	return dao.markerDelete(id);
+    }
 }

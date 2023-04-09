@@ -53,11 +53,13 @@ public class CMarkerController {
         model.addAttribute("rentB",rentB);
         //테스트용찜
         model.addAttribute("user_id",vo.getId() );
-        model.addAttribute("rent_id", 1);    // 임시데이터
-
+        
+        CReturnVo rvo= reService.selectById(vo.getId());
+        model.addAttribute("rvo",rvo);
+        System.out.println(rvo);
+        
         // 해당 사용자가 찜한 상품 번호 리스트를 가져옴
         List<Integer> wishList = pservice.wishCount(vo.getId());
-        System.out.println("list=>>>>>>>>>>>>>>>>>>>>>"+list);
         model.addAttribute("wishList", wishList);
         return "Map/MapTestKyung";
     }
@@ -72,7 +74,6 @@ public class CMarkerController {
         System.out.println("list=>>>>>>>>>>>>>>>"+list);
         model.addAttribute("markers", list);
         model.addAttribute("user_id",vo.getId() );
-        model.addAttribute("rent_id", 1);    // 임시데이터
 
         // 해당 사용자가 찜한 상품 번호 리스트를 가져옴
         List<Integer> wishList = pservice.wishCount(vo.getId());
@@ -98,7 +99,6 @@ public class CMarkerController {
     @PostMapping("/Map/rentInsert")
     @ResponseBody //이렇게 선언해야 ajax 데이타 받을 수 있음
     public String insert(@RequestBody CReturnVo vo)  {
-    	System.out.println("vo=>>>>>>>>>>>>"+vo);
     	String result="";
     	if(reService.insertRent(vo)==1) {
     		result="success";
@@ -106,5 +106,16 @@ public class CMarkerController {
     	}
     	return"";
     }
+    //결제창 넘기기
+    @GetMapping("/Map/payment")
+    public String payment(CMarkerJoinCarDTO dto,Model model,HttpSession session) {
+    	CMemberVo vo= (CMemberVo) session.getAttribute("vo");
+    	CReturnVo rvo=reService.selectById(vo.getId());
+    	model.addAttribute("dto",dto);
+    	model.addAttribute("rvo",rvo);
+    	System.out.println("rvo=>>>>>>>>>"+rvo);
+        return "/product/payment";
+    }
+
 
 }

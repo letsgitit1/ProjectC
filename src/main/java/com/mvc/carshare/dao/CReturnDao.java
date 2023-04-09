@@ -14,7 +14,7 @@ public interface CReturnDao {
 	//이동해
 	//반납한 차량중 리뷰안쓴 차량 조회
 	List<CReturnVo> retunCarNotreview(int user_id);
-
 	 public int insertRent(CReturnVo vo);
+	 public int updateReturn(int user_id);
 
 }

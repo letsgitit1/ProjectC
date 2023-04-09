@@ -175,19 +175,7 @@ var clusterer = new kakao.maps.MarkerClusterer({
 });
 
 	//반납여부에 따라 반납버튼을 block or none 처리
-	let RentB=[[${rentB}]]
-	if(RentB>0){
-		alert('현재 회원님을 차를 대여중입니다. 추가 대여는 불가능합니다.')
-		document.getElementById('returncar').style.display ='block';
-		  for (var i = 0; i < markers.length; i++) {
-				clusterer.removeMarker(markers[i]); // 클러스터러에서 해당 마커를 제거합니다
-			}
-			if (overlay) {
-				overlay.setMap(null); // 오버레이가 존재하면 지도에서 제거합니다
-			}
-	}else{
-		document.getElementById('returncar').style.display ='none'
-	}
+	
 	
 	var imageSrc = "/image/pngegg.png";
 	var imageSize = new kakao.maps.Size(30, 30);
@@ -221,11 +209,12 @@ var clusterer = new kakao.maps.MarkerClusterer({
 
 // "마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
 		function showMarkers() {
-			for (var i = 0; i < markers.length; i++) {
-				markers[i].setMap(map);
+			//넘길 변수 선언
+			
+			if(confirm('반납을 완료하면 결제창으로 이동합니다. 결제창으로 이동하시겠습니까?')){
+				location.href="/Map/payment?return_region_id="+return_region_id+"&regist_number="+regist_number+"&car_number="+car_id+"&car_number_join="+car_number
+						+"&rent_price="+markerData.rent_price+"&car_model="+markerData.car_model+"&id="+markerData.id;
 			}
-			clusterer.addMarkers(markers); // 클러스터러에 마커를 추가합니다
-			alert('반납이 완료되었습니다 이용해주셔서 정말 감사합니다!')
 		}
 // "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
 		function hideMarkers() {
@@ -577,6 +566,19 @@ var clusterer = new kakao.maps.MarkerClusterer({
 	});
 </script>
 	<script>
+	let RentB=[[${rentB}]]
+	if(RentB>0){
+		alert('현재 회원님을 차를 대여중입니다. 추가 대여는 불가능합니다.')
+		document.getElementById('returncar').style.display ='block';
+		  for (var i = 0; i < markers.length; i++) {
+				clusterer.removeMarker(markers[i]); // 클러스터러에서 해당 마커를 제거합니다
+			}
+			if (overlay) {
+				overlay.setMap(null); // 오버레이가 존재하면 지도에서 제거합니다
+			}
+	}else{
+		document.getElementById('returncar').style.display ='none'
+	}
 function wishlist(user_id, car_number) {
 	  var button_id = "#wishlist" + car_number;
 	  var isWished = $(button_id).hasClass("btn-secondary");

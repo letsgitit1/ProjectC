@@ -32,5 +32,8 @@ public class CReturnService {
 	 public int insertRent(CReturnVo vo) {
 	    	return dao.insertRent(vo);
 	    }
-
+	 
+	 public int updateReturn(int user_id) {
+		 return dao.updateReturn(user_id);
+	 }
 }

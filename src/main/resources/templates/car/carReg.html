@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>내차등록</title>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <style type="text/css">
 body {
 	margin: 0px;
@@ -31,6 +32,36 @@ tr > td {
 
 th {
 	text-align: right;
+}
+
+.upload-name {
+    display: inline-block;
+    height: 32px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid silver;
+    width: 65%;
+    color: #999999;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.label_file {
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    height: 40px;
+    margin-left: 10px;
+}
+input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+.upload-name:hover {
+	border: 1px solid black;
 }
 
 .carReg_button {
@@ -283,14 +314,18 @@ select:hover {
 				 	<td>
 				 		<select id="c_year" name="c_year">
 				 		<option value=""></option>
-				 		<script>
-				 		for (var i = 1980; i <= 2023; i++) {
-				 		      document.write('<option value="' + i + '">' + i + '</option>');
-				 		    }
-						</script>
+				 		
 				 		</select>
 				 	</td>
+				 	
 				 </tr>
+				<tr>
+				<th><label for="file" class="label_file">사진등록</label></th>
+				 	<td>
+   						<input type="file" id="file">
+				 		<input class="upload-name" value="첨부파일" placeholder="첨부파일">
+				 	</td>
+				</tr>
 				 <tr>
 				 	<td colspan="2"><br>
 				 	<div >
@@ -303,5 +338,22 @@ select:hover {
 			</form>
 			</div>
 	</main>
+	 <script>
+				 		for (var i = 1980; i <= 2023; i++) {
+				 		      document.write('<option value="' + i + '">' + i + '</option>');
+				 		    }
+				 		
+				 		$(function() {
+				 	 		 $('.upload-name').click(function() {
+				 	   			 $('#file').click();
+				 	 			 });
+				 			});
+				 			
+				 		
+				 			$("#file").on('change',function(){
+				 			  var fileName = $("#file").val();
+				 			  $(".upload-name").val(fileName);
+				 			});
+						</script>
 </body>
 </html>
