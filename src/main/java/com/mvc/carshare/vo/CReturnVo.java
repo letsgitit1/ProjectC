@@ -13,5 +13,4 @@ public class CReturnVo {
 	int return_region_id; // 반납지역 아이디
 	int user_id; //반납하는 사람 id
 	String car_number;
-
 }

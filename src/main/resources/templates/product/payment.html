@@ -4,20 +4,41 @@
 <meta charset="UTF-8">
 <head>
 <title>결제하기</title>
+<link href="../css/payment.css" rel="stylesheet"></link>
 </head>
-<body>
-	<div class="payment-method" style="clear: both;">
-			<h3 class="payment_bottom">결제수단</h3>
-			<select id="city">
+	<div th:include="header.html"></div>
+<body>	
+<h2 class="payment_Information">PayMent Information</h2>
+<div class="payment_area">
+      <label for="car-number">CAR NUMBER</label>
+      <input type="text" id="car-number" name="car-number" th:value="${dto.car_number_join}"required>
+
+      <label for="rent-date">RENT DATE</label>
+		<input type="date" id="rent-date" name="rent-date" required th:value="${#dates.format(rvo.rent_at, 'yyyy-MM-dd')}">
+
+    	 <label for="return-date">RETURN DATE</label>
+		<input type="date" id="return-date" name="return-date" required>
+
+     <label for="rent-hour">RENT HOUR</label>
+<input type="text" id="rent-hour" name="rent-hour" required>
+
+
+      <label for="price">PRICE</label>
+      <input type="number" id="price" name="price" required th:value="${dto.rent_price}">
+      <div class="payment-method">
+			<label class="payment_bottom" for="city" >PAYMENT METHOD</label>
+			<select id="city" name="city">
 				<option class="payment_bottom"  value="카드">신용/체크카드</option>
 				<option class="payment_bottom"  value="가상계좌">가상계좌</option>
 			</select>
-
 
 			<!-- Submit Button -->
 			<br>
 			<button id="payment-button" class="payment_bottom">결제하기</button>
 		</div>
+	</div>	
+	<div style="height:300px;"></div>
+	<div th:include="footer.html"></div>
 <script src="https://js.tosspayments.com/v1/payment"></script>
 <script th:inline="javascript">
   let tossPayments = TossPayments("test_ck_4vZnjEJeQVxO9apBvMP3PmOoBN0k");
@@ -25,26 +46,27 @@
   let orderId = new Date().getTime();
   
   //보내줄 변수 설정
-  let price='[[${rvo.rent_price}]]';
-  let orderName='[[${cvo.car_model}]]';
-  let customerName='[[${mvo.id}]]';
+  let amount='[[${dto.rent_price}]]'
+  let orderName='[[${dto.car_model}]]';
+  let customerName='[[${session.vo.name}]]';
   //쿼리스트링으로 보낼 변수 설정
-  let rid='[[${rvo.id}]]';
-  let reid='[[${revo.id}]]';
-  let cid='[[${cvo.car_id}]]';
-  let mid='[[${mvo.id}]]';
+  let cmid='[[${dto.id}]]';
+  let rid='[[${rvo.id}]]';  //반납아이디
+  let reid='[[${rvo.regist_number}]]'; //판매아이디
+  let cid='[[${dto.car_number}]]';  //차아이디
+  let mid='[[${session.vo.id}]]'; //회원아이디
   
   button.addEventListener("click", function () {
   	let select_v=document.getElementById('city');
 		if(city.options[select_v.selectedIndex].value==='카드'){
 			tossPayments.requestPayment('카드', { // 결제 수단 파라미터
 				  // 결제 정보 파라미터
-				  amount:price,
+				  amount:amount,
 				  orderId: orderId,
 				  orderName: orderName,
 				  customerName: customerName,
 				  customerEmail:"moonnetworkqq@naver.com",
-				  successUrl: 'http://localhost:8088/product/paymentSuccess?rid='+rid+'&mid='+mid+'&reid='+reid,
+				  successUrl: 'http://localhost:8088/product/paymentSuccess?rid='+rid+'&mid='+mid+'&reid='+reid+"&mid="+mid+"&cmid="+cmid,
 				  failUrl: 'http://localhost:8082/travel/toss/fail.jsp',
 				})
 				
@@ -81,5 +103,6 @@
 
 	    });
  </script>
+<script src="../js/payment.js"></script>  
 </body>
 </html>

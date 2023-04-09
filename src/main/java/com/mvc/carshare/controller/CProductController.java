@@ -45,7 +45,6 @@ public class CProductController {
 	@ResponseBody
 	public String wishInsert(@RequestBody CWishListVo vo) {
 		System.out.println("위시리스트들어옴");
-		System.out.println("vo=>>>>>>>>>>>>>>"+vo);
 		String result="fail";
 		if(service.check_wish(vo)==0) {
 			if(service.wishlist_insert(vo)==1) {

@@ -46,4 +46,7 @@ JOIN C_registrations s ON r.CAR_ID = s.car_number
 		cmc.cno) tr
 		ON cr.CAR_NUMBER= tr.cno AND mno=#{mno}
 	</select>
+	<delete id="markerDelete" parameterType="int">
+	DELETE  FROM CMARKER WHERE id=#{id}
+	</delete>
 </mapper>

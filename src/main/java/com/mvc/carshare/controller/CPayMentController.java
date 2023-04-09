@@ -20,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mvc.carshare.service.CMarkerService;
 import com.mvc.carshare.service.CMemberService;
 import com.mvc.carshare.service.CProductService;
 import com.mvc.carshare.service.CRegistrationsService;
@@ -36,19 +37,21 @@ public class CPayMentController {
 	private final String SECRET_KEY = "test_sk_ODnyRpQWGrNdJ2vGWe23Kwv1M9EN";
 	private final RestTemplate restTemplate = new RestTemplate();
 	private ObjectMapper objectMapper = new ObjectMapper();
-	private CProductService cService;
-	private CMemberService mService;
-	private CRegistrationsService rService;
-	private CReturnService reService;
-	private CSPaymentService pService;
+	private CProductService cService; //상품서비스
+	private CMemberService mService; //회원서비스
+	private CRegistrationsService rService; //판매등록서비스
+	private CReturnService reService; //반납서비스
+	private CSPaymentService pService; //결제서비스
+	private CMarkerService cmservice; //마커서비스
 
 	public CPayMentController(CSPaymentService pService,CProductService cService, CMemberService mService, CRegistrationsService rService,
-			CReturnService reService) {
+			CReturnService reService,CMarkerService cmservice) {
 		this.cService = cService; // Car
 		this.mService = mService; // member
 		this.rService = rService; // Registration
 		this.reService = reService; // rent
 		this.pService=pService; //payment
+		this.cmservice=cmservice;
 	}
 
 	@GetMapping("/product/payment")
@@ -58,6 +61,7 @@ public class CPayMentController {
 		CMemberVo mvo = mService.selectOne(user_id);
 		CRegistrationsVo rvo = rService.selectRegByCarNumber(car_id);
 		CReturnVo revo = reService.selectById(rent_id);
+		//
 		model.addAttribute("cvo", cvo); // Car
 		model.addAttribute("mvo", mvo); // member
 		model.addAttribute("rvo", rvo); // Registration
@@ -84,9 +88,10 @@ public class CPayMentController {
 			JsonNode successNode = responseEntity.getBody();
 			// 데이터베이스에 들어갈 변수 초기화
 			int rid = Integer.parseInt(map.get("rid"));
-			int reg_id = Integer.parseInt(map.get("reid")); // 판매
+			int reg_id = Integer.parseInt(map.get("reid"));
 			int return_number = Integer.parseInt(map.get("rid"));
-			int payer_id = Integer.parseInt(map.get("mid")); // 반납
+			int payer_id = Integer.parseInt(map.get("mid")); 
+			int marker_id=Integer.parseInt(map.get("cmid"));
 			String payment_method = successNode.get("method").asText();
 			int price = amount;
 			String payment_date = successNode.get("approvedAt").asText();
@@ -96,8 +101,9 @@ public class CPayMentController {
 			// 생성자에 불러온 값 저장하기
 			model.addAttribute("orderId", successNode.get("orderId").asText());
 			pService.paymentInsert(vo);
+			reService.updateReturn(payer_id);
+			cmservice.markerDelete(marker_id);
 			String secret = successNode.get("secret").asText(); // 가상계좌의 경우 입금 callback 검증을 위해서 secret을 저장하기를 권장함
-			
 			result = "/product/paymentSuccess";
 		} else {
 			JsonNode failNode = responseEntity.getBody();
