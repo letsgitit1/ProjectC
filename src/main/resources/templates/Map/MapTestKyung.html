@@ -335,7 +335,7 @@ var clusterer = new kakao.maps.MarkerClusterer({
 							'            ' + carImage +
 							'    <div class="first">' +
 							'        <p id ="realchange" class="triangle text" onclick="hideMarkers()" style="color: crimson; position: absolute; background-color: #2b2d36; border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none">대여하기</p>' +
-							'        <a class="triangle text" href="/rooms/register?registrNum=2" style="color: crimson;position: absolute; right:0; background-color: #2b2d36;  border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none' +
+							'        <a class="triangle text" href="/rooms/register?car_id=' + markerData.car_id+'" style="color: crimson;position: absolute; right:0; background-color: #2b2d36;  border-radius: 4px; text-align: center; vertical-align: top; width: 130px; height: 30px; padding: 5px; text-decoration: none' +
 							'" >' +
 							'1:1채팅으로</a>' +
 							'        <div class="movietitle text">' + markerData.car_model + '</div>' +
@@ -533,32 +533,6 @@ var clusterer = new kakao.maps.MarkerClusterer({
 
 			// 검색 버튼 클릭 시 searchPlace 함수 호출
 			document.getElementById('searchButton').addEventListener('click', searchPlace)
-
-			function moveToCurrentPosition() {
-				if (navigator.geolocation) {
-					// 사용자의 현재 위치를 요청합니다.
-					navigator.geolocation.getCurrentPosition(function(position) {
-						// 현재 위치의 위도와 경도를 저장합니다.
-						var lat = position.coords.latitude;
-						var lng = position.coords.longitude;
-
-						// 현재 위치로 지도를 이동합니다.
-						var moveLatLon = new kakao.maps.LatLng(lat, lng);
-						map.panTo(moveLatLon);
-						alert("현재 접속중인 위치를 기반으로 안내해드리겠습니다")
-					});
-				} else {
-					alert("현재위치를 찾을수 없습니다 ㅠㅠ");
-				}
-				// 버튼 클릭 시 moveToCurrentPosition 함수를 호출합니다.
-
-			}
-			document.getElementById('myarea').addEventListener('click', moveToCurrentPosition);
-
-
-
-
-
 	}
 </script>
 	<script>
@@ -643,6 +617,28 @@ function wishlist(user_id, car_number) {
 	    }
 	  });
 	}
+	
+function moveToCurrentPosition() {
+	if (navigator.geolocation) {
+		// 사용자의 현재 위치를 요청합니다.
+		navigator.geolocation.getCurrentPosition(function(position) {
+			// 현재 위치의 위도와 경도를 저장합니다.
+			var lat = position.coords.latitude;
+			var lng = position.coords.longitude;
+
+			// 현재 위치로 지도를 이동합니다.
+			var moveLatLon = new kakao.maps.LatLng(lat, lng);
+			map.panTo(moveLatLon);
+			alert("현재 접속중인 위치를 기반으로 안내해드리겠습니다")
+		});
+	} else {
+		alert("현재위치를 찾을수 없습니다 ㅠㅠ");
+	}
+	// 버튼 클릭 시 moveToCurrentPosition 함수를 호출합니다.
+
+}
+document.getElementById('myarea').addEventListener('click', moveToCurrentPosition);
+
 </script>
 
 </body>

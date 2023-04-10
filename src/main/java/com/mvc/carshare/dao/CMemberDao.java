@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSession;
 
 import com.mvc.carshare.vo.CMemberVo;
+import com.mvc.carshare.vo.CPayMentVo;
 
 @Mapper
 public interface CMemberDao {
@@ -42,6 +43,7 @@ public interface CMemberDao {
 		public void modify(CMemberVo cMemberVo);
 		public CMemberVo findByEmailAll(String email);
 		public int findByEmail(String email);
-		public String findByEamilAtRegisterId(int id);
+		public int findByEamilAtRegisterEmail(String email);
+
 }
 
