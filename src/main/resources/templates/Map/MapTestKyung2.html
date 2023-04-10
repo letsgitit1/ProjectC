@@ -420,7 +420,7 @@
 			// 원에 클릭 이벤트를 등록합니다
 			kakao.maps.event.addListener(circle, 'click', function () {
 				let resultDiv = document.getElementById('result');
-				alert('허브존에 반납하시면 요금할인이 있습니다.')
+				alert('허브존 근처 차는 요금이 조금 할인됩니다')
 			});
 		})(circle);
 
@@ -497,6 +497,14 @@
 		}
 		document.getElementById('roadview').addEventListener('click', roadmap)
 		document.getElementById('skyview').addEventListener('click', skyview)
+
+		kakao.maps.event.addListener(map, 'click', function () {
+
+			var overlaybox = document.getElementById('overlaybox');
+			if (overlaybox) {
+				overlaybox.style.display = 'none';
+			}
+		});
 	}
 </script>
 <script>
