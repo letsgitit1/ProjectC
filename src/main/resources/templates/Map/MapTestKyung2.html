@@ -102,7 +102,7 @@
 		   style="width: 708px; height: 30px; margin-left: 600px; margin-bottom: 50px; padding-left: 5px">
 	<button id="searchButton" onclick="searchPlace()">검색</button>
 	<button id="myarea">현재위치</button>
-	<div style="margin-left: 10px">
+	<div style="margin-left: 20px; margin-bottom: 15px">
 		지도에 보고싶은 정보를 클릭하시면 해당 정보가 지도에 나타납니다<br><br>
 		<input type="checkbox" id="chkUseDistrict" onclick="setOverlayMapTypeId()" />지적편집도 정보 보기
 		<input type="checkbox" id="chkTerrain" onclick="setOverlayMapTypeId()" />지형정보 보기
@@ -113,7 +113,7 @@
 
 
 <!--지도 div입니다 -->
-<div id="map" style="width: 80%; height: 450px; margin-left: 200px;">
+<div id="map" style="width: 80%; height: 450px; margin-left: 200px; margin-bottom: 20px;">
 	<div style="margin-top:10px; margin-left: 90%; margin-bottom: 20px; position: absolute; z-index: 2">
 		<button id="roadview">로드 맵</button>
 		<button id="skyview">스카이뷰(위성)</button>
@@ -127,10 +127,14 @@
 
 
 <div id="clickLatlng"></div>
-<p>
+<p style="margin-left: 686px; margin-bottom: 10px;" >
 	판매하시고싶은 장소에 마커를 등록하고 판매확정 버튼을 누르면 판매가 완료됩니다
-	<button id="ajaxformarker" onclick="markerfordb()">판매확정하기</button>
 </p>
+	<button style="display: block;
+		float: right;padding: 5px;background: crimson;border-radius: 20px;
+		width: 100px;height: 50px;margin-top: 10px;margin-right: 184px;color: white;"
+			id="ajaxformarker" onclick="markerfordb() ">판매확정</button>
+
 
 <!--허수의 영역-->
 <div style="height: 1000px;"></div>
@@ -294,7 +298,7 @@
 				// 클릭된 마커 위치로 오버레이 이동 약 30픽셀정도 이동시킴
 				overlay.setPosition(new kakao.maps.LatLng(parseFloat(markerData.latitude) + 0.0005, parseFloat(markerData.longitude)));
 				// 오버레이 내용 갱신(추후 차 정보로 바꿔 줄 예정입니다)
-				overlay.setContent('<div class="overlaybox">' +
+				overlay.setContent('<div class="overlaybox" id="overlaybox">' +
 						'    <div class="boxtitle">차 대여 정보입니다</div>' +
 						'    <div class="image-wrapper">' +
 						'        <div class="image">' +
@@ -332,7 +336,7 @@
 		})(markerData));
 
 		function createOverlay(markerData) {
-			var content = '<div class="overlaybox">' +
+			var content = '<div class="overlaybox" id="overlaybox">' +
 					'    <div class="boxtitle">차 대여 정보입니다</div>' +
 					'    <div class="image-wrapper">' +
 					'        <div class="image">' +
@@ -420,7 +424,7 @@
 			// 원에 클릭 이벤트를 등록합니다
 			kakao.maps.event.addListener(circle, 'click', function () {
 				let resultDiv = document.getElementById('result');
-				alert('허브존 근처 차는 요금이 조금 할인됩니다')
+				alert('허브존 근처에 판매등록시 혜택이 있습니다')
 			});
 		})(circle);
 

@@ -120,7 +120,7 @@
 			style="width: 708px; height: 30px; margin-left: 600px; margin-bottom: 50px; padding-left: 5px">
 		<button id="searchButton" onclick="searchPlace()">검색</button>
 		<button id="myarea">현재위치</button>
-		<div style="margin-left: 10px">
+		<div style="margin-left: 10px; margin-bottom: 15px;">
 			지도에 보고싶은 정보를 클릭하시면 해당 정보가 지도에 나타납니다<br><br>
 			<input type="checkbox" id="chkUseDistrict" onclick="setOverlayMapTypeId()" />지적편집도 정보 보기
 			<input type="checkbox" id="chkTerrain" onclick="setOverlayMapTypeId()" />지형정보 보기
@@ -148,8 +148,9 @@
 
 
 
-	<button id="returncar" onclick="showMarkers()">반납하기버튼이에요</button>
-
+		<button id="returncar" onclick="showMarkers()" style="display: block;
+		float: right;padding: 5px;background: crimson;border-radius: 20px;
+		width: 100px;height: 50px;margin-top: 10px;margin-right: 184px;color: white;">반납하기</button>
 	<div id="clickLatlng"></div>
 
 
@@ -375,7 +376,7 @@ var clusterer = new kakao.maps.MarkerClusterer({
 
 			function createOverlay(markerData) {
 				var overlay;
-				var content = '<div class="overlaybox" id="overlaybox">' +
+				var content = '<div class="overlaybox" id="overlaybox" style="display: block;">' +
 						'    <div class="boxtitle">차 대여 정보입니다</div>' +
 						'<button "id="wishlist'+markerData.car_id+'" onclick="wishlist('+user_id+','+markerData.car_id+')" class="wishlist-btn" style="width:100%; height:100px; position:absolute; top:50px">'+
 						'<span >'+wish+'</span>'
