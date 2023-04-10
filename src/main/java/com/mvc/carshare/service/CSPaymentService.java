@@ -14,4 +14,5 @@ public interface CSPaymentService {
 	public List<CPaymentDTO> getMonths();
 	public List<CPaymentDTO> getYears();
 	public int paymentInsert (CPayMentVo vo);
+	public List<CPayMentVo> paymentlist (int payer_id);
 }

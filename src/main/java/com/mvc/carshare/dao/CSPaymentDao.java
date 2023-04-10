@@ -14,4 +14,7 @@ public interface CSPaymentDao {
 	public List<CPaymentDTO> getMonths();
 	public List<CPaymentDTO> getYears();
 	public int paymentInsert(CPayMentVo vo);
+	
+	//동해 테스트중
+	List<CPayMentVo> paymentlist(int payer_id);
 }

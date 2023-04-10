@@ -4,7 +4,11 @@ import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -45,7 +49,7 @@ public class CPayMentController {
 	private CMarkerService cmservice; //마커서비스
 
 	public CPayMentController(CSPaymentService pService,CProductService cService, CMemberService mService, CRegistrationsService rService,
-			CReturnService reService,CMarkerService cmservice) {
+			CReturnService reService,CMarkerService cmservice, CSPaymentService service) {
 		this.cService = cService; // Car
 		this.mService = mService; // member
 		this.rService = rService; // Registration
@@ -114,4 +118,21 @@ public class CPayMentController {
 		return result;
 	}
 
+	//마이페이지 페이지로 이동 동해 테스트중
+	   @GetMapping("/mypage")
+	 public String mypage(Model model, HttpServletRequest request) {
+		   
+		HttpSession session = request.getSession();
+		CMemberVo vo = (CMemberVo) session.getAttribute("vo");
+		int payer_id = vo.getId();
+		List<CPayMentVo> list=pService.paymentlist(payer_id);
+		System.out.println(vo);
+		System.out.println("마이페이지 !!!!id = " + payer_id);
+		System.out.println("멤버컨트롤 확인중입니당^^" + list );
+		   
+		pService.paymentlist(payer_id);
+	      return "/member/mypage";
+	   }
+	
+	
 }
