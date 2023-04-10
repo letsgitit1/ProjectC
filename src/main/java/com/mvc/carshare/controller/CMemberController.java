@@ -142,8 +142,11 @@ public class CMemberController {
 	      return "/member/modify";
 	   }
 	   @GetMapping("/remove")
-		public String remove(String email) {
+		public String remove(HttpSession session) {
+		   CMemberVo vo= (CMemberVo) session.getAttribute("vo");
+		   String email=vo.getEmail();
 		   cSMemberService.remove(email);
+		   session.invalidate();
 			return "redirect:/";
 		}
 		
