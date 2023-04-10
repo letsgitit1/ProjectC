@@ -120,7 +120,7 @@
 			style="width: 708px; height: 30px; margin-left: 600px; margin-bottom: 50px; padding-left: 5px">
 		<button id="searchButton" onclick="searchPlace()">검색</button>
 		<button id="myarea">현재위치</button>
-		<div style="margin-left: 10px">
+		<div style="margin-left: 10px; margin-bottom: 15px;">
 			지도에 보고싶은 정보를 클릭하시면 해당 정보가 지도에 나타납니다<br><br>
 			<input type="checkbox" id="chkUseDistrict" onclick="setOverlayMapTypeId()" />지적편집도 정보 보기
 			<input type="checkbox" id="chkTerrain" onclick="setOverlayMapTypeId()" />지형정보 보기
@@ -138,7 +138,6 @@
 			<button id="skyview">스카이뷰(위성)</button>
 		</div>
 
-
 		<!-- 지도 확대, 축소 컨트롤 div 입니다 -->
 		<div class="custom_zoomcontrol radius_border">
 			<span style="margin-bottom: 2px;" onclick="zoomIn()"><img style="width: 60%; height: 100%; object-fit : cover;" src="/image/png-clipart-addition-plus-and-minus-signs-signboard-miscellaneous-cross.png"></span>
@@ -149,8 +148,9 @@
 
 
 
-	<button id="returncar" onclick="showMarkers()">반납하기버튼이에요</button>
-
+		<button id="returncar" onclick="showMarkers()" style="display: block;
+		float: right;padding: 5px;background: crimson;border-radius: 20px;
+		width: 100px;height: 50px;margin-top: 10px;margin-right: 184px;color: white;">반납하기</button>
 	<div id="clickLatlng"></div>
 
 
@@ -237,7 +237,7 @@ var clusterer = new kakao.maps.MarkerClusterer({
 					    data: JSON.stringify({return_region_id: return_region_id,regist_number: regist_number,user_id: user_id,car_number:car_number,car_id:car_id}),
 					    success: function (response) {
 					      if (response === "success") {
-					    	  alert('이용해주셔서 감사합니다 반납하기 버튼을 누르시거나 허브존을 클릭하면 반납이 완료됩니다.')
+					    	  alert('이용해주셔서 감사합니다 반납하기 버튼을 누르시면 반납이 완료됩니다.')
 					    	  document.getElementById('returncar').style.display ='block';
 					    	  for (var i = 0; i < markers.length; i++) {
 				clusterer.removeMarker(markers[i]); // 클러스터러에서 해당 마커를 제거합니다
@@ -245,7 +245,6 @@ var clusterer = new kakao.maps.MarkerClusterer({
 			if (overlay) {
 				overlay.setMap(null); // 오버레이가 존재하면 지도에서 제거합니다
 			}
-					    	
 					      }else{
 					    	alert('대여를 실패했습니다. 다시 시도해주세요');  
 					      	}
@@ -328,7 +327,7 @@ var clusterer = new kakao.maps.MarkerClusterer({
 					// 클릭된 마커 위치로 오버레이 이동 약 30픽셀정도 이동시킴
 					overlay.setPosition(new kakao.maps.LatLng(parseFloat(markerData.latitude) + 0.0005, parseFloat(markerData.longitude)));
 					// 오버레이 내용 갱신(추후 차 정보로 바꿔 줄 예정입니다)
-					overlay.setContent('<div class="overlaybox" id="overlaybox" >' +
+					overlay.setContent('<div class="overlaybox" id="overlaybox" style="display: block;">' +
 							'    <div class="boxtitle">차 대여 정보입니다</div>' +
 							'    <div class="image-wrapper">' +
 							'        <div class="image">' +
@@ -374,16 +373,10 @@ var clusterer = new kakao.maps.MarkerClusterer({
 
 			})(markerData));
 
-//오버레이 닫는 style
-		kakao.maps.event.addListener(map, 'click', function() {
-
-		document.getElementById('overlaybox').style.display =  'none';
-
-		});
 
 			function createOverlay(markerData) {
 				var overlay;
-				var content = '<div class="overlaybox" id="overlaybox">' +
+				var content = '<div class="overlaybox" id="overlaybox" style="display: block;">' +
 						'    <div class="boxtitle">차 대여 정보입니다</div>' +
 						'<button "id="wishlist'+markerData.car_id+'" onclick="wishlist('+user_id+','+markerData.car_id+')" class="wishlist-btn" style="width:100%; height:100px; position:absolute; top:50px">'+
 						'<span >'+wish+'</span>'
@@ -430,10 +423,7 @@ var clusterer = new kakao.maps.MarkerClusterer({
 				return overlay;
 			}
 
-
-
 }
-
 		// 원
 		for (var i = 0; i < markerListString.length; i++) {
 			var cicleData = markerListString[i];
@@ -499,6 +489,7 @@ var clusterer = new kakao.maps.MarkerClusterer({
 			function skyview() {
 				map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);
 			}
+
 			document.getElementById('roadview').addEventListener('click', roadmap)
 			document.getElementById('skyview').addEventListener('click', skyview)
 
@@ -511,7 +502,7 @@ var clusterer = new kakao.maps.MarkerClusterer({
 				var places = new kakao.maps.services.Places();
 
 				// 지역 검색을 요청합니다
-				places.keywordSearch(place, function(result, status) {
+				places.keywordSearch(place, function (result, status) {
 
 					// 정상적으로 검색이 완료됐으면
 					if (status === kakao.maps.services.Status.OK) {
@@ -533,7 +524,38 @@ var clusterer = new kakao.maps.MarkerClusterer({
 
 			// 검색 버튼 클릭 시 searchPlace 함수 호출
 			document.getElementById('searchButton').addEventListener('click', searchPlace)
-	}
+			function moveToCurrentPosition() {
+				if (navigator.geolocation) {
+					// 사용자의 현재 위치를 요청합니다.
+					navigator.geolocation.getCurrentPosition(function (position) {
+						// 현재 위치의 위도와 경도를 저장합니다.
+						var lat = position.coords.latitude;
+						var lng = position.coords.longitude;
+
+						// 현재 위치로 지도를 이동합니다.
+						var moveLatLon = new kakao.maps.LatLng(lat, lng);
+						map.panTo(moveLatLon);
+						alert("현재 접속중인 위치를 기반으로 안내해드리겠습니다")
+					});
+				} else {
+					alert("현재위치를 찾을수 없습니다 ㅠㅠ");
+				}
+				// 버튼 클릭 시 moveToCurrentPosition 함수를 호출합니다.
+
+			}
+
+			document.getElementById('myarea').addEventListener('click', moveToCurrentPosition);
+
+
+			kakao.maps.event.addListener(map, 'click', function () {
+
+				var overlaybox = document.getElementById('overlaybox');
+				if (overlaybox) {
+					overlaybox.style.display = 'none';
+				}
+			});
+		}
+
 </script>
 	<script>
 	window.addEventListener("scroll", function() {
@@ -557,7 +579,7 @@ var clusterer = new kakao.maps.MarkerClusterer({
 	let RentB=[[${rentB}]]
 	if(RentB>0){
 		alert('현재 회원님을 차를 대여중입니다. 추가 대여는 불가능합니다.')
-		document.getElementById('returncar').style.display ='block';
+		document.getElementById('returncar').style.display ='none';
 		  for (var i = 0; i < markers.length; i++) {
 				clusterer.removeMarker(markers[i]); // 클러스터러에서 해당 마커를 제거합니다
 			}
@@ -565,7 +587,7 @@ var clusterer = new kakao.maps.MarkerClusterer({
 				overlay.setMap(null); // 오버레이가 존재하면 지도에서 제거합니다
 			}
 	}else{
-		document.getElementById('returncar').style.display ='none'
+		document.getElementById('returncar').style.display ='block'
 	}
 function wishlist(user_id, car_number) {
 	  var button_id = "#wishlist" + car_number;
