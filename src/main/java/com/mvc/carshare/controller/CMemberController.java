@@ -133,12 +133,7 @@ public class CMemberController {
 		model.addAttribute("pass",pass);
 		return "/member/find_pass_result";
 	}
-	 //마이페이지 페이지로 이동
-	   @GetMapping("/mypage")
-	   public String mypage() {
-	      
-	      return "/member/mypage";
-	   }
+
 	   
 	   //회원정보수정 페이지로 이동
 	   @GetMapping("/update")

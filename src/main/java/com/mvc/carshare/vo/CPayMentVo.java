@@ -15,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 public class CPayMentVo {
-	int id;
+	int order_number;
 	int reg_id; //판매
 	int return_number; //반납
 	int payer_id; //회원

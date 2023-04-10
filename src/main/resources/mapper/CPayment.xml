@@ -2,18 +2,21 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="com.mvc.carshare.dao.CSPaymentDao">
- 	
- 	<!-- 일간 매출 -->
+<mapper namespace="com.mvc.carshare.dao.CSPaymentDao">
+
+	<!-- 일간 매출 -->
 	<select id="getDaily" resultType="CPaymentDTO">
-		SELECT TO_CHAR(PAYMENT_DATE, 'YYYY-MM-DD HH"시"') PAYMENT_DATE, PRICE, ROUND(PRICE*0.1) profit, CAR_MODEL FROM C_payments p JOIN 
+		SELECT TO_CHAR(PAYMENT_DATE,
+		'YYYY-MM-DD HH"시"') PAYMENT_DATE, PRICE, ROUND(PRICE*0.1) profit,
+		CAR_MODEL FROM C_payments p JOIN
 		(
-		SELECT r.ID, CAR_MODEL FROM C_CARS c JOIN C_REGISTRATIONS r ON c.car_id = r.CAR_NUMBER
-		) c ON p.REG_ID = c.ID 
+		SELECT r.ID, CAR_MODEL FROM C_CARS c JOIN C_REGISTRATIONS r ON
+		c.car_id = r.CAR_NUMBER
+		) c ON p.REG_ID = c.ID
 		ORDER BY PAYMENT_DATE
 	</select>
-	
- 	<!-- 주간 매출 -->
+
+	<!-- 주간 매출 -->
 	<select id="getWeeks" resultType="CPaymentDTO">
 	<![CDATA[
 		SELECT 
@@ -38,41 +41,57 @@
 					ELSE NULL
 		         END
 		ORDER BY PAYMENT_DATE
-	]]> 
+	]]>
 	</select>
-	
- 	<!-- 월간 매출 -->
+
+	<!-- 월간 매출 -->
 	<select id="getMonths" resultType="CPaymentDTO">
-		SELECT TO_CHAR(TRUNC(PAYMENT_DATE, 'MM'), 'YYYY-MM') PAYMENT_DATE,
-		       SUM(PRICE) PRICE,
-		       SUM(ROUND(PRICE*0.1)) profit
-		FROM C_payments p JOIN 
+		SELECT
+		TO_CHAR(TRUNC(PAYMENT_DATE, 'MM'), 'YYYY-MM') PAYMENT_DATE,
+		SUM(PRICE) PRICE,
+		SUM(ROUND(PRICE*0.1)) profit
+		FROM C_payments p JOIN
 		(
-		    SELECT r.ID, CAR_MODEL 
-		    FROM C_CARS c JOIN C_REGISTRATIONS r ON c.car_id = r.CAR_NUMBER
-		) c ON p.REG_ID = c.ID
+		SELECT r.ID, CAR_MODEL
+		FROM C_CARS c JOIN C_REGISTRATIONS r ON c.car_id = r.CAR_NUMBER
+		) c ON
+		p.REG_ID = c.ID
 		GROUP BY TRUNC(PAYMENT_DATE, 'MM')
 		ORDER BY PAYMENT_DATE
 	</select>
-	
- 	<!-- 연간 매출 -->
+
+	<!-- 연간 매출 -->
 	<select id="getYears" resultType="CPaymentDTO">
-		SELECT TO_CHAR(TRUNC(PAYMENT_DATE, 'YY'), 'YYYY') PAYMENT_DATE,
-		       SUM(PRICE) PRICE,
-		       SUM(ROUND(PRICE*0.1)) profit
+		SELECT
+		TO_CHAR(TRUNC(PAYMENT_DATE, 'YY'), 'YYYY') PAYMENT_DATE,
+		SUM(PRICE) PRICE,
+		SUM(ROUND(PRICE*0.1)) profit
 		FROM C_payments p
 		JOIN (
-		    SELECT r.ID, CAR_MODEL 
-		    FROM C_CARS c JOIN C_REGISTRATIONS r ON c.car_id = r.CAR_NUMBER
-		) c ON p.REG_ID = c.ID
+		SELECT r.ID, CAR_MODEL
+		FROM C_CARS c JOIN C_REGISTRATIONS r ON c.car_id = r.CAR_NUMBER
+		) c ON
+		p.REG_ID = c.ID
 		GROUP BY TRUNC(PAYMENT_DATE, 'YY')
 		ORDER BY PAYMENT_DATE
 	</select>
- 	<insert id="paymentInsert" parameterType="CPayMentVo">
+	<insert id="paymentInsert" parameterType="CPayMentVo">
 		INSERT INTO C_PAYMENTS
-		(ORDER_NUMBER, REG_ID, RETURN_ID, PAYER_ID, PAYMENT_METHOD, PRICE, PAYMENT_DATE)
+		(ORDER_NUMBER, REG_ID, RETURN_ID, PAYER_ID, PAYMENT_METHOD, PRICE,
+		PAYMENT_DATE)
 		VALUES(payment_seq.nextval ,#{reg_id}, #{return_number},
 		#{payer_id}, #{payment_method},
 		#{price}, #{payment_date})
 	</insert>
- </mapper>
+
+	<!-- 동해 테스트 -->
+	<select id="paymentlist" parameterType="int"
+		resultType="CPayMentVo">
+		SELECT * FROM C_PAYMENTS
+		WHERE PAYER_ID = #{payer_id}
+		AND rownum &lt;=5
+		ORDER BY order_number ASC
+	</select>
+
+
+</mapper>
