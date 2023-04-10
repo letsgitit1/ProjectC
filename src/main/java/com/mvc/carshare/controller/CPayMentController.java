@@ -130,6 +130,7 @@ public class CPayMentController {
 		System.out.println("마이페이지 !!!!id = " + payer_id);
 		System.out.println("멤버컨트롤 확인중입니당^^" + list );
 		   
+		model.addAttribute("list",list);
 		pService.paymentlist(payer_id);
 	      return "/member/mypage";
 	   }
