@@ -10,5 +10,5 @@ public interface CSMemberService {
 	public void modify(CMemberVo cMemberVo);
 	public CMemberVo findByEmailAll(String email);
 	public int findByEmail(String email);
-	public String findByEamilAtRegisterId(int id);
+	public int findByEamilAtRegisterEmail(String email);
 }
