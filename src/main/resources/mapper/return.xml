@@ -9,7 +9,7 @@
  	
  	<select id="ReturnDate" resultType="RentDto">
  	SELECT re.RENT_AT+(r.rent_time/24) remaining_time,re.ID ,re.user_id FROM C_REGISTRATIONS r JOIN C_RETURNS re
- ON r.CAR_NUMBER= re.CAR_NUMBER AND re.RETURNED_AT IS NULL
+ ON r.CAR_NUMBER= re.CAR_ID AND re.RETURNED_AT IS NULL
  	</select>
  	
  	<!-- 이동해 -->

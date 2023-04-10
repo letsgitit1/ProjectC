@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<link href="../css/serviceheader.css" rel="stylesheet" />
-	<meta charset="utf-8">
-	<title>맵맵맵맵맵테스트트트트트</title>
+   <link href="../css/serviceheader.css" rel="stylesheet" />
+   <meta charset="utf-8">
+   <title>맵맵맵맵맵테스트트트트트</title>
 
 </head>
 
@@ -88,6 +88,7 @@
 	}
 	.custom_zoomcontrol span img {padding:12px 0;border:none;}
 	.custom_zoomcontrol span:first-child{border-bottom:1px solid #bfbfbf;}
+
 </style>
 
 
@@ -122,6 +123,7 @@
 		<span onclick="zoomIn()"><img style="width: 60%; height: 100%; object-fit : cover;" src="/image/png-clipart-addition-plus-and-minus-signs-signboard-miscellaneous-cross.png"></span>
 		<span onclick="zoomOut()"><img style="width: 86%; height: 100%; object-fit :cover;" src="/image/png-clipart-dash-hyphen-at-sign-plus-and-minus-signs-minus-angle-text-thumbnail.png"></span>
 	</div>
+
 </div>
 
 
@@ -142,7 +144,7 @@
 <div th:include="footer.html"></div>
 <!-- services 라이브러리 불러오기 -->
 <script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d11d96d8bf1e2f7032da54bfc050846&libraries=services,clusterer"></script>
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d11d96d8bf1e2f7032da54bfc050846&libraries=services,clusterer"></script>
 <script th:inline="javascript">
 	function searchPlace() {
 		var place = document.getElementById('searchBox').value;
@@ -431,62 +433,62 @@
 		circle.setMap(map);
 
 
+
 //마커를 찍었을 떄 클릭 이벤트 발생시키는 함수입니다
-		let clickmouse1;
-		let clickmouse2;
-		kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
-			let resultajax = document.getElementById(ajaxformarker);
+      let clickmouse1;
+      let clickmouse2;
+      kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+         let resultajax = document.getElementById(ajaxformarker);
 
-			// 클릭한 위도, 경도 정보를 가져옵니다
-			var latlng = mouseEvent.latLng;
+         // 클릭한 위도, 경도 정보를 가져옵니다
+         var latlng = mouseEvent.latLng;
 
-			clickmouse1 = latlng.La;
-			clickmouse2 = latlng.Ma;
-			console.log(clickmouse1)
-		});
+         clickmouse1 = latlng.La;
+         clickmouse2 = latlng.Ma;
+         console.log(clickmouse1)
+      });
 
-		function markerfordb() {
-			console.log(markerData.car_id)
-			console.log("확인=>>>>>>>"+markerData.cno)
-			const jobj = {"longitude": clickmouse1, "latitude": clickmouse2,"car_number":markerData.cno}
-			const jstl = JSON.stringify(jobj)
-			const xhr = new XMLHttpRequest()
-			xhr.open('POST', '/Map/Insert')
-			xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-			xhr.send(jstl)
-			xhr.onload = function () {
-				console.log(xhr.response)
-				if (xhr.status === 200 || xhr.status === 201) {
-					console.log(xhr.response)
-					alert('판매가 확정되었습니다.');
-					window.location.href = 'http://localhost:8088/Map/MapTestKyung';
-				} else {
-					console.error("오류", xhr.status);
-				}
-			}
+      function markerfordb() {
+         const jobj = {"longitude": clickmouse1, "latitude": clickmouse2,"car_number":markerData.cno}
+         const jstl = JSON.stringify(jobj)
+         const xhr = new XMLHttpRequest()
+         xhr.open('POST', '/Map/Insert')
+         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+         xhr.send(jstl)
+         xhr.onload = function () {
+            console.log(xhr.response)
+            if (xhr.status === 200 || xhr.status === 201) {
+               console.log(xhr.response)
+               alert('판매가 확정되었습니다.');
+               window.location.href = 'http://localhost:8088/Map/MapTestKyung';
+            } else {
+               console.error("오류", xhr.status);
+            }
+            
+        }
 
-		}
+      }
 
 
-		//찍었을 떄 마커를 찍는 함수입니다
-		kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+      //찍었을 떄 마커를 찍는 함수입니다
+      kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 
-			// 클릭한 위도, 경도 정보를 가져옵니다
-			var latlng = mouseEvent.latLng;
+         // 클릭한 위도, 경도 정보를 가져옵니다
+         var latlng = mouseEvent.latLng;
 
-			// 마커 위치를 클릭한 위치로 옮깁니다
-			marker.setPosition(latlng);
+         // 마커 위치를 클릭한 위치로 옮깁니다
+         marker.setPosition(latlng);
 
-			var resultDiv = document.getElementById('clickLatlng');
+         var resultDiv = document.getElementById('clickLatlng');
 
-		});
+      });
 
 
 
 // 지도 확대, 축소 컨트롤에서 확대 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
-		function zoomIn() {
-			map.setLevel(map.getLevel() - 1);
-		}
+      function zoomIn() {
+         map.setLevel(map.getLevel() - 1);
+      }
 
 // 지도 확대, 축소 컨트롤에서 축소 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
 		function zoomOut() {
@@ -510,27 +512,28 @@
 			}
 		});
 	}
+
 </script>
 <script>
-	const headerNav = document.querySelector(".header_nav"); // ul 요소 가져오기
-	const headerNavItems = headerNav.querySelectorAll("li>a"); // li 요소 가져오기
-	console.log( headerNavItems[2])
-	window.addEventListener("scroll", function() {
-		if (window.scrollY > 80) {
-			headerNavItems[0].style.display = "none";
-			headerNavItems[1].style.display = "none";
-			headerNavItems[2].style.display = "none";
-			headerNavItems[3].style.display = "none";
+   const headerNav = document.querySelector(".header_nav"); // ul 요소 가져오기
+   const headerNavItems = headerNav.querySelectorAll("li>a"); // li 요소 가져오기
+   console.log( headerNavItems[2])
+   window.addEventListener("scroll", function() {
+      if (window.scrollY > 80) {
+         headerNavItems[0].style.display = "none";
+         headerNavItems[1].style.display = "none";
+         headerNavItems[2].style.display = "none";
+         headerNavItems[3].style.display = "none";
 
-		} else if(window.scrollY < 80) {
-			headerNavItems[0].style.display = "block";
-			headerNavItems[1].style.display = "block";
-			headerNavItems[2].style.display = "block";
-			headerNavItems[3].style.display = "block";
+      } else if(window.scrollY < 80) {
+         headerNavItems[0].style.display = "block";
+         headerNavItems[1].style.display = "block";
+         headerNavItems[2].style.display = "block";
+         headerNavItems[3].style.display = "block";
 
-		}
+      }
 
-	});
+   });
 </script>
 
 </body>

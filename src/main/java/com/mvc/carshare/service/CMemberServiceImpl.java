@@ -36,8 +36,8 @@ public class CMemberServiceImpl implements CSMemberService {
 	}
 
 	@Override
-	public String findByEamilAtRegisterId(int id) {
-		return cMemberDao.findByEamilAtRegisterId(id);
+	public int findByEamilAtRegisterEmail(String email) {
+		return cMemberDao.findByEamilAtRegisterEmail(email);
 	}
 	
 	

@@ -85,11 +85,12 @@
 		SELECT ID FROM C_MEMBERS WHERE EMAIL = #{email} GROUP BY ID
  	</select>
  	
- 	<select id="findByEamilAtRegisterId" resultType="string">
- 		SELECT EMAIL FROM C_REGISTRATIONS m1 JOIN 
+ 	<!-- 아이디값을 넣어서 판매자면 카운트 증가, 판매자가 아니면 0으로 반환 -->
+ 	<select id="findByEamilAtRegisterEmail" resultType="int">
+ 		SELECT COUNT(EMAIL) FROM C_REGISTRATIONS m1 JOIN 
 		(
-		SELECT c.car_id, m.EMAIL FROM C_MEMBERS m JOIN C_CARS c ON m.ID = c.OWNER_ID
+		SELECT c.CAR_ID, m.EMAIL FROM C_MEMBERS m JOIN C_CARS c ON m.ID = c.OWNER_ID
 		) m2
-		ON m1.CAR_NUMBER = m2.car_id WHERE m1.ID = #{id}
+		ON m1.CAR_NUMBER = m2.CAR_ID WHERE m2.EMAIL = #{email}
  	</select>
  </mapper>

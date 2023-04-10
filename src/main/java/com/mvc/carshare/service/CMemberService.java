@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.mvc.carshare.dao.CMemberDao;
 import com.mvc.carshare.vo.CMemberVo;
+import com.mvc.carshare.vo.CPayMentVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -104,6 +105,5 @@ public class CMemberService {
 		javaMailSender.send(simpleMessage);
 	}
 	  public CMemberVo selectOne(int id) { return dao.selectOne(id); }
-	  
 	  
 }

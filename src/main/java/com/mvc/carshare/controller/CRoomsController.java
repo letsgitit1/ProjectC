@@ -41,7 +41,6 @@ public class CRoomsController {
     @GetMapping("/register")
 
     public String register( Model model, int car_id,HttpSession request) {
-    	System.out.println("룸 들어옴"+car_id);
     	
     	CMemberVo vo = (CMemberVo) request.getAttribute("vo");		//임시로 만든 세션에 담긴 값
     	model.addAttribute("email", vo.getEmail());
@@ -54,7 +53,7 @@ public class CRoomsController {
     @PostMapping("/register")
     public RedirectView register(CRoomsVO cRoomsVO,  HttpSession request,Model model) {
     	
-    	CMemberVo vo = (CMemberVo) request.getAttribute("vo");		//임시로 만든 세션에 담긴 값
+    	CMemberVo vo = (CMemberVo) request.getAttribute("vo");		
     	model.addAttribute("email", vo.getEmail());
     	CMemberDTO cMemberDTO = new CMemberDTO();
     	cMemberDTO.setRegistrNum(cRoomsVO.getRegistrNum());
@@ -71,9 +70,10 @@ public class CRoomsController {
     //채팅방 목록 페이지
     @GetMapping("/rooms")
     public String getList(Model model, String email, HttpSession request) {
-    	CMemberVo vo = (CMemberVo) request.getAttribute("vo");		//임시로 만든 세션에 담긴 값
+    	CMemberVo vo = (CMemberVo) request.getAttribute("vo");		
     	model.addAttribute("email", vo.getEmail());
     	
+//    	방을 조회해서 채팅 기록이 없는 방은 삭제
     	for (CRoomsVO nulls : cRoomsService.contentIsNull()) {
 			cRoomsService.removeRoom(nulls.getId());
 		}
@@ -82,8 +82,8 @@ public class CRoomsController {
     	model.addAttribute("list", cRoomsService.registerList(vo.getEmail())); 
     	
 //    	구매자 리스트 가져오기
-    	if(cMemberService.findByEamilAtRegisterId(0) == null) {	//판매 번호로 이메일 조회, 판매 번호가 없으면 true
-    		if(cMessageService.getListByEamil(vo.getEmail()) != 0) {	//보낸 사람의 채팅기록이 있을때 리스트 전달
+    	if(cMemberService.findByEamilAtRegisterEmail(vo.getEmail()) != 1) {		//판매 번호로 이메일 조회, 로그인 한 사람이 판매자인지 조회(판매자는 구매 불가)
+    		if(cMessageService.getListByEamil(vo.getEmail()) != 0) {			//보낸 사람의 채팅기록이 있을때 리스트 전달
     			model.addAttribute("list", cRoomsService.getList(vo.getEmail()));
     		}    		
     	}

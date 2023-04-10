@@ -47,4 +47,9 @@ public class CPaymentServiceImpl implements CSPaymentService {
 		return cPaymentDao.paymentInsert(vo);
 	}
 
+	 //동해 테스트중
+	  public List<CPayMentVo> paymentlist(int payer_id) {
+		  return cPaymentDao.paymentlist(payer_id);
+	  }
+	
 }

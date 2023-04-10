@@ -17,6 +17,9 @@ main {
 	background-color: black;
 	height: 200px;
 }
+.mypage_list {
+	text-align: center;
+}
 .mypage_div_p {
 	color: white;
 	font-size: 20px;
@@ -69,13 +72,17 @@ main {
 }
 table {
 	border-top: 3px solid black;
-	border-bottom : 1px solid black;
 	width: 80%;
 	height: 50px;
 	float: left;
 	margin-left: 150px;
 }
-
+th {
+	padding: 10px;
+}
+td {
+	padding-top: 5px;
+}
 * {
   margin: 0;
   padding: 0;
@@ -272,14 +279,23 @@ footer {
 		</div>
 	
 	<div class="mypage_div_list">
-		<h3 class="mypage_h">주문내역 조회</h3>
+		<h3 class="mypage_h">최근 주문내역 조회</h3>
 		<br>
 		<table class="mypage_table">
 			<tr>
-				<th class="td_1">상품정보</th>
-				<th class="td_2">주문일자</th>
-				<th class="td_3">주문번호</th>
-				<th class="td_4">주문금액</th>
+				<th class="td_1">주문번호</th>
+				<th class="td_2">주문금액</th>
+				<th class="td_3">결제방법</th>
+				<th class="td_4">주문일자</th>
+			</tr >
+			<tr>
+				<td colspan="4" style="border-top: 1px solid black;"></td>
+			</tr>
+			<tr th:each="list : ${list}">
+				<td class="mypage_list" th:text="${list.order_number}"></td>
+				<td class="mypage_list" th:text="${list.price}"></td>
+				<td class="mypage_list" th:text="${list.payment_method}"></td>
+				<td class="mypage_list" th:text="${list.payment_date}"></td>
 			</tr>
 		</table>
 	</div>
