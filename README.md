@@ -43,7 +43,7 @@
 
 ## 개발 환경
 
-![3](https://user-images.githubusercontent.com/105581415/235371730-bdabf305-14b7-4749-8e73-a44cd05a1db3.png)
+![10](https://user-images.githubusercontent.com/105581415/235371832-a48a813d-1661-415e-871f-4cf0d0208af4.png)
 ---
 
 ## 회의 내용
