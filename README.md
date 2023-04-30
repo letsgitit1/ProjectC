@@ -1,6 +1,5 @@
 # ProjectC
-!(https://s3-us-west-2.amazonaws.com/secure.notion-static.com/44c7f4ba-ce2d-4c6a-853e-7b19077283e0/Untitled.png)
-
+https://github.com/letsgitit1/ProjectC/issues/61#issue-1690041878
 ## Git hub 주소
 
 [https://github.com/letsgitit1/ProjectC.git](https://github.com/letsgitit1/ProjectC.git)
