@@ -1,5 +1,5 @@
 # ProjectC
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/44c7f4ba-ce2d-4c6a-853e-7b19077283e0/Untitled.png)
+!(https://s3-us-west-2.amazonaws.com/secure.notion-static.com/44c7f4ba-ce2d-4c6a-853e-7b19077283e0/Untitled.png)
 
 ## Git hub 주소
 
