@@ -8,7 +8,7 @@
  	<!-- 차량넘버로 모든리뷰조회 -->
  	<select id="creviewOne" parameterType="int" resultType="CReviewVo">
 		SELECT * FROM C_REVIEWS cr 
-		WHERE car_number = #{car_number}
+		WHERE car_id = #{car_id}
  	</select>
  	
  	<select id="writebyme" parameterType="int" resultType="CReviewVo">

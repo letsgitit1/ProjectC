@@ -31,4 +31,6 @@ public interface CCarDao {
 	List<CNotRegCarDto> notregcar(int owner_id);
 	//자동차 삭제
 	 int delete_car(CcarVo vo);
+	 
+	 int insertCarMarker(int car_number);
 }

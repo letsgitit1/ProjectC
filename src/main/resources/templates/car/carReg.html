@@ -154,44 +154,47 @@ header {
 }
 
 h1 {
-  color: #fff;
-  position: absolute;
-  font-family:Anton;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 58px;
+	color: #fff;
+	position: absolute;
+	font-family: Anton;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 58px;
 }
 
-.header_nav_item:first-child > a,
-.header_nav_item:nth-child(2) > a {
+.header_nav_item:first-child>a, .header_nav_item:nth-child(2)>a {
 	font-family: 'Anton', sans-serif;
-    font-weight: normal;
-    font-size: 1.5rem;
-  color: #fff;
+	font-weight: normal;
+	font-size: 1.5rem;
+	color: #fff;
 }
-.header_nav_item:nth-child(3) > a {
+
+.header_nav_item:nth-child(3)>a {
 	font-family: 'Anton', sans-serif;
-    font-weight: normal;
-    font-size: 1.5rem;
-  color: #000;
+	font-weight: normal;
+	font-size: 1.5rem;
+	color: #000;
 }
-.header_nav_item:last-child > a {
+
+.header_nav_item:last-child>a {
 	font-family: 'Anton', sans-serif;
-    font-weight: normal;
-    font-size: 1.5rem;
-  color: #000;
+	font-weight: normal;
+	font-size: 1.5rem;
+	color: #000;
 }
-#sub_title{
-	     position: absolute;
-    font-family: inter;
-    top: 70%;
-    left: 188%;
-    width: 100%;
-    transform: translate(-90%, -10%);
-    font-size: 13px;
-    font-weight: 700;
+
+#sub_title {
+	position: absolute;
+	font-family: inter;
+	top: 70%;
+	left: 188%;
+	width: 100%;
+	transform: translate(-90%, -10%);
+	font-size: 13px;
+	font-weight: 700;
 }
+
 .header_icon, .header_nav {
 	color: #fff;
 	list-style: none;
@@ -219,10 +222,12 @@ h1 {
 	width: 32px;
 	height: 32px;
 }
-.nav_detail_text > a {
-  color: #000;
-  font-family: Inter;
+
+.nav_detail_text>a {
+	color: #000;
+	font-family: Inter;
 }
+
 .header_nav {
 	position: absolute;
 	right: 100px;
@@ -307,10 +312,10 @@ select:hover {
 					id="sub_title">with together</span>
 			</h1>
 			<ul class="header_nav">
-				<li class="header_nav_item"><a href="#">JOIN</a></li>
-				<li class="header_nav_item"><a href="#">SIGNIN</a></li>
-				<li class="header_nav_item"><a href="#">CHAT</a></li>
-				<li class="header_nav_item"><a href="#">MYPAGE</a></li>
+				<li class="header_nav_item"><a href="/reg">JOIN</a></li>
+				<li class="header_nav_item"><a href="/logout">LOGOUT</a></li>
+				<li class="header_nav_item"><a href="/rooms/rooms">CHAT</a></li>
+				<li class="header_nav_item"><a href="/mypage">MYPAGE</a></li>
 			</ul>
 		</header>
 
@@ -364,44 +369,45 @@ select:hover {
 					<tr>
 						<th><label for="c_year">연식</label></th>
 						<td><select id="c_year" name="c_year">
-								<option value=""></option>
+								<option value=""><script>
+									for (var i = 1980; i <= 2023; i++) {
+										document
+												.write('<option value="' + i + '">'
+														+ i + '</option>');
+									}
+								</script></option>
 
 						</select></td>
 
 					</tr>
 					<tr>
 						<th><label for="file" class="label_file">사진등록</label></th>
-						<td><input type="file" id="file"> <input
+						<td><input type="file" id="file" name="file"> <input
 							class="upload-name" value="첨부파일" placeholder="첨부파일"></td>
 					</tr>
 					<tr>
 						<td colspan="2"><br>
-							<div>
-								<input type="file" name="file">
-							</div>
 							<button class="carReg_button">등록</button>
 							<button class="carReg_button" type="button"
 								onclick="location.href='./'">메인</button></td>
+						 <script>
+							$(function() {
+								$('.upload-name').click(function() {
+									$('#file').click();
+								});
+							});
+
+							$("#file").on('change', function() {
+								var fileName = $("#file").val();
+								console.log(fileName)
+								$(".upload-name").val(fileName);
+							});
+						</script> 
 					</tr>
 				</table>
 			</form>
 		</div>
 	</main>
-	<script>
-		for (var i = 1980; i <= 2023; i++) {
-			document.write('<option value="' + i + '">' + i + '</option>');
-		}
 
-		$(function() {
-			$('.upload-name').click(function() {
-				$('#file').click();
-			});
-		});
-
-		$("#file").on('change', function() {
-			var fileName = $("#file").val();
-			$(".upload-name").val(fileName);
-		});
-	</script>
 </body>
 </html>

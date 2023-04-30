@@ -3,26 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <title>내차 리뷰</title>
+<style type="text/css">
+
+.review_home {
+	width: 50%; 
+	height: 35px; 
+	margin-left: 330px; 
+	color: white; 
+	background-color: black; 
+	border: 1px solid black; 
+	border-radius: 4px; 
+	cursor: pointer;
+}
+.review_home:hover {
+	background-color: silver;
+	border: 1px solid silver;
+}
+</style>
 </head>
+<link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 <body>
 <main>
-	<h3>리뷰보기</h3>
+<div th:include="header.html"></div>
 	
-	<table>
+	<table style="margin: auto; width: 60%; min-height: 300px;">
 		<tr>
 			<th>리뷰써준사람</th>
 			<th>내용</th>
 			<th>점수</th>
 		</tr>
 		<tr th:each="list : ${list}">
-			<td th:text="${list.author_id}"></td>
-			<td th:text="${list.content}"></td>
-			<td th:text="${list.car_score}"></td>
+			<td th:text="${list.author_id}" style="text-align: center;"></td>
+			<td th:text="${list.content}" style="text-align: center;"></td>
+			<td th:text="${list.car_score}" style="text-align: center;"></td>
 		</tr>
 		<tr>
-			<td> <input type="button" onclick="location.href='/'" value="메인으로"> </td>
+			<td colspan="3"> <input class="review_home" type="button" onclick="location.href='/'" value="메인으로"> </td>
+			
 		</tr>
 	</table>
+	
+	
+	
+	<div th:include="footer.html"></div>
 </main>
 </body>
 </html>

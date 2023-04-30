@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-   <link href="../css/serviceheader.css" rel="stylesheet" />
    <meta charset="utf-8">
    <title>맵맵맵맵맵테스트트트트트</title>
 
@@ -177,26 +176,7 @@
 	// 검색 버튼 클릭 시 searchPlace 함수 호출
 	document.getElementById('searchButton').addEventListener('click', searchPlace)
 
-	function moveToCurrentPosition() {
-		if (navigator.geolocation) {
-			// 사용자의 현재 위치를 요청합니다.
-			navigator.geolocation.getCurrentPosition(function(position) {
-				// 현재 위치의 위도와 경도를 저장합니다.
-				var lat = position.coords.latitude;
-				var lng = position.coords.longitude;
-
-				// 현재 위치로 지도를 이동합니다.
-				var moveLatLon = new kakao.maps.LatLng(lat, lng);
-				map.panTo(moveLatLon);
-				alert("현재 접속중인 위치를 기반으로 안내해드리겠습니다")
-			});
-		} else {
-			alert("현재위치를 찾을수 없습니다 ㅠㅠ");
-		}
-		// 버튼 클릭 시 moveToCurrentPosition 함수를 호출합니다.
-
-	}
-	document.getElementById('myarea').addEventListener('click', moveToCurrentPosition);
+	
 
 
 	var mapContainer = document.getElementById('map'); // 지도를 표시할 div
@@ -385,6 +365,41 @@
 			return overlay;
 		}
 	}
+
+	//마커를 찍었을 떄 클릭 이벤트 발생시키는 함수입니다
+	      let clickmouse1;
+	      let clickmouse2;
+	      kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+	         let resultajax = document.getElementById(ajaxformarker);
+			console.log(clickmouse1)
+
+	         // 클릭한 위도, 경도 정보를 가져옵니다
+	         var latlng = mouseEvent.latLng;
+
+	         clickmouse1 = latlng.La;
+	         clickmouse2 = latlng.Ma;
+	         console.log(clickmouse1)
+	      });
+	      function markerfordb() {
+	         const jobj = {"longitude": clickmouse1, "latitude": clickmouse2,"car_number":markerData.cno}
+	         const jstl = JSON.stringify(jobj)
+	         const xhr = new XMLHttpRequest()
+	         xhr.open('POST', '/Map/Insert')
+	         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+	         xhr.send(jstl)
+	         xhr.onload = function () {
+	            console.log(xhr.response)
+	            if (xhr.status === 200 || xhr.status === 201) {
+	               console.log(xhr.response)
+	               alert('판매가 확정되었습니다.');
+	               window.location.href = 'http://localhost:8088/Map/MapTestKyung';
+	            } else {
+	               console.error("오류", xhr.status);
+	            }
+	            
+	        }
+
+	      }
 	// 원
 	for (var i = 0; i < markerListString.length; i++) {
 		var cicleData = markerListString[i];
@@ -434,40 +449,6 @@
 
 
 
-//마커를 찍었을 떄 클릭 이벤트 발생시키는 함수입니다
-      let clickmouse1;
-      let clickmouse2;
-      kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
-         let resultajax = document.getElementById(ajaxformarker);
-
-         // 클릭한 위도, 경도 정보를 가져옵니다
-         var latlng = mouseEvent.latLng;
-
-         clickmouse1 = latlng.La;
-         clickmouse2 = latlng.Ma;
-         console.log(clickmouse1)
-      });
-
-      function markerfordb() {
-         const jobj = {"longitude": clickmouse1, "latitude": clickmouse2,"car_number":markerData.cno}
-         const jstl = JSON.stringify(jobj)
-         const xhr = new XMLHttpRequest()
-         xhr.open('POST', '/Map/Insert')
-         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-         xhr.send(jstl)
-         xhr.onload = function () {
-            console.log(xhr.response)
-            if (xhr.status === 200 || xhr.status === 201) {
-               console.log(xhr.response)
-               alert('판매가 확정되었습니다.');
-               window.location.href = 'http://localhost:8088/Map/MapTestKyung';
-            } else {
-               console.error("오류", xhr.status);
-            }
-            
-        }
-
-      }
 
 
       //찍었을 떄 마커를 찍는 함수입니다
@@ -515,9 +496,27 @@
 
 </script>
 <script>
-   const headerNav = document.querySelector(".header_nav"); // ul 요소 가져오기
-   const headerNavItems = headerNav.querySelectorAll("li>a"); // li 요소 가져오기
-   console.log( headerNavItems[2])
+
+function moveToCurrentPosition() {
+	if (navigator.geolocation) {
+		// 사용자의 현재 위치를 요청합니다.
+		navigator.geolocation.getCurrentPosition(function(position) {
+			// 현재 위치의 위도와 경도를 저장합니다.
+			var lat = position.coords.latitude;
+			var lng = position.coords.longitude;
+
+			// 현재 위치로 지도를 이동합니다.
+			var moveLatLon = new kakao.maps.LatLng(lat, lng);
+			map.panTo(moveLatLon);
+			alert("현재 접속중인 위치를 기반으로 안내해드리겠습니다")
+		});
+	} else {
+		alert("현재위치를 찾을수 없습니다 ㅠㅠ");
+	}
+	// 버튼 클릭 시 moveToCurrentPosition 함수를 호출합니다.
+
+}
+document.getElementById('myarea').addEventListener('click', moveToCurrentPosition);
    window.addEventListener("scroll", function() {
       if (window.scrollY > 80) {
          headerNavItems[0].style.display = "none";

@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mvc.carshare.service.CCarService;
+import com.mvc.carshare.service.CMarkerService;
 import com.mvc.carshare.service.CRegistrationsService;
 import com.mvc.carshare.vo.CMDto;
 import com.mvc.carshare.vo.CMemberVo;
@@ -33,12 +34,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CCarController {
 	private CCarService service;
-	private ObjectMapper objectMapper = new ObjectMapper();
 	private CRegistrationsService rService;
-
-	public CCarController(CCarService service, CRegistrationsService rService) {
+	private CMarkerService Cservice;
+	
+	public CCarController(CCarService service, CRegistrationsService rService,CMarkerService Cservice) {
 		this.service = service;
 		this.rService = rService;
+		this.Cservice=Cservice;
 	}
 
 	// 내차등록페이지로 이동
@@ -54,7 +56,7 @@ public class CCarController {
 	        @RequestParam("file") MultipartFile file) {
 		
 	    String uploadDir = "C:\\uploadimage";
-	    ServletContext context = request.getServletContext();
+	    //ServletContext context = request.getServletContext();
 	    //String realPath = context.getRealPath(uploadDir);
 	    // 파일 이름 설정
 	    String fileName = file.getOriginalFilename();
@@ -65,15 +67,18 @@ public class CCarController {
 //	    if (!dir.exists()) {
 //	        dir.mkdirs();
 //	    }
-//	    
-	    // 파일 저장
+	    
+	    //파일 저장
 	    try {
+	    	System.out.println(file);
 	        file.transferTo(new File(filePath));
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
 	    System.out.println(file.getOriginalFilename());
 	    vo.setCar_image(file.getOriginalFilename());
+	    System.out.println(vo);
+	   
 	    log.info("controller vo = {}", vo);
 	    service.car_reg(vo);
 	    return "redirect:/";
@@ -115,6 +120,7 @@ public class CCarController {
 		CMemberVo vo = (CMemberVo) session.getAttribute("vo");
 		CMDto cmvo = service.memberByCar(vo.getId(), carId);
 		model.addAttribute("cmvo", cmvo);
+		 
 		System.out.println(cmvo);
 
 		return "car/saleReg";
@@ -124,6 +130,8 @@ public class CCarController {
 	@PostMapping("/car/car_sReg")
 	public String insertReg(@ModelAttribute CRegistrationsVo vo) {
 		String url = "";
+		System.out.println(vo.getCar_number());
+		service.insertCarMarker(vo.getCar_number());
 		if (rService.insertReg(vo) == 1) {
 			url = "member/mypage";
 		} else {

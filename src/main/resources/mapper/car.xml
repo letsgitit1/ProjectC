@@ -71,5 +71,9 @@
 		DELETE FROM C_CARS
 		WHERE CAR_ID= #{car_id} AND OWNER_ID = #{owner_id}
 	</delete>
-
+	
+	<!--마커 인서트  -->
+	<insert id="insertCarMarker" parameterType="int">
+	INSERT INTO CMarker(id,CAR_NUMBER) VALUES (marker_seq.nextval,#{car_number})
+	</insert>
 </mapper>

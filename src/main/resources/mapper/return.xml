@@ -17,14 +17,14 @@
  	<select id="retunCarNotreview" parameterType="int" resultType="CReturnVo">
  		SELECT c.CAR_NUMBER FROM C_REVIEWS cr
 		right OUTER JOIN C_RETURNS c
-		ON c."CAR_id" = cr.CAR_NUMBER 
+		ON c.CAR_id = cr.car_id 
 		WHERE user_id =#{user_id}
  	</select>
 
 	<insert id="insertRent" parameterType="CReturnVo">
 		INSERT INTO C_RETURNS
 	(ID, regist_number,car_id, RENT_AT, RETURN_REGION_ID, USER_ID, CAR_NUMBER)
-	VALUES(returns_seq.nextval,#{car_id}, #{regist_number}, sysdate, #{return_region_id}, #{user_id}, #{car_number})
+	VALUES(returns_seq.nextval, #{regist_number},#{car_id}, sysdate, #{return_region_id}, #{user_id}, #{car_number})
 	</insert>
 	<update id="updateReturn" parameterType="int">
 		UPDATE C_RETURNS c

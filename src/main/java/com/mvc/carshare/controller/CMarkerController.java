@@ -50,6 +50,7 @@ public class CMarkerController {
         CMemberVo vo= (CMemberVo)session.getAttribute("vo");
         //회원의 렌트여부를 담음
         int rentB = service.booleanRent(vo.getId());
+        System.out.println("rentB=>>>>>>>>"+rentB);
         model.addAttribute("rentB",rentB);
         //테스트용찜
         model.addAttribute("user_id",vo.getId() );
@@ -86,7 +87,7 @@ public class CMarkerController {
     @ResponseBody //이렇게 선언해야 ajax 데이타 받을 수 있음
     public String insert(@RequestBody CMarker vo) throws JsonProcessingException {
     	System.out.println(vo.getCar_number());
-        int cnt=service.insertMarker(vo);
+        int cnt=service.updateMarker(vo);
         Map<String, Object> result=new HashMap<>();
         	
         result.put("cnt", cnt);
@@ -99,7 +100,9 @@ public class CMarkerController {
     @PostMapping("/Map/rentInsert")
     @ResponseBody //이렇게 선언해야 ajax 데이타 받을 수 있음
     public String insert(@RequestBody CReturnVo vo)  {
+    	vo.setReturn_region_id(1);
     	String result="";
+    	System.out.println("vo=>>>>>>>>>>>>>>>>>>>>>>>"+vo);
     	if(reService.insertRent(vo)==1) {
     		result="success";
           return result;

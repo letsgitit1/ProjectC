@@ -64,4 +64,8 @@ public class CCarService {
 	      log.info("service carvo = {}",vo);
 	      return dao.delete_car(vo);
 	   }
+	   public int insertCarMarker(int car_number) {
+		   return dao.insertCarMarker(car_number);
+	   }
+	   
 }

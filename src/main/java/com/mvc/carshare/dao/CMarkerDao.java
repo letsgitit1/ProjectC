@@ -20,5 +20,6 @@ public interface CMarkerDao {
    public List<CMarkerjoinCarDTO2> selectBySell(int owner_id); 
    public int booleanRent(int id);
    public int markerDelete(int id);
+   public int updateMarker(CMarker vo);
   
 }

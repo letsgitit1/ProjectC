@@ -40,4 +40,7 @@ public class CMarkerService {
     public int markerDelete(int id) {
     	return dao.markerDelete(id);
     }
+    public int updateMarker(CMarker vo) {
+    	return dao.updateMarker(vo);
+    }
 }
