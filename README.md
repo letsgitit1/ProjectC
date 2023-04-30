@@ -37,14 +37,13 @@
 
 ## 프로젝트 기획 일정
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f7bc3cf5-1c11-4cb6-833a-9233f0de8c3e/Untitled.png)
+![2](https://user-images.githubusercontent.com/105581415/235371732-6a92198d-404a-411e-85e9-9f3754227ae3.png)
 
 ---
 
 ## 개발 환경
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c6dfa79a-b473-4521-96a2-847e17df74d2/Untitled.png)
-
+![3](https://user-images.githubusercontent.com/105581415/235371730-bdabf305-14b7-4749-8e73-a44cd05a1db3.png)
 ---
 
 ## 회의 내용
@@ -55,17 +54,17 @@
 
 ## ERD
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/aa52a08c-d32c-4b56-bdc7-414c320b907f/Untitled.png)
+![3](https://user-images.githubusercontent.com/105581415/235371730-bdabf305-14b7-4749-8e73-a44cd05a1db3.png)
 
 ## Logic Process
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4b65d034-fa98-4de8-8d8e-7df0e9ea060b/Untitled.png)
+![4](https://user-images.githubusercontent.com/105581415/235371728-fffdf571-b0b6-44e6-810d-dc4c35dc3d49.png)
 
 ## 기능 설명
 
 ### 자동차 대여 기능
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ce2208a0-2d4f-466b-a6a4-d4b3c3d350fd/Untitled.png)
+![5](https://user-images.githubusercontent.com/105581415/235371726-e2f96f36-074d-45e9-80a0-18efc059de04.png)
 
 - 구매자 대여 화면입니다.
 - 화면에는 판매자가 맵에 등록한 상품들이 마커로 표시됩니다.
@@ -78,7 +77,7 @@
 
 ### 반납하기 및 결제 기능
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/25b4f933-4cbd-4329-9a5d-a4ffaff4a829/Untitled.png)
+![6](https://user-images.githubusercontent.com/105581415/235371725-e283dda3-8a67-4c2f-99ea-fb32c75258c0.png)
 
 - 반납 버튼을 누른 뒤 alert 창에 있는 확인 버튼을 누르면 결제 페이지로 이동합니다.
 - 결제 해야할 정보들이 나오고 결제하기를 누르면 토스 페이먼츠 위젯이 나옵니다.
@@ -89,7 +88,7 @@
 
 ### 자동차 공유(판매)하기
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9e69dc43-d316-4b80-89d2-a7eafa3fe8b6/Untitled.png)
+![7](https://user-images.githubusercontent.com/105581415/235371724-0decf0d6-c7ad-4f6a-a5d7-76257f1d7eb4.png)
 
 - 자동차를 판매등록한 판매자가 지도에 마커를 등록하기 위한 페이지입니다.
 - 판매 버튼을 누르게 되면 마커의 정보가 저장됩니다.
@@ -98,7 +97,7 @@
 
 ### 반납 1시간전 회원에게 알림 문자보내기
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7f1e24d7-b695-4783-afbd-c1aedd1987bd/Untitled.png)
+![8](https://user-images.githubusercontent.com/105581415/235371723-6873f7ff-0673-4c3c-b62b-fcd1ba10c26d.png)
 
 - @Scheduled를 사용해서 매 시간 정각에 위의 메소드를 실행하게 했습니다.
 - 반납을 하지 않은 회원의 리스트를 가져옵니다.
@@ -108,7 +107,7 @@
 
 ### 알림문자
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/561773c5-6b67-4d97-b6c4-e6980f7ad8e5/Untitled.png)
+![9](https://user-images.githubusercontent.com/105581415/235371721-43f188dd-7f76-4046-8bda-9af84df24fb1.png)
 
 알림은 위의 사진과 같이 나옵니다.
 
